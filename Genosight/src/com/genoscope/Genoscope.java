@@ -9,7 +9,6 @@ package com.genoscope;
  * @author alim
  */
 public class Genoscope {
-
     /**
      * @param args the command line arguments
      */
@@ -18,7 +17,7 @@ public class Genoscope {
         
         GenoscopeGUIMain.main(args);
         
-        System.out.println("ends\n");
+        System.out.println("main returned\n");
         
     }
 }
