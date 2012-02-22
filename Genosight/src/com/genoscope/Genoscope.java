@@ -2,13 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.genosight;
+package com.genoscope;
 
 /**
  *
  * @author alim
  */
-public class Genosight {
+public class Genoscope {
 
     /**
      * @param args the command line arguments
@@ -16,7 +16,7 @@ public class Genosight {
     public static void main(String[] args) {
         // TODO code application logic here
         
-        GenosightGUIMain.main(args);
+        GenoscopeGUIMain.main(args);
         
         System.out.println("ends\n");
         
