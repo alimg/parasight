@@ -17,7 +17,7 @@ public class Genoscope {
         
         GenoscopeGUIMain.main(args);
         
-        System.out.println("main returned\n");
+        System.out.println("returned\n");
         
     }
 }

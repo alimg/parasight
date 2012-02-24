@@ -5,6 +5,8 @@
 package com.genoscope;
 
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
@@ -15,6 +17,7 @@ import javax.swing.JFrame;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 /**
  *
@@ -34,7 +37,16 @@ public class Genoscope {
         
         GLProfile glprofile = GLProfile.getDefault();
         GLCapabilities glcapabilities = new GLCapabilities( glprofile );
-        final GLCanvas glcanvas = new GLCanvas( glcapabilities );
+        final GLCanvas glcanvas = new GLCanvas( glcapabilities ) {
+
+            @Override
+            public Dimension getSize() {
+                return new Dimension(0,0);
+            }
+            
+        };
+        
+        glcanvas.setPreferredSize(new Dimension(0,0));
 
         glcanvas.addGLEventListener( new GLEventListener() {
             
@@ -55,45 +67,20 @@ public class Genoscope {
             public void display( GLAutoDrawable glautodrawable ) {
                 GLRenderer.render( glautodrawable.getGL().getGL2(), glautodrawable.getWidth(), glautodrawable.getHeight() );
             }
-        });/*
-    	//MyPanel canvas=new MyPanel();
-        JFrame frame = new JFrame( "Hello World" );
-        //frame.getContentPane().add( canvas);
-        JPanel p=new com.genoscope.GLJPanel();
-        p.setLayout(new FlowLayout());
-        p.add(glcanvas);
-        p.add(new TextField("deneme"));
-        p.revalidate();
-        frame.getContentPane().add( p);
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent ev) {
-                System.exit(0);
-            }
-        });
-
-
-        frame.setSize( frame.getContentPane().getPreferredSize() );
-        frame.setVisible( true );
-        //frame.getContentPane().add( glcanvas, BorderLayout.CENTER );
-        
-        frame.pack();
-        frame.setSize( 640, 480 );
-        frame.setVisible( true );
-        * 
-        */
+        }); 
         
         GenoscopeApp f=new GenoscopeApp();
-        f.getContentPane().add(new TextField("deneme"));
+        f.glcanvas=glcanvas;
+     
         f.setVisible(true);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridheight = 1;
+        gbc.weightx = gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        f.jPanel2.setLayout(new CardLayout());
+        f.jPanel2.add(glcanvas);
         
-        f.jPanel1.removeAll();
-        //f.jPanel1.setPreferredSize(new Dimension(0,0));
-        f.jPanel1.layout();
-        
-        f.jPanel1.add(glcanvas);
-        //f.jPanel1.add(new TextField("deneme"));
-        //f.main(args);
-
         System.out.println("ends\n");
         
     }
