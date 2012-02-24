@@ -19,7 +19,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     public GenoscopeApp() {
         initComponents();
     }
-    GLCanvas glcanvas;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,26 +48,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                formComponentResized(evt);
-            }
-        });
-        addContainerListener(new java.awt.event.ContainerAdapter() {
-            public void componentAdded(java.awt.event.ContainerEvent evt) {
-                formComponentAdded(evt);
-            }
-        });
         getContentPane().setLayout(new java.awt.CardLayout());
 
         jButton1.setText("jButton1");
 
         jPanel2.setFocusable(false);
-        jPanel2.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                jPanel2ComponentResized(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,27 +166,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void formComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_formComponentAdded
-        // TODO add your handling code here:
-        //jPanel1.dispatchEvent(evt);
-//        glcanvas.setSize( new Dimension(jPanel1.getHeight(), evt.getComponent().getWidth()));
-    
-    }//GEN-LAST:event_formComponentAdded
-
-    private void formComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentResized
-        // TODO add your handling code here:
-    }//GEN-LAST:event_formComponentResized
-
-    private void jPanel2ComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel2ComponentResized
-        System.out.println(evt.getComponent());
-        //jPanel1.setSize(evt.getComponent().getSize());
-        //jPanel1.setLocation(evt.getComponent().getLocation());
-        if(glcanvas!=null)
-           glcanvas.setSize(evt.getComponent().getWidth(),
-                   evt.getComponent().getHeight());
-       
-    }//GEN-LAST:event_jPanel2ComponentResized
-
     /**
      * @param args the command line arguments
      */
@@ -216,6 +179,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
          * default look and feel. For details see
          * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
+        /*
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -231,7 +195,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
         //</editor-fold>
 
         /*

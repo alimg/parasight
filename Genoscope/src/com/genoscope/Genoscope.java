@@ -1,24 +1,17 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package com.genoscope;
 
-import java.awt.*;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
 import javax.media.opengl.GLAutoDrawable;
+import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.GLProfile;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.awt.GLJPanel;
 import javax.media.opengl.awt.GLCanvas;
-import javax.swing.JFrame;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
 /**
  *
  * @author alim
@@ -70,7 +63,6 @@ public class Genoscope {
         }); 
         
         GenoscopeApp f=new GenoscopeApp();
-        f.glcanvas=glcanvas;
      
         f.setVisible(true);
         GridBagConstraints gbc = new GridBagConstraints();

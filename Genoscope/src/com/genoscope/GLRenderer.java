@@ -14,7 +14,7 @@ public class GLRenderer  {
     
     
     protected static void setup( GL2 gl2, int width, int height ) {
-        System.out.println("oldu" + width+"  "+height);
+        //System.out.println("oldu" + width+"  "+height);
         gl2.glMatrixMode( GL2.GL_PROJECTION );
         gl2.glLoadIdentity();
 
