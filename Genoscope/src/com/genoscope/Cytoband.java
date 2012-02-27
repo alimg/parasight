@@ -2,22 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.genoscope;
 
 /**
  *
  * @author Ahmet Kerim SENOL
  */
-public class ReadDepth extends Feature {
-    protected int length;
-    protected int score;
+public class Cytoband extends Feature{
+    int length;
 
-    public ReadDepth(int length, int score) {
+    public Cytoband(int length) {
         this.length = length;
-        this.score = score;
     }
-    
 
     public int getLength() {
         return length;
@@ -25,14 +21,6 @@ public class ReadDepth extends Feature {
 
     public void setLength(int length) {
         this.length = length;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
     
 }
