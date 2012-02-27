@@ -34,7 +34,8 @@ public class Genoscope {
 
             @Override
             public Dimension getSize() {
-                return new Dimension(0,0);
+                //return new Dimension(0,0);
+                return super.getSize();
             } 
             
         };
