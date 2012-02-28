@@ -27,6 +27,7 @@ public class GLRenderer {
         gl2.glLoadIdentity();
 
         gl2.glViewport( 0, 0, width, height );
+        gl2.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
     }
 
     protected static void render( GL2 gl2, int width, int height ) {
@@ -34,28 +35,6 @@ public class GLRenderer {
         gl2.glClear( GL.GL_COLOR_BUFFER_BIT );
         if(renderer!=null)
             renderer.draw(gl2);
-        /*
-        // draw a triangle filling the window
-        gl2.glLoadIdentity();
-        gl2.glBegin( GL.GL_TRIANGLES );
-        gl2.glColor3f( 1, 0, 0 );
-        gl2.glVertex2f( 0, 0 );
-        gl2.glColor3f( 0, 1, 0 );
-        gl2.glVertex2f( width, 0 );
-        gl2.glColor3f( 0, 0, 1 );
-        gl2.glVertex2f( width / 2, height );
-        gl2.glEnd();
-        
-        gl2.glPixelStorei(GL.GL_PACK_ALIGNMENT, 1); 
-        gl2.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, 1); 
-        int WIDTH=50;
-        int HEIGHT=50;
-        ByteBuffer fbpixels = ByteBuffer.allocateDirect((WIDTH + 1)* (HEIGHT) * 3 - 1); 
-        gl2.glReadPixels(200,100, WIDTH, HEIGHT, GL2.GL_RGB, GL2.GL_UNSIGNED_BYTE, fbpixels); 
-        gl2.glRasterPos3f(0,0,0); 
-        gl2.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGB, GL.GL_UNSIGNED_BYTE, fbpixels); 
-        */
-
     }
 
     static void setRenderer(GenoscopeRenderer r) {
