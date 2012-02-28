@@ -8,6 +8,7 @@ import java.awt.Dimension;
 import java.io.File;
 import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -42,12 +43,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
         }
 
         initComponents();
+		//Do not change If you don't know
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.setFileFilter(addFileFilters());
 		fileChooser.setFileHidingEnabled(true);
-        
+//		fileChooser.setCurrentDirectory( new File( "./") ); 
 	}
-	
+
 	//required for File Filter DO NOT DELETE
 	private FileFilter addFileFilters(){
 		return new FileNameExtensionFilter("supported files (*.cn, *.bed, *.falan, *.filan)",
@@ -316,8 +318,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
 		// TODO add your handling code here:
 		int returnVal = fileChooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-		File file = fileChooser.getSelectedFile();
-		if(file==null)return;
+			File file = fileChooser.getSelectedFile();
+			if(file==null || !file.exists()){
+				System.out.println("File does not exists!");
+				JOptionPane.showMessageDialog(this, "File does not exists");
+				openMenuItemActionPerformed(evt);
+				return;
+			}
 			System.out.println( file.getAbsolutePath() );
 		} else {
 			System.out.println("File access cancelled by user.");
@@ -362,6 +369,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+			@Override
             public void run() {
                 new GenoscopeApp().setVisible(true);
             }
