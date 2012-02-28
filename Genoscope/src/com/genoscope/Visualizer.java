@@ -31,19 +31,19 @@ class Visualizer {
     {
         WIDTH=w;
         HEIGHT=h;
-        buffer = ByteBuffer.allocateDirect((WIDTH + 1)* (HEIGHT) * 3 - 1); 
+        buffer = ByteBuffer.allocateDirect((WIDTH + 1)* (HEIGHT) * 4 - 1); 
     }
     
-    void updateBuffer(GL2 gl)
+    final void updateBuffer(GL2 gl)
     {
         updateNeeded=false;//
         
         draw(gl);
         
-        
+        //debug
         gl.glPixelStorei(GL.GL_PACK_ALIGNMENT, 1); 
         gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, 1); 
-        gl.glReadPixels(0,0, WIDTH, HEIGHT, GL2.GL_RGB, GL2.GL_UNSIGNED_BYTE, buffer); 
+        gl.glReadPixels(0,0, WIDTH, HEIGHT, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE, buffer); 
     }
     /**
      * Called when update needed
@@ -53,16 +53,15 @@ class Visualizer {
     {
         System.out.println("redraw");
         gl.glLoadIdentity();
-        gl.glBegin( GL2.GL_TRIANGLES );
+        gl.glBegin( GL2.GL_LINE_LOOP );
         gl.glColor3f( 1, 0, 0 );
         gl.glVertex2f( 0, 0 );
         gl.glColor3f( 0, 1, 0 );
+        gl.glVertex2f( WIDTH/2, HEIGHT/2 );
         gl.glVertex2f( WIDTH, 0 );
         gl.glColor3f( 0, 0, 1 );
         gl.glVertex2f( WIDTH / 2, HEIGHT );
         gl.glEnd();
-        
-        
     }
     
     boolean isBufferUpToDate() { //should have default modifier
@@ -70,11 +69,11 @@ class Visualizer {
         return !updateNeeded;
     }
 
-    void drawBuffered(GL2 gl) {
+    final void drawBuffered(GL2 gl) {
         //throw new UnsupportedOperationException("Not yet implemented");
          
-        gl.glRasterPos3f(30,300,0); 
-        gl.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGB, GL.GL_UNSIGNED_BYTE, buffer); 
+        gl.glRasterPos3f(300,300,0); 
+        gl.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, buffer); 
     }
     
 }
