@@ -62,8 +62,12 @@ public class Genoscope {
             public void display( GLAutoDrawable glautodrawable ) {
                 GLRenderer.render( glautodrawable.getGL().getGL2(), glautodrawable.getWidth(), glautodrawable.getHeight() );
             }
+            
         }); 
-        
+        GenoscopeRenderer a=new GenoscopeRenderer();
+        glcanvas.addMouseListener(a);
+        GLRenderer.setRenderer(a);
+        a.addVisualizer(new Visualizer(300, 80));
         GenoscopeApp f=new GenoscopeApp();
      
         f.setVisible(true);
