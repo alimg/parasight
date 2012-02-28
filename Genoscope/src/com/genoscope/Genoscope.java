@@ -4,6 +4,7 @@
 package com.genoscope;
 
 import java.awt.CardLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import javax.media.opengl.GLAutoDrawable;
@@ -66,13 +67,7 @@ public class Genoscope {
         GenoscopeApp f=new GenoscopeApp();
      
         f.setVisible(true);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.gridheight = 1;
-        gbc.weightx = gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        f.jPanel2.setLayout(new CardLayout());
-        f.jPanel2.add(glcanvas);
+        f.OpenGLPanel.add(glcanvas);
         
         System.out.println("ends\n");
         
