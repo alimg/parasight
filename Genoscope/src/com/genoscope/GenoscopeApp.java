@@ -50,12 +50,22 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        propertiesPanel = new javax.swing.JPanel();
+        leftToolBar = new javax.swing.JPanel();
+        actions = new javax.swing.JPanel();
+        viewControl = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        objectProperties = new javax.swing.JScrollPane();
+        insertObject = new javax.swing.JScrollPane();
         drawingPanel = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollBar1 = new javax.swing.JScrollBar();
-        jScrollBar2 = new javax.swing.JScrollBar();
+        OpenGLContainer = new javax.swing.JPanel();
+        OpenGLPanel = new javax.swing.JPanel();
+        verticalScroll = new javax.swing.JScrollBar();
+        horizontalScroll = new javax.swing.JScrollBar();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -72,39 +82,126 @@ public class GenoscopeApp extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setTitle("GenoScope");
+        setMinimumSize(new java.awt.Dimension(700, 555));
+        setPreferredSize(new java.awt.Dimension(700, 590));
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        propertiesPanel.setAlignmentX(0.0F);
-        propertiesPanel.setAlignmentY(0.0F);
-        propertiesPanel.setMaximumSize(new java.awt.Dimension(200, 32767));
-        propertiesPanel.setMinimumSize(new java.awt.Dimension(200, 500));
+        mainPanel.setMinimumSize(new java.awt.Dimension(800, 575));
 
-        javax.swing.GroupLayout propertiesPanelLayout = new javax.swing.GroupLayout(propertiesPanel);
-        propertiesPanel.setLayout(propertiesPanelLayout);
-        propertiesPanelLayout.setHorizontalGroup(
-            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+        leftToolBar.setAlignmentX(0.0F);
+        leftToolBar.setAlignmentY(0.0F);
+        leftToolBar.setMaximumSize(new java.awt.Dimension(275, 32767));
+        leftToolBar.setMinimumSize(new java.awt.Dimension(275, 500));
+        leftToolBar.setPreferredSize(new java.awt.Dimension(275, 286));
+        leftToolBar.setLayout(new javax.swing.BoxLayout(leftToolBar, javax.swing.BoxLayout.Y_AXIS));
+
+        actions.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions"));
+        actions.setMaximumSize(new java.awt.Dimension(32767, 75));
+        actions.setMinimumSize(new java.awt.Dimension(0, 75));
+
+        javax.swing.GroupLayout actionsLayout = new javax.swing.GroupLayout(actions);
+        actions.setLayout(actionsLayout);
+        actionsLayout.setHorizontalGroup(
+            actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 263, Short.MAX_VALUE)
         );
-        propertiesPanelLayout.setVerticalGroup(
-            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 641, Short.MAX_VALUE)
+        actionsLayout.setVerticalGroup(
+            actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        drawingPanel.setMinimumSize(new java.awt.Dimension(0, 0));
+        leftToolBar.add(actions);
+
+        viewControl.setBorder(javax.swing.BorderFactory.createTitledBorder("View Control"));
+        viewControl.setMaximumSize(new java.awt.Dimension(32767, 100));
+        viewControl.setMinimumSize(new java.awt.Dimension(0, 100));
+
+        jLabel1.setText("Zoom");
+
+        jButton2.setText("+");
+
+        jButton3.setText("-");
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/magnifier.png"))); // NOI18N
+        jButton4.setText("Zoom Tool");
+        jButton4.setToolTipText("Select an area to zoom at");
+
+        jCheckBox1.setText("Show Labels");
+
+        jCheckBox2.setText("Show Colors");
+
+        javax.swing.GroupLayout viewControlLayout = new javax.swing.GroupLayout(viewControl);
+        viewControl.setLayout(viewControlLayout);
+        viewControlLayout.setHorizontalGroup(
+            viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewControlLayout.createSequentialGroup()
+                .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(viewControlLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jCheckBox1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCheckBox2))
+                    .addGroup(viewControlLayout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(19, 19, 19))
+        );
+        viewControlLayout.setVerticalGroup(
+            viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewControlLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBox1)
+                    .addComponent(jCheckBox2))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        leftToolBar.add(viewControl);
+
+        objectProperties.setBorder(javax.swing.BorderFactory.createTitledBorder("Object Properties"));
+        objectProperties.setMaximumSize(new java.awt.Dimension(32767, 200));
+        objectProperties.setMinimumSize(new java.awt.Dimension(250, 200));
+        objectProperties.setName("");
+        objectProperties.setPreferredSize(new java.awt.Dimension(250, 200));
+        leftToolBar.add(objectProperties);
+
+        insertObject.setBorder(javax.swing.BorderFactory.createTitledBorder("Insert Object"));
+        insertObject.setMaximumSize(new java.awt.Dimension(32767, 150));
+        insertObject.setMinimumSize(new java.awt.Dimension(37, 150));
+        insertObject.setPreferredSize(new java.awt.Dimension(12, 150));
+        leftToolBar.add(insertObject);
+
+        drawingPanel.setMinimumSize(null);
+        drawingPanel.setPreferredSize(null);
         drawingPanel.setLayout(new javax.swing.BoxLayout(drawingPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
+        OpenGLContainer.setMinimumSize(null);
+        OpenGLContainer.setPreferredSize(null);
+        OpenGLContainer.setLayout(new javax.swing.BoxLayout(OpenGLContainer, javax.swing.BoxLayout.LINE_AXIS));
 
-        jPanel2.setLayout(new java.awt.CardLayout());
-        jPanel1.add(jPanel2);
-        jPanel1.add(jScrollBar1);
+        OpenGLPanel.setMinimumSize(null);
+        OpenGLPanel.setPreferredSize(null);
+        OpenGLPanel.setLayout(new java.awt.CardLayout());
+        OpenGLContainer.add(OpenGLPanel);
+        OpenGLContainer.add(verticalScroll);
 
-        drawingPanel.add(jPanel1);
+        drawingPanel.add(OpenGLContainer);
 
-        jScrollBar2.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
-        drawingPanel.add(jScrollBar2);
+        horizontalScroll.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
+        drawingPanel.add(horizontalScroll);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -112,9 +209,9 @@ public class GenoscopeApp extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(leftToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
+                .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -122,8 +219,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(propertiesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE))
+                    .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -242,7 +339,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel OpenGLContainer;
+    public javax.swing.JPanel OpenGLPanel;
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JPanel actions;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -252,16 +352,23 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollBar jScrollBar1;
-    private javax.swing.JScrollBar jScrollBar2;
+    private javax.swing.JScrollBar horizontalScroll;
+    private javax.swing.JScrollPane insertObject;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JScrollPane objectProperties;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JScrollBar verticalScroll;
+    private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
 }
