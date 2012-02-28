@@ -49,10 +49,9 @@ public class GenoscopeApp extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        mainPanel = new javax.swing.JPanel();
+        propertiesPanel = new javax.swing.JPanel();
+        drawingPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollBar1 = new javax.swing.JScrollBar();
@@ -73,67 +72,62 @@ public class GenoscopeApp extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        jButton1.setText("jButton1");
+        propertiesPanel.setAlignmentX(0.0F);
+        propertiesPanel.setAlignmentY(0.0F);
+        propertiesPanel.setMaximumSize(new java.awt.Dimension(200, 32767));
+        propertiesPanel.setMinimumSize(new java.awt.Dimension(200, 500));
 
-        jLabel1.setText("deneme");
+        javax.swing.GroupLayout propertiesPanelLayout = new javax.swing.GroupLayout(propertiesPanel);
+        propertiesPanel.setLayout(propertiesPanelLayout);
+        propertiesPanelLayout.setHorizontalGroup(
+            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        propertiesPanelLayout.setVerticalGroup(
+            propertiesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 641, Short.MAX_VALUE)
+        );
 
-        jPanel4.setLayout(new javax.swing.BoxLayout(jPanel4, javax.swing.BoxLayout.PAGE_AXIS));
+        drawingPanel.setMinimumSize(new java.awt.Dimension(0, 0));
+        drawingPanel.setLayout(new javax.swing.BoxLayout(drawingPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
         jPanel1.setLayout(new javax.swing.BoxLayout(jPanel1, javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 373, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
-        );
-
+        jPanel2.setLayout(new java.awt.CardLayout());
         jPanel1.add(jPanel2);
         jPanel1.add(jScrollBar1);
 
-        jPanel4.add(jPanel1);
+        drawingPanel.add(jPanel1);
 
         jScrollBar2.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
-        jPanel4.add(jScrollBar2);
+        drawingPanel.add(jScrollBar2);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jButton1))
-                .addContainerGap(405, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                    .addGap(109, 109, 109)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(propertiesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
-                .addContainerGap(264, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel3Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 928, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(propertiesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
-        getContentPane().add(jPanel3, "card3");
+        getContentPane().add(mainPanel, "card3");
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -253,21 +247,20 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JMenuItem deleteMenuItem;
+    private javax.swing.JPanel drawingPanel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JScrollBar jScrollBar2;
+    private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
