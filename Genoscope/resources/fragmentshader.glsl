@@ -15,7 +15,7 @@ vec4 applyFXAA(vec2 fragCoord, sampler2D tex)
     vec4 rgbSW = texture2D(tex, fragCoord + (vec2(-1.0, 1.0)) * inverseVP);
     vec4 rgbSE = texture2D(tex, fragCoord + (vec2(1.0, 1.0)) * inverseVP);
     vec4 rgbM  = texture2D(tex, fragCoord );
-    vec4 luma = vec4(0.299, 0.587, 0.114,0.5);
+    vec4 luma = vec4(0.299, 0.587, 0.114,0.18);
     float lumaNW = dot(rgbNW, luma);
     float lumaNE = dot(rgbNE, luma);
     float lumaSW = dot(rgbSW, luma);
@@ -53,7 +53,6 @@ vec4 applyFXAA(vec2 fragCoord, sampler2D tex)
 
 void main()
 {
-    gl_FragColor = s;*/
 	
 	gl_FragColor=applyFXAA(vec2(gl_TexCoord[0]),baseImage);
 
