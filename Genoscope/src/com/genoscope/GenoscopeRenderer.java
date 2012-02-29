@@ -53,9 +53,11 @@ public class GenoscopeRenderer implements MouseListener {
         {
             //TODO init buffer
             if(! v.isBufferUpToDate())
+            {
+                gl.glClear( GL2.GL_COLOR_BUFFER_BIT );
                 v.updateBuffer(gl);
+            }
         }
-        
         gl.glClear( GL2.GL_COLOR_BUFFER_BIT );
         for(Visualizer v: clients)
         {

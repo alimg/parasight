@@ -7,6 +7,7 @@ import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import javax.media.nativewindow.Capabilities;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCapabilities;
 import javax.media.opengl.GLEventListener;
@@ -31,6 +32,9 @@ public class Genoscope {
         
         GLProfile glprofile = GLProfile.getDefault();
         GLCapabilities glcapabilities = new GLCapabilities( glprofile );
+        glcapabilities.setNumSamples(4);
+        glcapabilities.setSampleBuffers(true);
+        
         final GLCanvas glcanvas = new GLCanvas( glcapabilities ) {
 
             @Override
@@ -52,6 +56,7 @@ public class Genoscope {
             
             @Override
             public void init( GLAutoDrawable glautodrawable ) {
+                GLRenderer.init(glautodrawable.getGL().getGL2());
             }
             
             @Override
@@ -68,6 +73,9 @@ public class Genoscope {
         glcanvas.addMouseListener(a);
         GLRenderer.setRenderer(a);
         a.addVisualizer(new Visualizer(300, 80));
+        a.addVisualizer(new Visualizer(200, 300));
+        a.addVisualizer(new Visualizer(100, 300));
+        a.addVisualizer(new Visualizer(100, 50));
         GenoscopeApp f=new GenoscopeApp();
      
         f.setVisible(true);
