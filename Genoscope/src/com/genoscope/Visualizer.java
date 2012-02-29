@@ -73,10 +73,11 @@ class Visualizer {
         System.out.println("redraw");
         gl.glLoadIdentity();
         gl.glBegin( GL2.GL_QUADS );
-        gl.glColor3f( 1, 0, 0 );
+        gl.glColor4f( 1, 0, 0,1 );
         gl.glVertex2f( 0, 0 );
-        gl.glColor4f( 0, 1, 0,0.8f );
+        gl.glColor4f( 0, 1, 0,1 );
         gl.glVertex2f( WIDTH/2, HEIGHT/2 );
+        gl.glColor4f( 0, 1, 0,0.8f);
         gl.glVertex2f( WIDTH, 0 );
         gl.glColor4f( 0, 0, 1,1 );
         gl.glVertex2f( WIDTH / 2, HEIGHT );
@@ -92,11 +93,12 @@ class Visualizer {
         //throw new UnsupportedOperationException("Not yet implemented");
          
         gl.glEnable(GL.GL_TEXTURE_2D);
-        //gl.glUseProgram(0);
+        gl.glUseProgram(0);
         
-        //gl.glRasterPos3f(10,300,0); 
-        //gl.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, buffer); 
+        gl.glRasterPos3f(10,300,0); 
+        gl.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, buffer); 
                 
+        gl.glUseProgram(GLRenderer.shaderprogram);
         gl.glUniform1i(GLRenderer.imgUniform, 0);
         gl.glUniform2f(GLRenderer.sizeUniform, WIDTH,HEIGHT);
         
@@ -104,7 +106,7 @@ class Visualizer {
         gl.glBindTexture(GL.GL_TEXTURE_2D,textId);
         gl.glUseProgram(GLRenderer.shaderprogram);
         
-        gl.glColor3f( 1, 1, 1 );
+        //gl.glColor4f( 0, 0, 0 ,0.5f);
         gl.glLoadIdentity();
         gl.glBegin( GL2.GL_QUADS );
         gl.glTexCoord2f( 0, 0 );
