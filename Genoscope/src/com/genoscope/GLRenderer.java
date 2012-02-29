@@ -77,7 +77,7 @@ public class GLRenderer {
     
     protected static void setup( GL2 gl2, int width, int height ) {
         //System.out.println("oldu" + width+"  "+height);
-        gl2.glClearColor (0.0f, 0.0f, 0.0f, 0.0f);
+        gl2.glClearColor (1.0f, 1.0f, 1.0f, 0.0f);
         gl2.glEnable(GL2.GL_LINE_SMOOTH);
         gl2.glEnable(GL2.GL_MULTISAMPLE);
         gl2.glEnable(GL2.GL_POLYGON_SMOOTH);
