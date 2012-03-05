@@ -9,7 +9,7 @@ package com.genoscope.types;
  * @author Ahmet Kerim SENOL
  */
 public class Cytoband extends Feature{
-    int length;
+    protected int length;
 
     public Cytoband(int length) {
         this.length = length;
