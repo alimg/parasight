@@ -4,10 +4,15 @@
  */
 package com.genoscope.reader;
 
+import com.genoscope.types.Chromosome;
+
 /**
  *
  * @author Furkan Mustafa Akdemir
  */
-abstract public class BasicAnnotationFormat {
+abstract public class BasicFormat {
+	protected Chromosome Chr;
 	
+	//
+	abstract public Chromosome readFile(String path);
 }

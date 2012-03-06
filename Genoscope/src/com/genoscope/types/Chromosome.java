@@ -14,7 +14,8 @@ public class Chromosome {
     private int length;
     private int chrNo;
     private String name;
-    ArrayList<Cytoband> cytobands;
+    private ArrayList<Cytoband> cytobands;
+	private ArrayList<NormalFeature> features;
 
     public Chromosome(int length, int chrNo, String name, ArrayList<Cytoband> cytobands) {
         this.length = length;
@@ -22,6 +23,10 @@ public class Chromosome {
         this.name = name;
         this.cytobands = cytobands;
     }
+
+	public Chromosome() {
+		throw new UnsupportedOperationException("Not yet implemented");
+	}
 
     public int getChrNo() {
         return chrNo;
