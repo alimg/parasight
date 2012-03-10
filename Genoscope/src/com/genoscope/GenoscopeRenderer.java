@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL20;
 public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
     public final static int EDIT_MODE=1;
     public final static int NAVIGATE_MODE=0;
+
     private int horizonalGap=15;//pixels
     private int verticalGap=15;//pixels
     private ArrayList<Visualizer> clients= new ArrayList<Visualizer>();
@@ -87,17 +88,21 @@ public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
         System.out.println("x,y "+me.getX()+" "+me.getY());
     }
     
-    @Override
-    public void mouseMoved(MouseEvent me) {
-        System.out.println("x,y "+me.getX()+" "+me.getY());
-        MPX=me.getX();
-        MPY=me.getY();
+    void mouseMove(int x, int y) {
+        MPX=x;
+        MPY=y;
         
         
         for(Visualizer v: clients)
             v.setHighlight(intersect(v,MPX,MPY));
         GLRenderer.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
+    }
+    @Override
+    public void mouseMoved(MouseEvent me) {
+        System.out.println("x,y "+me.getX()+" "+me.getY()); 
+        mouseMove(me.getX(),MPY=me.getY() );
+
     }
 
     @Override

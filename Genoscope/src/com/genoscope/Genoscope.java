@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Controllers;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.*;
@@ -27,6 +28,7 @@ public class Genoscope {
      */
     static boolean ok=false;
     public static void main(String[] args) {
+        //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
         final GenoscopeRenderer a=new GenoscopeRenderer();
         
         GLRenderer.setRenderer(a);
@@ -70,6 +72,7 @@ public class Genoscope {
             
             
         };
+        
         c.addMouseListener(a);
         c.addMouseMotionListener(a);
         f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
@@ -79,8 +82,6 @@ public class Genoscope {
         
        try {
             Display.setParent(c);
-            Mouse.destroy();
-            Keyboard.destroy();
             
             Display.setVSyncEnabled(true);
 
@@ -100,7 +101,7 @@ public class Genoscope {
             });
 
             
-            renderThread=new RendererThread();
+            renderThread=new RendererThread(a);
             renderThread.start();
             
         } catch (LWJGLException e1) {
