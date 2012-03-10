@@ -4,11 +4,12 @@
  */
 package com.genoscope;
 
-import javax.media.opengl.GL2;
-
-import com.jogamp.opengl.util.GLBuffers;
 import java.nio.ByteBuffer;
-import javax.media.opengl.GL;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL20;
 
 /**
  *
@@ -16,72 +17,80 @@ import javax.media.opengl.GL;
  */
 class Visualizer {
     
-    int WIDTH;
-    int HEIGHT;
-    ByteBuffer buffer;
-    int textId;
-    int []texts=null;
+    private int width;
+    private int height;
+    private ByteBuffer buffer;
+    private int textId;
+    private IntBuffer texts=null;
     //private int []matrix=new int[16]; //position&orientation
     
     boolean updateNeeded=true;
+    
+    private int posX;
+    private int posY;
+    private boolean higlighted;
+
+
+    
     public Visualizer(int w,int h)
     {
         setSize(w, h);
     }
     public void setSize(int w,int h)
     {
-        WIDTH=w;
-        HEIGHT=h;
-        buffer = ByteBuffer.allocateDirect((WIDTH + 1)* (HEIGHT) * 4 - 1); 
+        width=w;
+        height=h;
+        buffer = ByteBuffer.allocateDirect((width + 1)* (height) * 4 - 1); 
     }
     
-    final void updateBuffer(GL2 gl)
+    final void updateBuffer()
     {
         updateNeeded=false;//
-        gl.glUseProgram(0);
-        draw(gl);
+        GL20.glUseProgram(0);
+        draw();
         
-        gl.glEnable(GL.GL_TEXTURE_2D);
-        gl.glPixelStorei(GL.GL_PACK_ALIGNMENT, 1); 
-        gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, 1); 
-        gl.glReadPixels(0,0, WIDTH, HEIGHT, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE, buffer); 
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1); 
+        GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1); 
+        GL11.glReadPixels(0,GLRenderer.getHeight()-height, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+        
         if(texts!=null)
-            gl.glDeleteTextures(WIDTH, texts, textId);
-        texts=new int [1];
-        gl.glGenTextures(1,texts , 0);
-        textId=texts[0];
+            GL11.glDeleteTextures(texts);
+        else texts=createIntBuffer(1);
+        GL11.glGenTextures(texts);
+        textId=texts.get(0);
         
-        gl.glBindTexture(GL.GL_TEXTURE_2D,textId);
-        gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-        gl.glTexParameteri (GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
-        gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
-        gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_LINEAR);
-        gl.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL2.GL_RGBA, WIDTH,
-                HEIGHT, 0, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE,buffer);
-        gl.glBindTexture(GL.GL_TEXTURE_2D,textId);
-        System.out.println("textId"+textId);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,textId);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+        GL11.glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
+        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+        GL11.glTexImage2D(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGBA, width,
+                height, 0, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE,buffer);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,textId);
+        System.out.println("textId "+textId);
         
     }
     /**
      * Called when update needed
      * @param gl 
      */
-    public void draw(GL2 gl)
+    public void draw()
     {
         
-        gl.glDisable(GL.GL_TEXTURE_2D);
-        System.out.println("redraw");
-        gl.glLoadIdentity();
-        gl.glBegin( GL2.GL_QUADS );
-        gl.glColor4f( 1, 0, 0,1 );
-        gl.glVertex2f( 0, 0 );
-        gl.glColor4f( 0, 1, 0,1 );
-        gl.glVertex2f( WIDTH/2, HEIGHT/2 );
-        gl.glColor4f( 0, 1, 0,0.8f);
-        gl.glVertex2f( WIDTH, 0 );
-        gl.glColor4f( 0, 0, 1,1 );
-        gl.glVertex2f( WIDTH / 2, HEIGHT );
-        gl.glEnd();
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        System.out.println("buffer update");
+        GL11.glLoadIdentity();
+        GL11.glBegin( GL11.GL_QUADS );
+        GL11.glColor4f( 1, 0, 0,1 );
+        GL11.glVertex2f( 0, 0 );
+        GL11.glColor4f( 0, 1, 0,1 );
+        GL11.glVertex2f( width/2, height/2 );
+        GL11.glColor4f( 0, 1, 0,0.8f);
+        GL11.glVertex2f( width, 0 );
+        GL11.glColor4f( 0, 0, 1,1 );
+        GL11.glVertex2f( width / 2, height );
+        GL11.glEnd();
     }
     
     boolean isBufferUpToDate() { //should have default modifier
@@ -89,35 +98,71 @@ class Visualizer {
         return !updateNeeded;
     }
 
-    final void drawBuffered(GL2 gl) {
+    final void drawBuffered() {
         //throw new UnsupportedOperationException("Not yet implemented");
          
-        gl.glEnable(GL.GL_TEXTURE_2D);
-        gl.glUseProgram(0);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL20.glUseProgram(0);
         
-        gl.glRasterPos3f(10,300,0); 
-        gl.glDrawPixels(WIDTH, HEIGHT, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, buffer); 
+        //GL11.glRasterPos3f(10,500,0); 
+        //GL11.glDrawPixels(width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer); 
                 
-        gl.glUseProgram(GLRenderer.shaderprogram);
-        gl.glUniform1i(GLRenderer.imgUniform, 0);
-        gl.glUniform2f(GLRenderer.sizeUniform, WIDTH,HEIGHT);
+        GL20.glUseProgram(GLRenderer.shaderprogram);
+        GL20.glUniform1i(GLRenderer.imgUniform, 0);
+        GL20.glUniform2f(GLRenderer.sizeUniform, width,height);
         
-        gl.glActiveTexture(GL2.GL_TEXTURE0);
-        gl.glBindTexture(GL.GL_TEXTURE_2D,textId);
-        gl.glUseProgram(GLRenderer.shaderprogram);
+        GL13.glActiveTexture(GL13.GL_TEXTURE0);
+        GL11.glBindTexture(GL11.GL_TEXTURE_2D,textId);
+        GL20.glUseProgram(GLRenderer.shaderprogram);
         
         //gl.glColor4f( 0, 0, 0 ,0.5f);
-        gl.glLoadIdentity();
-        gl.glBegin( GL2.GL_QUADS );
-        gl.glTexCoord2f( 0, 0 );
-        gl.glVertex3f( 0, HEIGHT,0 );
-        gl.glTexCoord2f( 0, -1 );
-        gl.glVertex3f( 0, 0,0 );
-        gl.glTexCoord2f( 1, -1 );
-        gl.glVertex3f( WIDTH, 0,0 );
-        gl.glTexCoord2f( 1, 0 );
-        gl.glVertex3f( WIDTH, HEIGHT,0 );
-        gl.glEnd();
+        //gl.glLoadIdentity();
+        GL11.glBegin( GL11.GL_QUADS );
+        GL11.glTexCoord2f( 0, 0 );
+        GL11.glVertex3f( 0, height,0 );
+        GL11.glTexCoord2f( 0, -1 );
+        GL11.glVertex3f( 0, 0,0 );
+        GL11.glTexCoord2f( 1, -1 );
+        GL11.glVertex3f( width, 0,0 );
+        GL11.glTexCoord2f( 1, 0 );
+        GL11.glVertex3f( width, height,0 );
+        GL11.glEnd();
+    }
+
+    public int getWidht() {
+        return width;
+    }
+    public int getHeight(){
+        return height;
+    }
+
+    final void setPosition(int x, int y) {
+        posX=x;
+        posY=y;
+    }
+    final int getX()
+    {
+        return posX;
+    }
+    final int getY()
+    {
+        return posY;
+    }
+
+    /**
+     * is selected
+     */
+    final void setHighlight(boolean intersect) {
+        higlighted=intersect;
+    }
+    final boolean isHiglighted() {
+        return higlighted;
     }
     
+    final protected IntBuffer createIntBuffer(int size) {
+      ByteBuffer temp = ByteBuffer.allocateDirect(4 * size);
+      temp.order(ByteOrder.nativeOrder());
+
+      return temp.asIntBuffer();
+    }  
 }
