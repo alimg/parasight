@@ -54,8 +54,8 @@ public class Genoscope {
             @Override
             public void paint(Graphics g) {
                 //super.paint(g);
-				if(renderThread==null)
-					return;
+		if(renderThread==null)
+                    return;
                 synchronized(renderThread)
                 {
                     renderThread.notifyAll();
