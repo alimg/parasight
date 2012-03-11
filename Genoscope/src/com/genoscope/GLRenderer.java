@@ -92,9 +92,9 @@ public class GLRenderer {
         width=w;
         height=h;
         //System.out.println("oldu" + width+"  "+height);
-        GL11.glClearColor (1.0f, 1.0f, 1.0f, 0.0f);
+        GL11.glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        GL11.glEnable(GL13.GL_MULTISAMPLE);
+        //GL11.glEnable(GL13.GL_MULTISAMPLE);
         GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
         //GL11.glBlendFunc (GL11.GL_SRC_ALPHA_SATURATE, GL11.GL_ONE);
@@ -126,6 +126,9 @@ public class GLRenderer {
     }
 
     protected static void render( ) {
+		
+		if(width==0 || height==0)
+			return;
         //System.out.print("oldu\n");
         GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
         if(renderer!=null)

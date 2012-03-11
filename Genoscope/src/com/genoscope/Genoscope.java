@@ -54,6 +54,8 @@ public class Genoscope {
             @Override
             public void paint(Graphics g) {
                 //super.paint(g);
+				if(renderThread==null)
+					return;
                 synchronized(renderThread)
                 {
                     renderThread.notifyAll();
@@ -85,7 +87,7 @@ public class Genoscope {
                 @Override
                 public void componentResized(ComponentEvent e)
                 {
-                    //System.out.println(" resize");
+                    System.out.println(" resize "+c.getSize());
                     renderThread.setSize(c.getSize());
                     synchronized(renderThread)
                     {
@@ -96,6 +98,7 @@ public class Genoscope {
 
             
             renderThread=new RendererThread(a);
+            renderThread.setSize(c.getSize());
             renderThread.start();
             
         } catch (LWJGLException e1) {
