@@ -69,8 +69,6 @@ public class Genoscope {
             
         };
         
-        c.addMouseListener(a);
-        c.addMouseMotionListener(a);
         f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
         f.OpenGLPanel.add(c);
