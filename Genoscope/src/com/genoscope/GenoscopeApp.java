@@ -192,7 +192,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(1, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
