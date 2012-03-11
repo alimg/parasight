@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL20;
  * This class handles OpenGL and input events for Visualizer classes.
  * @author alim
  */
-public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
+public class GenoscopeRenderer {
     public final static int EDIT_MODE=1;
     public final static int NAVIGATE_MODE=0;
 
@@ -52,41 +52,6 @@ public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
         clients.add(v);
     }
     
-    @Override
-    public void mouseClicked(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void mousePressed(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-        System.out.println("x,y "+me.getX()+" "+me.getY());
-        switch(mMode)
-        {
-            case NAVIGATE_MODE:
-                
-                break;
-            case EDIT_MODE:
-                break;
-            default:
-                break;
-        }
-    }
-    @Override
-    public void mouseDragged(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-        System.out.println("x,y "+me.getX()+" "+me.getY());
-    }
     
     void mouseMove(int x, int y) {
         MPX=x;
@@ -98,17 +63,7 @@ public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
         GLRenderer.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
     }
-    @Override
-    public void mouseMoved(MouseEvent me) {
-        System.out.println("x,y "+me.getX()+" "+me.getY()); 
-        mouseMove(me.getX(),MPY=me.getY() );
 
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent me) {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
     
 
     private boolean updated=false;
@@ -152,18 +107,6 @@ public class GenoscopeRenderer implements MouseListener,MouseMotionListener {
                 GL11.glPopMatrix();
             }
         }
-        /*
-        gl.glUseProgram(0);
-        gl.glPointSize(4);
-        gl.glColor4f(0,0,0,1);
-        gl.glDisable(GL.GL_TEXTURE_2D);
-        gl.glPushMatrix();
-        gl.glBegin(GL.GL_POINTS);
-        gl.glVertex2f(MPX, MPY);
-        gl.glEnd();
-        gl.glPopMatrix();
-        */
-
     }
 
     private boolean intersect(Visualizer v, int x, int y) {
