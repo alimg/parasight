@@ -3,64 +3,77 @@
  * and open the template in the editor.
  */
 package com.genoscope;
+import java.awt.Canvas;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.glu.GLU;
 /**
  *
  * @author alim
  */
 public class GLRenderer {
-    static GenoscopeRenderer renderer=null;
+    private static GenoscopeRenderer renderer=null;
+    private static Canvas glcanvas;
     
     static int imgUniform;
     static int sizeUniform;
     static int shaderprogram;
+    static private int width;
+    static private int height;
+
+    public static int getHeight() {
+        return height;
+    }
+
+    public static int getWidth() {
+        return width;
+    }
     
-    protected static void init(GL2 gl) //shader initialization
+    protected static void init() //shader initialization
     {  
         System.out.println(new File(".").getAbsoluteFile());
         try {
             
-            int i=gl.glGetError();
-            if(i!=GL2.GL_NO_ERROR)
+            int i=GL11.glGetError();
+            if(i!=GL11.GL_NO_ERROR)
                 System.out.println(" error "+i);
             
-            int v = gl.glCreateShader(GL2.GL_VERTEX_SHADER);
+            int v = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
             BufferedReader brv = new BufferedReader(new FileReader("resources/vertexshader.glsl"));
             String vsrc = "";
             String line;
             while ((line=brv.readLine()) != null) {
             vsrc += line + "\n";
             }
-            gl.glShaderSource(v, 1, new String[] {vsrc}, (int[])null,0);
-            gl.glCompileShader(v);
+            GL20.glShaderSource(v, vsrc );
+            GL20.glCompileShader(v);
             
-            int f = gl.glCreateShader(GL2.GL_FRAGMENT_SHADER);
+            int f = GL20.glCreateShader(GL20.GL_FRAGMENT_SHADER);
             BufferedReader brf = new BufferedReader(new FileReader("resources/fragmentshader.glsl"));
             String fsrc = "";
             while ((line=brf.readLine()) != null) {
             fsrc += line + "\n";
             }
-            gl.glShaderSource(f, 1, new String[] {fsrc}, (int[])null,0);
-            gl.glCompileShader(f);
-            int shaderprogram = gl.glCreateProgram();
+            GL20.glShaderSource(f, fsrc);
+            GL20.glCompileShader(f);
+            int shaderprogram = GL20.glCreateProgram();
             System.out.println(" s "+shaderprogram);
-            gl.glAttachShader(shaderprogram, v);
-            gl.glAttachShader(shaderprogram, f);
-            gl.glLinkProgram(shaderprogram);
-            gl.glValidateProgram(shaderprogram);
+            GL20.glAttachShader(shaderprogram, v);
+            GL20.glAttachShader(shaderprogram, f);
+            GL20.glLinkProgram(shaderprogram);
+            GL20.glValidateProgram(shaderprogram);
             
-            gl.glUseProgram(shaderprogram);
-            i=gl.glGetError();
-            if(i!=GL2.GL_NO_ERROR)
+            GL20.glUseProgram(shaderprogram);
+            i=GL11.glGetError();
+            if(i!=GL11.GL_NO_ERROR)
                 System.out.println(" error "+i);
-            imgUniform = gl.glGetUniformLocation(shaderprogram, "baseImage");
-            sizeUniform = gl.glGetUniformLocation(shaderprogram, "baseSize");
+            imgUniform = GL20.glGetUniformLocation(shaderprogram, "baseImage");
+            sizeUniform = GL20.glGetUniformLocation(shaderprogram, "baseSize");
             GLRenderer.shaderprogram=shaderprogram;
             System.out.println("uniform "+imgUniform);
             
@@ -75,47 +88,60 @@ public class GLRenderer {
         }
     }
     
-    protected static void setup( GL2 gl2, int width, int height ) {
+    protected static void setup( int w, int h ) {
+        width=w;
+        height=h;
         //System.out.println("oldu" + width+"  "+height);
-        gl2.glClearColor (1.0f, 1.0f, 1.0f, 0.0f);
-        gl2.glEnable(GL2.GL_LINE_SMOOTH);
-        gl2.glEnable(GL2.GL_MULTISAMPLE);
-        gl2.glEnable(GL2.GL_POLYGON_SMOOTH);
-        gl2.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
-        //gl2.glBlendFunc (GL2.GL_SRC_ALPHA_SATURATE, GL2.GL_ONE);
-        gl2.glEnable(GL2.GL_BLEND);
-        gl2.glEnable(GL2.GL_LINE_SMOOTH); 
+        GL11.glClearColor (1.0f, 1.0f, 1.0f, 0.0f);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glEnable(GL13.GL_MULTISAMPLE);
+        GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        //GL11.glBlendFunc (GL11.GL_SRC_ALPHA_SATURATE, GL11.GL_ONE);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH); 
 
-        gl2.glHint(GL2.GL_LINE_SMOOTH_HINT,GL2.GL_NICEST);
-        gl2.glHint(GL2.GL_POLYGON_SMOOTH_HINT,GL2.GL_NICEST);
-        gl2.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT,GL2.GL_NICEST);
-        gl2.glMatrixMode( GL2.GL_PROJECTION );
-        gl2.glLoadIdentity();
+        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT,GL11.GL_NICEST);
+        GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT,GL11.GL_NICEST);
+        GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT,GL11.GL_NICEST);
+        GL11.glMatrixMode( GL11.GL_PROJECTION );
+        GL11.glLoadIdentity();
 
         // coordinate system origin at lower left with width and height same as the window
-        GLU glu = new GLU();
-        glu.gluOrtho2D( 0.0f, width, 0.0f, height );
+        //GLU glu = new GLU();
+        //glu.gluOrtho2D( 0.0f, width, 0.0f, height );
+        GLU.gluOrtho2D( 0.0f, width, height,0.0f );
 
-        gl2.glMatrixMode( GL2.GL_MODELVIEW );
-        gl2.glLoadIdentity();
+        GL11.glMatrixMode( GL11.GL_MODELVIEW );
+        GL11.glLoadIdentity();
 
-        gl2.glViewport( 0, 0, width, height );
-        gl2.glHint(GL2.GL_PERSPECTIVE_CORRECTION_HINT, GL2.GL_NICEST);
+        GL11.glViewport( 0, 0, width, height );
+        GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
         
-        gl2.glClear( GL.GL_COLOR_BUFFER_BIT );
+        GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
+        
+        
         if(renderer!=null)
-            renderer.draw(gl2);
+            renderer.draw();
     }
 
-    protected static void render( GL2 gl2, int width, int height ) {
+    protected static void render( ) {
         //System.out.print("oldu\n");
-        gl2.glClear( GL.GL_COLOR_BUFFER_BIT );
+        GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
         if(renderer!=null)
-            renderer.draw(gl2);
+            renderer.draw();
     }
 
     static void setRenderer(GenoscopeRenderer r) {
         renderer=r;
+    }
+
+    static void requestPaint() {
+        glcanvas.repaint();
+    }
+
+    static void setGLCanvas(Canvas c) {
+        glcanvas=c;
     }
     
 }

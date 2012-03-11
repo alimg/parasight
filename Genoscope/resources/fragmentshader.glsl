@@ -53,10 +53,11 @@ vec4 applyFXAA(vec2 fragCoord, sampler2D tex)
 
 void main()
 {
-	
-	gl_FragColor=applyFXAA(vec2(gl_TexCoord[0]),baseImage);
+	//anti-aliasing
+	//gl_FragColor=vec4(1.0, 0.0, 0.0, 1.0);
+    gl_FragColor=applyFXAA(vec2(gl_TexCoord[0]),baseImage);
 
     //Gamma correction
-    //gl_FragColor.rgb = pow(s.rgb, vec3(1.0 / 0.56));
+    gl_FragColor.rgb = pow(gl_FragColor.rgb, vec3(1.0 / 0.36));
     
 }

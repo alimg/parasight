@@ -7,7 +7,6 @@ package com.genoscope;
 import com.genoscope.reader.Reader;
 import java.awt.Dimension;
 import java.io.File;
-import javax.media.opengl.awt.GLCanvas;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;

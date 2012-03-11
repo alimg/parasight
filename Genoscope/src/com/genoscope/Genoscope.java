@@ -3,16 +3,17 @@
  */
 package com.genoscope;
 
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import javax.media.nativewindow.Capabilities;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLProfile;
-import javax.media.opengl.awt.GLCanvas;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Controllers;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.*;
 
 /**
  *
@@ -20,68 +21,94 @@ import javax.media.opengl.awt.GLCanvas;
  */
 public class Genoscope {
 
-    static {
-        // setting this true causes window events not to get sent on Linux if you run from inside Eclipse
-        GLProfile.initSingleton( false );
-    }
-
+    private static Object renderLocker=new Object();
+    private static RendererThread renderThread;
     /**
      * @param args the command line arguments
      */
+    static boolean ok=false;
     public static void main(String[] args) {
+        //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
+        final GenoscopeRenderer a=new GenoscopeRenderer();
         
-        GLProfile glprofile = GLProfile.getDefault();
-        GLCapabilities glcapabilities = new GLCapabilities( glprofile );
-        glcapabilities.setNumSamples(4);
-        glcapabilities.setSampleBuffers(true);
-        
-        final GLCanvas glcanvas = new GLCanvas( glcapabilities ) {
-
-            @Override
-            public Dimension getSize() {
-                return new Dimension(0,0);
-                //return super.getSize();
-            } 
-            
-        };
-        
-        glcanvas.setPreferredSize(new Dimension(0,0));
-
-        glcanvas.addGLEventListener( new GLEventListener() {
-            
-            @Override
-            public void reshape( GLAutoDrawable glautodrawable, int x, int y, int width, int height ) {
-                GLRenderer.setup( glautodrawable.getGL().getGL2(), width, height );
-            }
-            
-            @Override
-            public void init( GLAutoDrawable glautodrawable ) {
-                GLRenderer.init(glautodrawable.getGL().getGL2());
-            }
-            
-            @Override
-            public void dispose( GLAutoDrawable glautodrawable ) {
-            }
-            
-            @Override
-            public void display( GLAutoDrawable glautodrawable ) {
-                GLRenderer.render( glautodrawable.getGL().getGL2(), glautodrawable.getWidth(), glautodrawable.getHeight() );
-            }
-            
-        }); 
-        GenoscopeRenderer a=new GenoscopeRenderer();
-        glcanvas.addMouseListener(a);
         GLRenderer.setRenderer(a);
         a.addVisualizer(new Visualizer(300, 80));
         a.addVisualizer(new Visualizer(200, 300));
         a.addVisualizer(new Visualizer(100, 300));
         a.addVisualizer(new Visualizer(100, 50));
         GenoscopeApp f=new GenoscopeApp();
-     
         f.setVisible(true);
-        f.OpenGLPanel.add(glcanvas);
+        //System.out.println("Trying LWJGL");
+        final Canvas c=new Canvas() {
+            @Override
+            public Dimension getSize() {
+                //return new Dimension(0,0);
+                return super.getSize();
+            }
+
+            @Override
+            public void repaint() {
+                //super.repaint();
+                synchronized(renderThread)
+                {
+                    renderThread.notifyAll();
+                }
+            }
+
+            @Override
+            public void paint(Graphics g) {
+                //super.paint(g);
+                synchronized(renderThread)
+                {
+                    renderThread.notifyAll();
+                }
+            }
+
+            @Override
+            public void paintAll(Graphics g) {
+                //super.paintAll(g);
+            }
+
+            
+            
+        };
         
-        System.out.println("ends\n");
+        c.addMouseListener(a);
+        c.addMouseMotionListener(a);
+        f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
+        //f.OpenGLPanel.setLayout(new BorderLayout());
+        f.OpenGLPanel.add(c);
+        GLRenderer.setGLCanvas( c );
         
+       try {
+            Display.setParent(c);
+            
+            Display.setVSyncEnabled(true);
+
+            f.pack();
+
+            c.addComponentListener(new ComponentAdapter() {
+                @Override
+                public void componentResized(ComponentEvent e)
+                {
+                    //System.out.println(" resize");
+                    renderThread.setSize(c.getSize());
+                    synchronized(renderThread)
+                    {
+                        renderThread.notifyAll();
+                    }
+                }
+            });
+
+            
+            renderThread=new RendererThread(a);
+            renderThread.start();
+            
+        } catch (LWJGLException e1) {
+            e1.printStackTrace();
+        }
+
+        System.out.println("main returns");
+
     }
 }
