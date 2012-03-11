@@ -31,6 +31,12 @@ public class GenoscopeApp extends javax.swing.JFrame {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
+                if ("Windows".equals(info.getName())) {
+                    
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+                
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
@@ -69,7 +75,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         fileChooser = new javax.swing.JFileChooser();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
-        actions = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
@@ -84,6 +89,28 @@ public class GenoscopeApp extends javax.swing.JFrame {
         OpenGLPanel = new javax.swing.JPanel();
         verticalScroll = new javax.swing.JScrollBar();
         horizontalScroll = new javax.swing.JScrollBar();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JToolBar.Separator();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
+        jSeparator2 = new javax.swing.JToolBar.Separator();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
+        jButton13 = new javax.swing.JButton();
+        jButton14 = new javax.swing.JButton();
+        jSeparator4 = new javax.swing.JToolBar.Separator();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
+        jSeparator5 = new javax.swing.JToolBar.Separator();
+        jButton19 = new javax.swing.JButton();
+        jButton17 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -113,23 +140,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         leftToolBar.setPreferredSize(new java.awt.Dimension(275, 286));
         leftToolBar.setLayout(new javax.swing.BoxLayout(leftToolBar, javax.swing.BoxLayout.Y_AXIS));
 
-        actions.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions"));
-        actions.setMaximumSize(new java.awt.Dimension(32767, 75));
-        actions.setMinimumSize(new java.awt.Dimension(0, 75));
-
-        javax.swing.GroupLayout actionsLayout = new javax.swing.GroupLayout(actions);
-        actions.setLayout(actionsLayout);
-        actionsLayout.setHorizontalGroup(
-            actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
-        );
-        actionsLayout.setVerticalGroup(
-            actionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 52, Short.MAX_VALUE)
-        );
-
-        leftToolBar.add(actions);
-
         viewControl.setBorder(javax.swing.BorderFactory.createTitledBorder("View Control"));
         viewControl.setMaximumSize(new java.awt.Dimension(32767, 100));
         viewControl.setMinimumSize(new java.awt.Dimension(0, 100));
@@ -140,7 +150,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         jButton3.setText("-");
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/magnifier.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/magnifier.png"))); // NOI18N
         jButton4.setText("Zoom Tool");
         jButton4.setToolTipText("Select an area to zoom at");
 
@@ -167,7 +177,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         viewControlLayout.setVerticalGroup(
@@ -183,7 +193,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(1, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -214,24 +224,152 @@ public class GenoscopeApp extends javax.swing.JFrame {
         horizontalScroll.setOrientation(javax.swing.JScrollBar.HORIZONTAL);
         drawingPanel.add(horizontalScroll);
 
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setName("");
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/file_yellow_empty.png"))); // NOI18N
+        jButton1.setToolTipText("New Data");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/directory_open.png"))); // NOI18N
+        jButton5.setToolTipText("Open Data");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton5);
+
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/floppy_35inch_blue.png"))); // NOI18N
+        jButton6.setToolTipText("Save Data");
+        jButton6.setFocusable(false);
+        jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton6);
+        jToolBar1.add(jSeparator1);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/scissors.png"))); // NOI18N
+        jButton7.setToolTipText("Cut");
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton7);
+
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/copy.png"))); // NOI18N
+        jButton8.setToolTipText("Copy");
+        jButton8.setFocusable(false);
+        jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton8);
+
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/paste.png"))); // NOI18N
+        jButton9.setToolTipText("Paste");
+        jButton9.setFocusable(false);
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton9);
+
+        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/delete_red.png"))); // NOI18N
+        jButton10.setToolTipText("Delete");
+        jButton10.setFocusable(false);
+        jButton10.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton10);
+        jToolBar1.add(jSeparator2);
+
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/undo_blue.png"))); // NOI18N
+        jButton11.setToolTipText("Undo");
+        jButton11.setFocusable(false);
+        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton11);
+
+        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/redo_blue.png"))); // NOI18N
+        jButton12.setToolTipText("Redo");
+        jButton12.setFocusable(false);
+        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton12);
+        jToolBar1.add(jSeparator3);
+
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/magnifier_plus_blue.png"))); // NOI18N
+        jButton13.setToolTipText("Zoom In");
+        jButton13.setFocusable(false);
+        jButton13.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton13);
+
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/magnifier_minus_blue.png"))); // NOI18N
+        jButton14.setToolTipText("Zoom Out");
+        jButton14.setFocusable(false);
+        jButton14.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton14.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton14);
+        jToolBar1.add(jSeparator4);
+
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/select_all.png"))); // NOI18N
+        jButton15.setToolTipText("Select All");
+        jButton15.setFocusable(false);
+        jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton15);
+
+        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/select_none.png"))); // NOI18N
+        jButton16.setToolTipText("Select None");
+        jButton16.setFocusable(false);
+        jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton16.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton16);
+        jToolBar1.add(jSeparator5);
+
+        jButton19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/tools.png"))); // NOI18N
+        jButton19.setToolTipText("Settings");
+        jButton19.setFocusable(false);
+        jButton19.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton19.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton19);
+
+        jButton17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/info.png"))); // NOI18N
+        jButton17.setToolTipText("About");
+        jButton17.setFocusable(false);
+        jButton17.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton17.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton17);
+
+        jButton18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/exit.png"))); // NOI18N
+        jButton18.setToolTipText("Exit");
+        jButton18.setFocusable(false);
+        jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton18);
+
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+            .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(leftToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 505, Short.MAX_VALUE)
+                .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -333,6 +471,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
 	}//GEN-LAST:event_openMenuItemActionPerformed
 
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -380,7 +522,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel OpenGLContainer;
     public javax.swing.JPanel OpenGLPanel;
     private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JPanel actions;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -393,12 +534,34 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JMenu helpMenu;
     private javax.swing.JScrollBar horizontalScroll;
     private javax.swing.JScrollPane insertObject;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JToolBar.Separator jSeparator4;
+    private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;

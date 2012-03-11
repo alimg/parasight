@@ -69,7 +69,8 @@ public class RendererThread extends Thread {
                     int y=Mouse.getY();
                     //System.out.println("mouse "+x+" "+y);
                     for(int i=0;i<Mouse.getButtonCount();i++)
-                        System.out.println("mouse "+Mouse.isButtonDown(i));
+                        if(Mouse.isButtonDown(i))
+                            System.out.println("mouse " +i+" "+Mouse.getEventButtonState());
                     
                     renderer.mouseMove(x,GLRenderer.getHeight()-y);
                 }

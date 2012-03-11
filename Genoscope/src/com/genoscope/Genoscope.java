@@ -3,17 +3,13 @@
  */
 package com.genoscope;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Controllers;
-import org.lwjgl.input.Mouse;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.Display;
 
 /**
  *
@@ -73,14 +69,12 @@ public class Genoscope {
             
         };
         
-        c.addMouseListener(a);
-        c.addMouseMotionListener(a);
         f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
         f.OpenGLPanel.add(c);
         GLRenderer.setGLCanvas( c );
         
-       try {
+        try {
             Display.setParent(c);
             
             Display.setVSyncEnabled(true);
