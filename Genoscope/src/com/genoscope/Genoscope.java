@@ -3,6 +3,10 @@
  */
 package com.genoscope;
 
+import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.RendererThread;
+import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,8 +31,8 @@ public class Genoscope {
         //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
         final GenoscopeRenderer a=new GenoscopeRenderer();
         
-        GLRenderer.setRenderer(a);
-        a.addVisualizer(new Visualizer(300, 80));
+        GLHandler.setRenderer(a);
+        a.addVisualizer(new Visualizer(400, 80));
         a.addVisualizer(new Visualizer(200, 300));
         a.addVisualizer(new Visualizer(100, 300));
         a.addVisualizer(new Visualizer(100, 50));
@@ -74,8 +78,8 @@ public class Genoscope {
         f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
         f.OpenGLPanel.add(c);
-        GLRenderer.setGLCanvas( c );
-        
+        GLHandler.setGLCanvas( c );
+        //c.setFocusable(false);
         try {
             Display.setParent(c);
             
@@ -87,7 +91,7 @@ public class Genoscope {
                 @Override
                 public void componentResized(ComponentEvent e)
                 {
-                    System.out.println(" resize "+c.getSize());
+                    //System.out.println(" resize "+c.getSize());
                     renderThread.setSize(c.getSize());
                     synchronized(renderThread)
                     {

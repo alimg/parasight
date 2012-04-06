@@ -2,20 +2,22 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.genoscope;
+package com.genoscope.renderer.visualizers;
 
+import com.genoscope.renderer.GLHandler;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.glu.GLU;
 
 /**
  *
  * @author alim
  */
-class Visualizer {
+public class Visualizer {
     
     private int width;
     private int height;
@@ -31,7 +33,6 @@ class Visualizer {
     private boolean higlighted;
 
 
-    
     public Visualizer(int w,int h)
     {
         setSize(w, h);
@@ -43,7 +44,44 @@ class Visualizer {
         buffer = ByteBuffer.allocateDirect((width + 1)* (height) * 4 - 1); 
     }
     
-    final void updateBuffer()
+    public int getWidht() {
+        return width;
+    }
+    public int getHeight(){
+        return height;
+    }
+
+    public void setPosition(int x, int y) {
+        posX=x;
+        posY=y;
+    }
+    public int getX()
+    {
+        return posX;
+    }
+    public int getY()
+    {
+        return posY;
+    }
+
+        
+    public boolean isBufferUpToDate() { //should have default modifier
+        //throw new UnsupportedOperationException("Not yet implemented");
+        return !updateNeeded;
+    }
+    
+    public final void initBuffer() {
+        GL11.glMatrixMode( GL11.GL_PROJECTION );
+        GL11.glLoadIdentity();
+        GL11.glViewport( 0, 0, width, height );
+        GLU.gluOrtho2D( 0.0f, width, height,0.0f );
+        GL11.glMatrixMode( GL11.GL_MODELVIEW );
+        GL11.glLoadIdentity();
+    }
+    
+
+    
+    public final void updateBuffer()
     {
         updateNeeded=false;//
         GL20.glUseProgram(0);
@@ -52,7 +90,7 @@ class Visualizer {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1); 
         GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1); 
-        GL11.glReadPixels(0,GLRenderer.getHeight()-height, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+        GL11.glReadPixels(0,0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
         
         if(texts!=null)
             GL11.glDeleteTextures(texts);
@@ -86,19 +124,15 @@ class Visualizer {
         GL11.glVertex2f( 0, 0 );
         GL11.glColor4f( 0, 1, 0,1 );
         GL11.glVertex2f( width/2, height/2 );
-        GL11.glColor4f( 0, 1, 0,0.8f);
+        GL11.glColor4f( 0, 1, 0,0.0f);
         GL11.glVertex2f( width, 0 );
         GL11.glColor4f( 0, 0, 1,1 );
         GL11.glVertex2f( width / 2, height );
         GL11.glEnd();
     }
-    
-    boolean isBufferUpToDate() { //should have default modifier
-        //throw new UnsupportedOperationException("Not yet implemented");
-        return !updateNeeded;
-    }
 
-    final void drawBuffered() {
+
+    public final void drawBuffered() {
         //throw new UnsupportedOperationException("Not yet implemented");
          
         GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -107,13 +141,13 @@ class Visualizer {
         //GL11.glRasterPos3f(10,500,0); 
         //GL11.glDrawPixels(width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer); 
                 
-        GL20.glUseProgram(GLRenderer.shaderprogram);
-        GL20.glUniform1i(GLRenderer.imgUniform, 0);
-        GL20.glUniform2f(GLRenderer.sizeUniform, width,height);
+        GL20.glUseProgram(GLHandler.shaderprogram);
+        GL20.glUniform1i(GLHandler.imgUniform, 0);
+        GL20.glUniform2f(GLHandler.sizeUniform, width,height);
         
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D,textId);
-        GL20.glUseProgram(GLRenderer.shaderprogram);
+        GL20.glUseProgram(GLHandler.shaderprogram);
         
         //gl.glColor4f( 0, 0, 0 ,0.5f);
         //gl.glLoadIdentity();
@@ -129,40 +163,21 @@ class Visualizer {
         GL11.glEnd();
     }
 
-    public int getWidht() {
-        return width;
-    }
-    public int getHeight(){
-        return height;
-    }
-
-    final void setPosition(int x, int y) {
-        posX=x;
-        posY=y;
-    }
-    final int getX()
-    {
-        return posX;
-    }
-    final int getY()
-    {
-        return posY;
-    }
-
     /**
      * is selected
      */
-    final void setHighlight(boolean intersect) {
+    public final void setHighlight(boolean intersect) {
         higlighted=intersect;
     }
-    final boolean isHiglighted() {
+    public final boolean isHiglighted() {
         return higlighted;
     }
     
-    final protected IntBuffer createIntBuffer(int size) {
+    protected final IntBuffer createIntBuffer(int size) {
       ByteBuffer temp = ByteBuffer.allocateDirect(4 * size);
       temp.order(ByteOrder.nativeOrder());
 
       return temp.asIntBuffer();
-    }  
+    }
+
 }

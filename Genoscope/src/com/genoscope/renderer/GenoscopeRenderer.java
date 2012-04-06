@@ -1,8 +1,8 @@
-package com.genoscope;
+package com.genoscope.renderer;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import com.genoscope.renderer.mouseactions.MouseActionHandler;
+import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.visualizers.Visualizer;
 import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
@@ -23,6 +23,11 @@ public class GenoscopeRenderer {
     
     private int MPX=0,MPY=0;
     
+    private MouseActionHandler mouseHandlers[]=new MouseActionHandler[5];
+    public GenoscopeRenderer()
+    {
+        
+    }
     /**
      * Arranges position of all clients 
      */
@@ -33,14 +38,14 @@ public class GenoscopeRenderer {
         int lineMax=0;
         for(Visualizer v: clients)
         {
-            if(x+v.getWidht()>GLRenderer.getWidth())
+            if(x+v.getWidht()>GLHandler.getWidth())
             {
                 y+=lineMax+verticalGap;
                 lineMax=0;
                 x=horizonalGap;
             }
             v.setPosition(x,y);
-            x+=v.getWidht();
+            x+=v.getWidht()+horizonalGap;
             if(lineMax<v.getHeight())
                 lineMax=v.getHeight();
                 
@@ -52,15 +57,24 @@ public class GenoscopeRenderer {
         clients.add(v);
     }
     
+    void mouseDown(int i)
+    {
+        System.out.println("down "+i);
+    }
     
-    void mouseMove(int x, int y) {
+    void mouseUp(int i)
+    {
+        System.out.println("up "+i);
+        
+    }
+    void mouseMove(int x, int y, int buttons) {
         MPX=x;
         MPY=y;
         
         
         for(Visualizer v: clients)
             v.setHighlight(intersect(v,MPX,MPY));
-        GLRenderer.requestPaint();
+        GLHandler.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
     }
 
@@ -68,7 +82,7 @@ public class GenoscopeRenderer {
 
     private boolean updated=false;
     void draw() {
-        //System.out.println("repaint");
+       
         if(!updated)
         {
             resetLayout();
@@ -78,10 +92,15 @@ public class GenoscopeRenderer {
         {
             if(! v.isBufferUpToDate())
             {
+                GL11.glPushMatrix();
+                v.initBuffer();
                 GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
                 v.updateBuffer();
+                GL11.glPopMatrix();
             }
         }
+        
+        GLHandler.setup();
         GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
         for(Visualizer v: clients)
         {
@@ -92,7 +111,7 @@ public class GenoscopeRenderer {
                 GL11.glTranslatef(v.getX(), v.getY(), 0);
                 v.drawBuffered();
                 if(v.isHiglighted())
-                {
+                {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
                     GL20.glUseProgram(0);
                     GL11.glColor4f(0,0,0,1);
                     GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -103,8 +122,10 @@ public class GenoscopeRenderer {
                     GL11.glVertex2f(v.getWidht(),v.getHeight());
                     GL11.glVertex2f(v.getWidht(), 0);
                     GL11.glEnd();
+                    //</editor-fold>
                 }
                 GL11.glPopMatrix();
+                
             }
         }
     }

@@ -1,30 +1,29 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * GLHandler.java
+ * Shader initialization, viewport setup etc.
  */
-package com.genoscope;
+package com.genoscope.renderer;
 import java.awt.Canvas;
 import java.io.*;
-import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.glu.GLU;
 /**
  *
  * @author alim
  */
-public class GLRenderer {
+public class GLHandler {
     private static GenoscopeRenderer renderer=null;
     private static Canvas glcanvas;
     
-    static int imgUniform;
-    static int sizeUniform;
-    static int shaderprogram;
+    static public int imgUniform;
+    static public int sizeUniform;
+    static public int shaderprogram;
     static private int width;
     static private int height;
+
 
     public static int getHeight() {
         return height;
@@ -34,7 +33,7 @@ public class GLRenderer {
         return width;
     }
     
-    protected static void init() //shader initialization
+    public static void init() //shader initialization
     {  
         System.out.println(new File(".").getAbsoluteFile());
         try {
@@ -74,23 +73,31 @@ public class GLRenderer {
                 System.out.println(" error "+i);
             imgUniform = GL20.glGetUniformLocation(shaderprogram, "baseImage");
             sizeUniform = GL20.glGetUniformLocation(shaderprogram, "baseSize");
-            GLRenderer.shaderprogram=shaderprogram;
+            GLHandler.shaderprogram=shaderprogram;
             System.out.println("uniform "+imgUniform);
             
         } catch (FileNotFoundException ex) {
            System.out.println("err:not found");
-            Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GLHandler.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
            System.out.println("err:io exception");
-            Logger.getLogger(GLRenderer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GLHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
            System.out.println("done loading shaders");
         }
     }
     
-    protected static void setup( int w, int h ) {
+    static void setup() {
+        
+        setup(width,height);
+    }
+    
+  
+    public static void setup( int w, int h ) {
         width=w;
         height=h;
+        if(width==0 || height==0)
+                return;
         //System.out.println("oldu" + width+"  "+height);
         GL11.glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
@@ -121,21 +128,22 @@ public class GLRenderer {
         GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
         
         
-        if(renderer!=null)
-            renderer.draw();
+        /*if(renderer!=null)
+            renderer.draw();*/
+        
     }
 
     protected static void render( ) {
 		
-		if(width==0 || height==0)
-			return;
+        if(width==0 || height==0)
+                return;
         //System.out.print("oldu\n");
         GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
         if(renderer!=null)
             renderer.draw();
     }
 
-    static void setRenderer(GenoscopeRenderer r) {
+    public static void setRenderer(GenoscopeRenderer r) {
         renderer=r;
     }
 
@@ -143,8 +151,9 @@ public class GLRenderer {
         glcanvas.repaint();
     }
 
-    static void setGLCanvas(Canvas c) {
+    public static void setGLCanvas(Canvas c) {
         glcanvas=c;
     }
+
     
 }

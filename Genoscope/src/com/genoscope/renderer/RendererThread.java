@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.genoscope;
+package com.genoscope.renderer;
 
+import com.genoscope.Genoscope;
+import com.genoscope.renderer.GLHandler;
 import java.awt.Dimension;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
@@ -40,8 +42,9 @@ public class RendererThread extends Thread {
         } catch (LWJGLException ex) {
             Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
         }
-        GLRenderer.init();
+        GLHandler.init();
         Dimension newDim;
+        int mButtonCount=Mouse.getButtonCount(),mouseState=0,mouseState_old=0;
         while(!Display.isCloseRequested())
         {
 
@@ -50,11 +53,11 @@ public class RendererThread extends Thread {
             if (newDim != null)
             {
                 GL11.glViewport(0, 0, newDim.width, newDim.height);
-                GLRenderer.setup(newDim.width,newDim.height);
+                GLHandler.setup(newDim.width,newDim.height);
             }
             else{
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
-                GLRenderer.render();
+                GLHandler.render();
             }
             Display.update();
 
@@ -63,16 +66,37 @@ public class RendererThread extends Thread {
             
             while(Mouse.next())
             {
+                
                 if(Mouse.isInsideWindow())
                 {
                     int x=Mouse.getX();
                     int y=Mouse.getY();
                     //System.out.println("mouse "+x+" "+y);
-                    for(int i=0;i<Mouse.getButtonCount();i++)
+                    mouseState=0;
+                    for(int i=0;i<mButtonCount;i++)
+                    {
                         if(Mouse.isButtonDown(i))
-                            System.out.println("mouse " +i+" "+Mouse.getEventButtonState());
-                    
-                    renderer.mouseMove(x,GLRenderer.getHeight()-y);
+                        {
+                            mouseState|=1<<i;
+                            //System.out.println("mouse " +i+" "+Mouse.getEventButtonState());
+                        }
+                        if( (((mouseState^mouseState_old)>>i)&1 )==1 )
+                        {
+                            if(Mouse.isButtonDown(i))
+                                renderer.mouseDown(i);
+                            else renderer.mouseUp(i);
+                        }
+                    }
+                    mouseState_old=mouseState;
+                    renderer.mouseMove(x,GLHandler.getHeight()-y, mouseState );
+                }
+                else {
+                    //release mouse buttons when exited from screen
+                    mouseState=0;
+                    for(int i=0;i<mButtonCount;i++)
+                        if( (((mouseState^mouseState_old)>>i)&1 )==1 )
+                            renderer.mouseUp(i);
+                    mouseState_old=0;
                 }
             }
             synchronized(this)
