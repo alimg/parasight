@@ -115,13 +115,13 @@ public class Genoscope {
             }
             
         }
-        
-            a.addVisualizer(new Visualizer(800, 80));
-            a.addVisualizer(new Visualizer(200, 300));
-            a.addVisualizer(new Visualizer(100, 300));
-            a.addVisualizer(new Visualizer(64, 64));
-            a.addVisualizer(new Visualizer(64, 64));
-            a.addVisualizer(new Visualizer(64, 64));
-            System.out.println("main returns");
+        a.addVisualizer(new Visualizer(800, 80));
+        a.addVisualizer(new Visualizer(200, 300));
+        a.addVisualizer(new Visualizer(100, 300));
+        a.addVisualizer(new Visualizer(64, 64));
+        a.addVisualizer(new Visualizer(64, 64));
+        a.addVisualizer(new Visualizer(64, 64));
+        a.addVisualizer(new Visualizer(64, 64));
+        System.out.println("main returns");
     }
 }

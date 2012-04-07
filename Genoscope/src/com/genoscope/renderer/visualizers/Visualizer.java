@@ -36,7 +36,6 @@ public class Visualizer {
 
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
-        System.out.println("fbo " + useFBO);
         setSize(w, h);
 
     }
@@ -45,8 +44,8 @@ public class Visualizer {
         width = w;
         height = h;
         needRecreateBuffers = true;
-        //if(!useFBO)
-        buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
+        if(!useFBO)
+            buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
 
     }
 
@@ -71,8 +70,7 @@ public class Visualizer {
         return posY;
     }
 
-    public boolean isBufferUpToDate() { //should have default modifier
-        //throw new UnsupportedOperationException("Not yet implemented");
+    public boolean isBufferUpToDate() {
         return !updateNeeded;
     }
 
@@ -127,6 +125,7 @@ public class Visualizer {
         draw();
  
         if (useFBO) {
+                glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
         } else { // buffer screen if FBO is not supported
             //<editor-fold defaultstate="collapsed" desc="comment">
             glEnable(GL_TEXTURE_2D);
