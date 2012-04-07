@@ -11,11 +11,11 @@ package com.genoscope.renderer.mouseactions;
 public class ZoomAction implements MouseActionHandler{
 
     @Override
-    public void mouseDown(int i) {
+    public void mouseDown() {
     }
 
     @Override
-    public void mouseUp(int i) {
+    public void mouseUp() {
     }
 
     @Override

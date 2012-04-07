@@ -76,6 +76,7 @@ public class RendererThread extends Thread {
                 {
                     int x=Mouse.getX();
                     int y=Mouse.getY();
+                    renderer.mouseMove(x,GLHandler.getHeight()-y, mouseState );
                     //System.out.println("mouse "+x+" "+y);
                     mouseState=0;
                     for(int i=0;i<mButtonCount;i++)
@@ -93,15 +94,15 @@ public class RendererThread extends Thread {
                         }
                     }
                     mouseState_old=mouseState;
-                    renderer.mouseMove(x,GLHandler.getHeight()-y, mouseState );
                 }
                 else {
+                    /*
                     //release mouse buttons when exited from screen
                     mouseState=0;
                     for(int i=0;i<mButtonCount;i++)
                         if( (((mouseState^mouseState_old)>>i)&1 )==1 )
                             renderer.mouseUp(i);
-                    mouseState_old=0;
+                    mouseState_old=0;*/
                 }
             }
             synchronized(this)

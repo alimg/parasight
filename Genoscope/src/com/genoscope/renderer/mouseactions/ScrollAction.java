@@ -11,12 +11,12 @@ package com.genoscope.renderer.mouseactions;
 public class ScrollAction implements MouseActionHandler{
 
     @Override
-    public void mouseDown(int i) {
+    public void mouseDown() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void mouseUp(int i) {
+    public void mouseUp() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

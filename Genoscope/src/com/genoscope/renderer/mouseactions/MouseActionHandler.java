@@ -10,8 +10,8 @@ package com.genoscope.renderer.mouseactions;
  */
 public interface MouseActionHandler {
     
-    void mouseDown(int i);
-    void mouseUp(int i);
+    void mouseDown();
+    void mouseUp();
     void mouseMove(int x,int y,int buttons);
     
 }

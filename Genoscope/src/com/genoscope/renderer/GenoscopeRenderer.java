@@ -2,8 +2,10 @@ package com.genoscope.renderer;
 
 import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.util.ArrayList;
+import java.util.Vector;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 
@@ -18,7 +20,7 @@ public class GenoscopeRenderer {
 
     private int horizonalGap=15;//pixels
     private int verticalGap=15;//pixels
-    private ArrayList<Visualizer> clients= new ArrayList<Visualizer>();
+    private Vector<Visualizer> clients= new Vector<Visualizer>();
     private int mMode=0;
     
     private int MPX=0,MPY=0;
@@ -26,7 +28,7 @@ public class GenoscopeRenderer {
     private MouseActionHandler mouseHandlers[]=new MouseActionHandler[5];
     public GenoscopeRenderer()
     {
-        
+        mouseHandlers[0]=new MoveAction(clients);
     }
     /**
      * Arranges position of all clients 
@@ -34,7 +36,7 @@ public class GenoscopeRenderer {
     public void resetLayout()
     {
         int x=horizonalGap;
-        int y=verticalGap;
+        int y=0;
         int lineMax=0;
         for(Visualizer v: clients)
         {
@@ -60,10 +62,14 @@ public class GenoscopeRenderer {
     void mouseDown(int i)
     {
         System.out.println("down "+i);
+        if(mouseHandlers[i]!=null)
+            mouseHandlers[i].mouseDown();
     }
     
     void mouseUp(int i)
     {
+        if(mouseHandlers[i]!=null)
+            mouseHandlers[i].mouseUp();
         System.out.println("up "+i);
         
     }
@@ -71,9 +77,18 @@ public class GenoscopeRenderer {
         MPX=x;
         MPY=y;
         
-        
+        for(MouseActionHandler m:mouseHandlers)
+            if(m!=null)
+                m.mouseMove(x, y, buttons);
+        Visualizer r=null;
         for(Visualizer v: clients)
-            v.setHighlight(intersect(v,MPX,MPY));
+        {
+            if(intersect(v,MPX,MPY))
+                r=v;
+            v.setHighlight(false);
+        }
+        if(r!=null)
+            r.setHighlight(true);
         GLHandler.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
     }

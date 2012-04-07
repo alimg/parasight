@@ -33,6 +33,7 @@ public class Visualizer {
     private boolean useFBO = false;
     private int FBOid;
     private boolean needRecreateBuffers = false;
+    private int OVERSAMPLE=2;
 
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
@@ -77,7 +78,7 @@ public class Visualizer {
     public final void initBufferMode() {
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        glViewport(0, 0, width, height);
+        glViewport(0, 0, OVERSAMPLE*width, OVERSAMPLE*height);
         GLU.gluOrtho2D(0.0f, width, height, 0.0f);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -99,7 +100,7 @@ public class Visualizer {
                 
                 glBindTexture(GL_TEXTURE_2D, textId);
                 glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);   
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, OVERSAMPLE*width, OVERSAMPLE*height, 0, GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);
                 glBindTexture(GL_TEXTURE_2D, textId);
 
                 glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, textId, 0);
@@ -162,7 +163,7 @@ public class Visualizer {
     public void draw() {
 
         glDisable(GL_TEXTURE_2D);
-        glClearColor(1, 1, 1, 1);
+        glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
         System.out.println("buffer update");
         glLoadIdentity();
