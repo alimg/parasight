@@ -24,6 +24,7 @@ public class RendererThread extends Thread {
     boolean running=true;
     RendererThread that=this;
     GenoscopeRenderer renderer;
+    public Object initSync=new Object();
     public RendererThread(GenoscopeRenderer renderer) {
         this.renderer=renderer;
     }
@@ -43,6 +44,10 @@ public class RendererThread extends Thread {
             Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
         }
         GLHandler.init();
+        synchronized(initSync)
+        {
+            initSync.notify();
+        }
         Dimension newDim;
         int mButtonCount=Mouse.getButtonCount(),mouseState=0,mouseState_old=0;
         while(!Display.isCloseRequested())

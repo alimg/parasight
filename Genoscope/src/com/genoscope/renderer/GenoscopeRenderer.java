@@ -4,7 +4,7 @@ import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.GLHandler;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.util.ArrayList;
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 
 
@@ -92,39 +92,37 @@ public class GenoscopeRenderer {
         {
             if(! v.isBufferUpToDate())
             {
-                GL11.glPushMatrix();
-                v.initBuffer();
-                GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
+                glPushMatrix();
+                v.initBufferMode();
                 v.updateBuffer();
-                GL11.glPopMatrix();
+                glPopMatrix();
             }
         }
         
         GLHandler.setup();
-        GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
+        glClear( GL_COLOR_BUFFER_BIT );
         for(Visualizer v: clients)
         {
             if(v.isBufferUpToDate())
             {
                 //translate then draw;
-                GL11.glPushMatrix();
-                GL11.glTranslatef(v.getX(), v.getY(), 0);
+                glPushMatrix();
+                glTranslatef(v.getX(), v.getY(), 0);
                 v.drawBuffered();
                 if(v.isHiglighted())
                 {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
                     GL20.glUseProgram(0);
-                    GL11.glColor4f(0,0,0,1);
-                    GL11.glDisable(GL11.GL_TEXTURE_2D);
-                    GL11.glBegin(GL11.GL_LINE_LOOP);
-                    GL11.glTranslatef(v.getX(), v.getY(),0);
-                    GL11.glVertex2f(0, 0);
-                    GL11.glVertex2f(0,v.getHeight());
-                    GL11.glVertex2f(v.getWidht(),v.getHeight());
-                    GL11.glVertex2f(v.getWidht(), 0);
-                    GL11.glEnd();
+                    glColor4f(0,0,0,1);
+                    glDisable(GL_TEXTURE_2D);
+                    glBegin(GL_LINE_LOOP);
+                    glVertex2f(0, 0);
+                    glVertex2f(0,v.getHeight());
+                    glVertex2f(v.getWidht(),v.getHeight());
+                    glVertex2f(v.getWidht(), 0);
+                    glEnd();
                     //</editor-fold>
                 }
-                GL11.glPopMatrix();
+                glPopMatrix();
                 
             }
         }

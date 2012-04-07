@@ -7,8 +7,9 @@ import java.awt.Canvas;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
 /**
  *
@@ -23,6 +24,7 @@ public class GLHandler {
     static public int shaderprogram;
     static private int width;
     static private int height;
+    static public boolean FBOEnabled;
 
 
     public static int getHeight() {
@@ -38,8 +40,8 @@ public class GLHandler {
         System.out.println(new File(".").getAbsoluteFile());
         try {
             
-            int i=GL11.glGetError();
-            if(i!=GL11.GL_NO_ERROR)
+            int i=glGetError();
+            if(i!=GL_NO_ERROR)
                 System.out.println(" error "+i);
             
             int v = GL20.glCreateShader(GL20.GL_VERTEX_SHADER);
@@ -60,7 +62,7 @@ public class GLHandler {
             }
             GL20.glShaderSource(f, fsrc);
             GL20.glCompileShader(f);
-            int shaderprogram = GL20.glCreateProgram();
+            shaderprogram = GL20.glCreateProgram();
             System.out.println(" s "+shaderprogram);
             GL20.glAttachShader(shaderprogram, v);
             GL20.glAttachShader(shaderprogram, f);
@@ -68,13 +70,13 @@ public class GLHandler {
             GL20.glValidateProgram(shaderprogram);
             
             GL20.glUseProgram(shaderprogram);
-            i=GL11.glGetError();
-            if(i!=GL11.GL_NO_ERROR)
+            i=glGetError();
+            if(i!=GL_NO_ERROR)
                 System.out.println(" error "+i);
             imgUniform = GL20.glGetUniformLocation(shaderprogram, "baseImage");
             sizeUniform = GL20.glGetUniformLocation(shaderprogram, "baseSize");
-            GLHandler.shaderprogram=shaderprogram;
-            System.out.println("uniform "+imgUniform);
+            
+            //System.out.println("uniform "+imgUniform);
             
         } catch (FileNotFoundException ex) {
            System.out.println("err:not found");
@@ -85,6 +87,12 @@ public class GLHandler {
         } finally {
            System.out.println("done loading shaders");
         }
+        
+        //frame buffer object
+        FBOEnabled = GLContext.getCapabilities().GL_EXT_framebuffer_object;
+        System.out.println("framebuffer enabled "+FBOEnabled);
+        
+        
     }
     
     static void setup() {
@@ -99,33 +107,33 @@ public class GLHandler {
         if(width==0 || height==0)
                 return;
         //System.out.println("oldu" + width+"  "+height);
-        GL11.glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
-        GL11.glEnable(GL11.GL_LINE_SMOOTH);
-        //GL11.glEnable(GL13.GL_MULTISAMPLE);
-        GL11.glEnable(GL11.GL_POLYGON_SMOOTH);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        //GL11.glBlendFunc (GL11.GL_SRC_ALPHA_SATURATE, GL11.GL_ONE);
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_LINE_SMOOTH); 
-
-        GL11.glHint(GL11.GL_LINE_SMOOTH_HINT,GL11.GL_NICEST);
-        GL11.glHint(GL11.GL_POLYGON_SMOOTH_HINT,GL11.GL_NICEST);
-        GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT,GL11.GL_NICEST);
-        GL11.glMatrixMode( GL11.GL_PROJECTION );
-        GL11.glLoadIdentity();
+        glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
+        glEnable(GL_LINE_SMOOTH);
+        //glEnable(GL13.GL_MULTISAMPLE);
+        glEnable(GL_POLYGON_SMOOTH);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glBlendFunc (GL_SRC_ALPHA_SATURATE, GL_ONE);
+        glEnable(GL_BLEND);
+        glEnable(GL_LINE_SMOOTH); 
+        glDisable(GL_DEPTH_TEST);
+        glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+        glHint(GL_POLYGON_SMOOTH_HINT,GL_NICEST);
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT,GL_NICEST);
+        glMatrixMode( GL_PROJECTION );
+        glLoadIdentity();
 
         // coordinate system origin at lower left with width and height same as the window
         //GLU glu = new GLU();
         //glu.gluOrtho2D( 0.0f, width, 0.0f, height );
         GLU.gluOrtho2D( 0.0f, width, height,0.0f );
 
-        GL11.glMatrixMode( GL11.GL_MODELVIEW );
-        GL11.glLoadIdentity();
+        glMatrixMode( GL_MODELVIEW );
+        glLoadIdentity();
 
-        GL11.glViewport( 0, 0, width, height );
-        GL11.glHint(GL11.GL_PERSPECTIVE_CORRECTION_HINT, GL11.GL_NICEST);
+        glViewport( 0, 0, width, height );
+        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
         
-        GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
+        glClear( GL_COLOR_BUFFER_BIT );
         
         
         /*if(renderer!=null)
@@ -138,9 +146,13 @@ public class GLHandler {
         if(width==0 || height==0)
                 return;
         //System.out.print("oldu\n");
-        GL11.glClear( GL11.GL_COLOR_BUFFER_BIT );
+        glClear( GL_COLOR_BUFFER_BIT );
         if(renderer!=null)
             renderer.draw();
+
+        int i=glGetError();
+        if(i!=GL_NO_ERROR)
+            System.out.println(" error "+i);
     }
 
     public static void setRenderer(GenoscopeRenderer r) {

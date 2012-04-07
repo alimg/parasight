@@ -12,6 +12,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
@@ -32,10 +34,6 @@ public class Genoscope {
         final GenoscopeRenderer a=new GenoscopeRenderer();
         
         GLHandler.setRenderer(a);
-        a.addVisualizer(new Visualizer(400, 80));
-        a.addVisualizer(new Visualizer(200, 300));
-        a.addVisualizer(new Visualizer(100, 300));
-        a.addVisualizer(new Visualizer(100, 50));
         GenoscopeApp f=new GenoscopeApp();
         f.setVisible(true);
         //System.out.println("Trying LWJGL");
@@ -108,8 +106,22 @@ public class Genoscope {
         } catch (LWJGLException e1) {
             e1.printStackTrace();
         }
-
-        System.out.println("main returns");
-
+        synchronized(renderThread.initSync)
+        {
+            try {
+                renderThread.initSync.wait();
+            } catch (InterruptedException ex) {
+                //Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        
+            a.addVisualizer(new Visualizer(800, 80));
+            a.addVisualizer(new Visualizer(200, 300));
+            a.addVisualizer(new Visualizer(100, 300));
+            a.addVisualizer(new Visualizer(64, 64));
+            a.addVisualizer(new Visualizer(64, 64));
+            a.addVisualizer(new Visualizer(64, 64));
+            System.out.println("main returns");
     }
 }
