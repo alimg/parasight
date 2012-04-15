@@ -167,15 +167,15 @@ public class Visualizer {
         glClear(GL_COLOR_BUFFER_BIT);
         System.out.println("buffer update");
         glLoadIdentity();
-        glBegin(GL_QUADS);
-        glColor4f(1, 0, 0, 1);
-        glVertex2f(0, 0);
+        glBegin(GL_POLYGON);
         glColor4f(0, 1, 0, 1);
         glVertex2f(width / 2, height / 2);
-        glColor4f(0, 1, 0, 0.0f);
-        glVertex2f(width, 0);
+        glColor4f(1, 0, 0, 1);
+        glVertex2f(0, 0);
         glColor4f(0, 0, 1, 1);
         glVertex2f(width / 2, height);
+        glColor4f(0, 1, 0, 0.0f);
+        glVertex2f(width, 0);
         glEnd();
     }
 
