@@ -33,7 +33,7 @@ public class Visualizer {
     private boolean useFBO = false;
     private int FBOid;
     private boolean needRecreateBuffers = false;
-    private int OVERSAMPLE=2;
+    private int OVERSAMPLE=4;
 
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
