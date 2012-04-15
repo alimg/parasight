@@ -31,9 +31,9 @@ public class Genoscope {
     static boolean ok=false;
     public static void main(String[] args) {
         //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
-        final GenoscopeRenderer a=new GenoscopeRenderer();
+        final GenoscopeRenderer renderer=new GenoscopeRenderer();
         
-        GLHandler.setRenderer(a);
+        GLHandler.setRenderer(renderer);
         GenoscopeApp f=new GenoscopeApp();
         f.setVisible(true);
         //System.out.println("Trying LWJGL");
@@ -99,7 +99,7 @@ public class Genoscope {
             });
 
             
-            renderThread=new RendererThread(a);
+            renderThread=new RendererThread(renderer);
             renderThread.setSize(c.getSize());
             renderThread.start();
             
@@ -115,13 +115,13 @@ public class Genoscope {
             }
             
         }
-        a.addVisualizer(new Visualizer(800, 80));
-        a.addVisualizer(new Visualizer(200, 300));
-        a.addVisualizer(new Visualizer(100, 300));
-        a.addVisualizer(new Visualizer(64, 64));
-        a.addVisualizer(new Visualizer(64, 64));
-        a.addVisualizer(new Visualizer(64, 64));
-        a.addVisualizer(new Visualizer(64, 64));
+        renderer.addVisualizer(new Visualizer(800, 80));
+        renderer.addVisualizer(new Visualizer(200, 300));
+        renderer.addVisualizer(new Visualizer(100, 300));
+        renderer.addVisualizer(new Visualizer(64, 64));
+        renderer.addVisualizer(new Visualizer(64, 64));
+        renderer.addVisualizer(new Visualizer(64, 64));
+        renderer.addVisualizer(new Visualizer(64, 64));
         System.out.println("main returns");
     }
 }
