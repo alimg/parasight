@@ -16,11 +16,11 @@ public class Chromosome {
     private String name;
     private Vector<Feature> features;
 
-    public Chromosome(int length, int chrNo, String name, Vector<Feature> features) {
+    public Chromosome(int length, int chrNo, String name) {
         this.length = length;
         this.chrNo = chrNo;
         this.name = name;
-        this.features = features;
+        this.features = new <Feature>Vector();
     }
 
     public Chromosome() {
@@ -30,11 +30,11 @@ public class Chromosome {
     public void addFeature(Feature feature){
         features.add(feature);
     }
-    
+
     public Vector<Feature> getFeatures(){
         return features;
-    }
-    
+	}
+
     public int getChrNo() {
         return chrNo;
     }
@@ -59,7 +59,4 @@ public class Chromosome {
         this.name = name;
     }
     
-    
-    
-  
 }
