@@ -21,13 +21,12 @@ public class BED extends BasicFormat{
 
 		try {
 			Scanner scanner = new Scanner(file);
-			Chr=new Chromosome();
 			for(int i=0;i<3;i++)
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				System.out.println(line);
 			}
-			return Chr;
+			return null;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:"+path);
 			return null;
