@@ -18,7 +18,7 @@ public class Reader {
 		//variables for extension check
 		String extension;
 		int lastInd;
-
+ 
 		//get extension
 		lastInd=path.lastIndexOf('.');
 		extension=path.substring(lastInd+1);
