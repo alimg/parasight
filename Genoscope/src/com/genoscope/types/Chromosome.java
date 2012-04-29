@@ -15,7 +15,7 @@ public class Chromosome {
     private int chrNo;
     private String name;
     private ArrayList<Cytoband> cytobands;
-	private ArrayList<NormalFeature> features;
+    private ArrayList<NormalFeature> features;
 
     public Chromosome(int length, int chrNo, String name, ArrayList<Cytoband> cytobands) {
         this.length = length;
