@@ -31,6 +31,6 @@ public class BED extends BasicFormat{
 			System.out.println("File not found:"+path);
 			return null;
 		}
-}
+	}
 	
 }
