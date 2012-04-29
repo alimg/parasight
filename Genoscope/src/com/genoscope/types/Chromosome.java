@@ -4,7 +4,7 @@
  */
 package com.genoscope.types;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *
@@ -14,18 +14,25 @@ public class Chromosome {
     private int length;
     private int chrNo;
     private String name;
-    private ArrayList<Cytoband> cytobands;
-	private ArrayList<NormalFeature> features;
+    private Vector<Feature> features;
 
-    public Chromosome(int length, int chrNo, String name, ArrayList<Cytoband> cytobands) {
+    public Chromosome(int length, int chrNo, String name) {
         this.length = length;
         this.chrNo = chrNo;
         this.name = name;
-        this.cytobands = cytobands;
+        this.features = new <Feature>Vector();
     }
 
-	public Chromosome() {
-		throw new UnsupportedOperationException("Not yet implemented");
+    public Chromosome() {
+            throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public void addFeature(Feature feature){
+        features.add(feature);
+    }
+
+    public Vector<Feature> getFeatures(){
+        return features;
 	}
 
     public int getChrNo() {
@@ -34,14 +41,6 @@ public class Chromosome {
 
     public void setChrNo(int chrNo) {
         this.chrNo = chrNo;
-    }
-
-    public ArrayList<Cytoband> getCytobands() {
-        return cytobands;
-    }
-
-    public void setCytobands(ArrayList<Cytoband> cytobands) {
-        this.cytobands = cytobands;
     }
 
     public int getLength() {
@@ -60,7 +59,4 @@ public class Chromosome {
         this.name = name;
     }
     
-    
-    
-  
 }

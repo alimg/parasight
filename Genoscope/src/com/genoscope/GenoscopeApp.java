@@ -5,7 +5,6 @@
 package com.genoscope;
 
 import com.genoscope.reader.Reader;
-import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -54,6 +53,9 @@ public class GenoscopeApp extends javax.swing.JFrame {
 		fileChooser.setFileFilter(addFileFilters());
 		fileChooser.setFileHidingEnabled(true);
 //		fileChooser.setCurrentDirectory( new File( "./") ); 
+		
+		//initialize
+		state=new State();
 	}
 
 	//required for File Filter DO NOT DELETE
@@ -83,7 +85,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         objectProperties = new javax.swing.JScrollPane();
-        insertObject = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         drawingPanel = new javax.swing.JPanel();
         OpenGLContainer = new javax.swing.JPanel();
         OpenGLPanel = new javax.swing.JPanel();
@@ -193,7 +195,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(4, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -205,11 +207,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectProperties.setPreferredSize(new java.awt.Dimension(250, 200));
         leftToolBar.add(objectProperties);
 
-        insertObject.setBorder(javax.swing.BorderFactory.createTitledBorder("Insert Object"));
-        insertObject.setMaximumSize(new java.awt.Dimension(32767, 150));
-        insertObject.setMinimumSize(new java.awt.Dimension(37, 150));
-        insertObject.setPreferredSize(new java.awt.Dimension(12, 150));
-        leftToolBar.add(insertObject);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Object List"));
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32567, 200));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(250, 200));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(250, 200));
+        leftToolBar.add(jScrollPane1);
 
         drawingPanel.setLayout(new javax.swing.BoxLayout(drawingPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -240,6 +242,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/floppy_35inch_blue.png"))); // NOI18N
@@ -369,7 +376,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -463,8 +470,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 				openMenuItemActionPerformed(evt);
 				return;
 			}
-			reader.readFile(file.getAbsolutePath());
-			System.out.println( file.getAbsolutePath() );
+			Reader.readFile(file.getAbsolutePath(),state);
 		} else {
 			System.out.println("File access cancelled by user.");
 		}
@@ -533,7 +539,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JScrollBar horizontalScroll;
-    private javax.swing.JScrollPane insertObject;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -556,6 +561,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
@@ -573,6 +579,5 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
-	private Reader reader=new Reader();
-
+    protected State state;
 }
