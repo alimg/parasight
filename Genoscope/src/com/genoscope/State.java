@@ -5,6 +5,8 @@
 package com.genoscope;
 
 import com.genoscope.reader.Reader;
+import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Pair;
@@ -15,10 +17,14 @@ public class State {
     private Vector<Chromosome> chromosomeList;
     private Vector<Pair> pairList;
     private Vector<Visualizer> visualizerList;
+    private GenoscopeRenderer renderer;
     public State(){
         chromosomeList = new <Chromosome>Vector();
         pairList = new <Pair>Vector();
         visualizerList = new <Visualizer>Vector();
+    }
+    public void setRenderer(GenoscopeRenderer renderer){
+        this.renderer = renderer;
     }
     public int importData(String fileName){
         int returnID = Reader.readFile(fileName,this);
@@ -40,6 +46,7 @@ public class State {
     
     public void addChromosome(Chromosome chr){
         chromosomeList.add(chr);
+        renderer.addVisualizer(new ChromosomeVisualizer(500,100,chr));
     }
     public void addPair(Pair pair){
         pairList.add(pair);

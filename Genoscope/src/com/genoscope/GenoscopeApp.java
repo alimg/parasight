@@ -57,7 +57,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
 		//initialize
 		state=new State();
 	}
-
+        
+        public State getAppState(){
+            return state;
+        }
 	//required for File Filter DO NOT DELETE
 	private FileFilter addFileFilters(){
 		return new FileNameExtensionFilter("supported files (*.cn, *.bed, *.falan, *.filan)",
@@ -599,7 +602,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
 		} else {
 			System.out.println("File access cancelled by user.");
 		}
-
 	}//GEN-LAST:event_openMenuItemActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed

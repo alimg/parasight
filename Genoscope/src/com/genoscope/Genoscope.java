@@ -34,8 +34,9 @@ public class Genoscope {
         final GenoscopeRenderer renderer=new GenoscopeRenderer();
         
         GLHandler.setRenderer(renderer);
-        GenoscopeApp f=new GenoscopeApp();
-        f.setVisible(true);
+        GenoscopeApp app=new GenoscopeApp();
+        app.setVisible(true);
+        app.getAppState().setRenderer(renderer);
         //System.out.println("Trying LWJGL");
         final Canvas c=new Canvas() {
             @Override
@@ -73,9 +74,9 @@ public class Genoscope {
             
         };
         
-        f.OpenGLPanel.setMinimumSize(new Dimension(0,0));
+        app.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
-        f.OpenGLPanel.add(c);
+        app.OpenGLPanel.add(c);
         GLHandler.setGLCanvas( c );
         //c.setFocusable(false);
         try {
@@ -83,7 +84,7 @@ public class Genoscope {
             
             Display.setVSyncEnabled(true);
 
-            f.pack();
+            app.pack();
 
             c.addComponentListener(new ComponentAdapter() {
                 @Override
@@ -115,13 +116,6 @@ public class Genoscope {
             }
             
         }
-        renderer.addVisualizer(new Visualizer(800, 80));
-        renderer.addVisualizer(new Visualizer(200, 300));
-        renderer.addVisualizer(new Visualizer(100, 300));
-        renderer.addVisualizer(new Visualizer(64, 64));
-        renderer.addVisualizer(new Visualizer(64, 64));
-        renderer.addVisualizer(new Visualizer(64, 64));
-        renderer.addVisualizer(new Visualizer(64, 64));
         System.out.println("main returns");
     }
 }
