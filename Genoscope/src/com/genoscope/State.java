@@ -24,6 +24,20 @@ public class State {
         int returnID = Reader.readFile(fileName,this);
         return returnID;
     }
+    public Chromosome getChromosome(String name){
+        for(Chromosome i:chromosomeList)
+            if(i.getName().equals(name))
+                return i;
+        return null;
+    }
+    
+    public Chromosome getChromosome(int id){
+        for(Chromosome i:chromosomeList)
+            if(i.getChrNo() == id)
+                return i;
+        return null;
+    }
+    
     public void addChromosome(Chromosome chr){
         chromosomeList.add(chr);
     }

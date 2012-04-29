@@ -24,8 +24,6 @@ public abstract class Feature {
     public Feature() {
     }
     
-    
-    
 
     public int getChrNo() {
         return chrNo;
