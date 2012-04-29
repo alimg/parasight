@@ -579,6 +579,5 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
-	protected State state;
-
+    protected State state;
 }
