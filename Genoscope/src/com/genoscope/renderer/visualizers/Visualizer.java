@@ -238,8 +238,10 @@ public class Visualizer {
         return temp.asIntBuffer();
     }
 
-    final public void setSnap(int x, int y) {
+    final public void setSnapX(int x) {
         snapX=x;
+    }
+    final public void setSnapY(int y) {
         snapY=y;
     }
 

@@ -159,8 +159,8 @@ public  class MoveAction extends MouseActionHandler {
         aa=Math.abs(a-sx);
         bb=Math.abs(b-sxe);
         if( aa<bb && aa<r)
-            selected.setSnap(a, selected.getSnapY());
-        else selected.setSnap(sx, sy);
+            selected.setSnapX(a);
+        else selected.setSnapX(sx);
         //snap Y
         
         d=(Integer) arY.floorKey(sy);
@@ -171,7 +171,7 @@ public  class MoveAction extends MouseActionHandler {
         else if(sx-d>u-sx)a=u;
         else a=d;
         
-        d=(Integer) arY.floorKey(sy);
+        d=(Integer) arY.floorKey(sye);
         u=(Integer) arY.higherKey(sye);
         if(d==null)b=u;
         else if(u==null)b=d;
@@ -180,8 +180,8 @@ public  class MoveAction extends MouseActionHandler {
         aa=Math.abs(a-sy);
         bb=Math.abs(b-sye);
         if( aa<bb && aa<r)
-            selected.setSnap( selected.getSnapX(),a);
-        else selected.setSnap(sx,sy);
+            selected.setSnapY( a);
+        else selected.setSnapY(sy);
     }
     
     
