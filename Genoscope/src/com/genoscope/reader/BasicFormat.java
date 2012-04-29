@@ -12,7 +12,6 @@ import com.genoscope.types.Chromosome;
  */
 abstract public class BasicFormat {
 	protected Chromosome Chr;
-	
-	//
+        
 	abstract public Chromosome readFile(String path);
 }
