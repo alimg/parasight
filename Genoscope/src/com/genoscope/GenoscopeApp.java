@@ -5,7 +5,6 @@
 package com.genoscope;
 
 import com.genoscope.reader.Reader;
-import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -54,6 +53,9 @@ public class GenoscopeApp extends javax.swing.JFrame {
 		fileChooser.setFileFilter(addFileFilters());
 		fileChooser.setFileHidingEnabled(true);
 //		fileChooser.setCurrentDirectory( new File( "./") ); 
+		
+		//initialize
+		state=new State();
 	}
 
 	//required for File Filter DO NOT DELETE
@@ -193,7 +195,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(1, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -242,7 +244,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                openMenuItemActionPerformed(evt);
             }
         });
         jToolBar1.add(jButton5);
@@ -374,7 +376,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -468,8 +470,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 				openMenuItemActionPerformed(evt);
 				return;
 			}
-			reader.readFile(file.getAbsolutePath());
-			System.out.println( file.getAbsolutePath() );
+			Reader.readFile(file.getAbsolutePath(),state);
 		} else {
 			System.out.println("File access cancelled by user.");
 		}
@@ -479,10 +480,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -582,6 +579,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
-	private Reader reader=new Reader();
+	protected State state;
 
 }

@@ -32,5 +32,4 @@ public class BED extends BasicFormat{
 			return null;
 		}
 	}
-	
 }
