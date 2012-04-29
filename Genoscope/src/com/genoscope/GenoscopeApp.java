@@ -75,6 +75,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
+        jTextField1 = new javax.swing.JTextField();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
@@ -85,7 +86,21 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         objectProperties = new javax.swing.JScrollPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        propertiesPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        objectName = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        objectName1 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        objectName2 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        objectName3 = new javax.swing.JLabel();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        objectList = new javax.swing.JScrollPane();
+        objectTree = new javax.swing.JTree();
         drawingPanel = new javax.swing.JPanel();
         OpenGLContainer = new javax.swing.JPanel();
         OpenGLPanel = new javax.swing.JPanel();
@@ -127,6 +142,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
         helpMenu = new javax.swing.JMenu();
         contentsMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GenoScope");
@@ -205,13 +222,121 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectProperties.setMinimumSize(new java.awt.Dimension(250, 200));
         objectProperties.setName("");
         objectProperties.setPreferredSize(new java.awt.Dimension(250, 200));
+
+        propertiesPanel.setMaximumSize(new java.awt.Dimension(240, 1000));
+        propertiesPanel.setMinimumSize(new java.awt.Dimension(240, 35));
+        propertiesPanel.setOpaque(false);
+        propertiesPanel.setPreferredSize(new java.awt.Dimension(240, 175));
+        propertiesPanel.setRequestFocusEnabled(false);
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT);
+        flowLayout1.setAlignOnBaseline(true);
+        propertiesPanel.setLayout(flowLayout1);
+
+        objectName.setText("Name");
+        objectName.setMaximumSize(new java.awt.Dimension(90, 16));
+        objectName.setMinimumSize(new java.awt.Dimension(90, 16));
+        objectName.setPreferredSize(new java.awt.Dimension(90, 16));
+        jPanel1.add(objectName);
+
+        jTextField2.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        jTextField2.setMinimumSize(new java.awt.Dimension(150, 22));
+        jTextField2.setPreferredSize(new java.awt.Dimension(150, 22));
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextField2);
+
+        propertiesPanel.add(jPanel1);
+
+        objectName1.setText("Position X");
+        objectName1.setMaximumSize(new java.awt.Dimension(90, 16));
+        objectName1.setMinimumSize(new java.awt.Dimension(90, 16));
+        objectName1.setPreferredSize(new java.awt.Dimension(90, 16));
+        jPanel2.add(objectName1);
+
+        jTextField3.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        jTextField3.setMinimumSize(new java.awt.Dimension(150, 22));
+        jTextField3.setPreferredSize(new java.awt.Dimension(150, 22));
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jTextField3);
+
+        propertiesPanel.add(jPanel2);
+
+        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        objectName2.setText("Position Y");
+        objectName2.setMaximumSize(new java.awt.Dimension(90, 16));
+        objectName2.setMinimumSize(new java.awt.Dimension(90, 16));
+        objectName2.setPreferredSize(new java.awt.Dimension(90, 16));
+        jPanel3.add(objectName2);
+
+        jTextField4.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        jTextField4.setMinimumSize(new java.awt.Dimension(150, 22));
+        jTextField4.setPreferredSize(new java.awt.Dimension(150, 22));
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jTextField4);
+
+        propertiesPanel.add(jPanel3);
+
+        jPanel4.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+
+        objectName3.setText("Visible");
+        objectName3.setMaximumSize(new java.awt.Dimension(90, 16));
+        objectName3.setMinimumSize(new java.awt.Dimension(90, 16));
+        objectName3.setPreferredSize(new java.awt.Dimension(90, 16));
+        jPanel4.add(objectName3);
+
+        jCheckBox3.setAlignmentX(0.5F);
+        jPanel4.add(jCheckBox3);
+
+        propertiesPanel.add(jPanel4);
+
+        objectProperties.setViewportView(propertiesPanel);
+
         leftToolBar.add(objectProperties);
 
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Object List"));
-        jScrollPane1.setMaximumSize(new java.awt.Dimension(32567, 200));
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(250, 200));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(250, 200));
-        leftToolBar.add(jScrollPane1);
+        objectList.setBorder(javax.swing.BorderFactory.createTitledBorder("Object List"));
+        objectList.setMaximumSize(new java.awt.Dimension(32767, 500));
+        objectList.setMinimumSize(new java.awt.Dimension(37, 150));
+        objectList.setPreferredSize(new java.awt.Dimension(12, 150));
+
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
+        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Chromosomes");
+        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 1");
+        javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
+        treeNode3.add(treeNode4);
+        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("ReadDepth Features");
+        treeNode3.add(treeNode4);
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 2");
+        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
+        treeNode3.add(treeNode4);
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 3");
+        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Cytobands");
+        treeNode3.add(treeNode4);
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Pairings");
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Insertion-Deletion");
+        treeNode2.add(treeNode3);
+        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Similarity");
+        treeNode2.add(treeNode3);
+        treeNode1.add(treeNode2);
+        objectTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        objectList.setViewportView(objectTree);
+
+        leftToolBar.add(objectList);
 
         drawingPanel.setLayout(new javax.swing.BoxLayout(drawingPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -376,7 +501,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -481,6 +606,18 @@ public class GenoscopeApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -560,20 +697,35 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JScrollPane objectList;
+    private javax.swing.JLabel objectName;
+    private javax.swing.JLabel objectName1;
+    private javax.swing.JLabel objectName2;
+    private javax.swing.JLabel objectName3;
     private javax.swing.JScrollPane objectProperties;
+    private javax.swing.JTree objectTree;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JScrollBar verticalScroll;
