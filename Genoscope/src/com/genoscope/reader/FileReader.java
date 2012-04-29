@@ -4,7 +4,13 @@
  */
 package com.genoscope.reader;
 
+import com.genoscope.State;
+import com.genoscope.types.Chromosome;
+
 /**
  *
- * @author PC
+ * @author Furkan Mustafa Akdemir
  */
+abstract public class FileReader {
+	abstract public Chromosome readFile(String path, State state);
+}
