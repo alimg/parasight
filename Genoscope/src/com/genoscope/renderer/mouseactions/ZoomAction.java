@@ -8,7 +8,7 @@ package com.genoscope.renderer.mouseactions;
  *
  * @author alim
  */
-public class ZoomAction implements MouseActionHandler{
+public class ZoomAction extends MouseActionHandler{
 
     @Override
     public void mouseDown() {
@@ -20,6 +20,11 @@ public class ZoomAction implements MouseActionHandler{
 
     @Override
     public void mouseMove(int x, int y, int buttons) {
+    }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
     
 }

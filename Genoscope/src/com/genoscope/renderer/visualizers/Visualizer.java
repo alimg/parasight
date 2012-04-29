@@ -34,6 +34,8 @@ public class Visualizer {
     private int FBOid;
     private boolean needRecreateBuffers = false;
     private int OVERSAMPLE=4;
+    private int snapX=-100067;
+    private int snapY=-100067;
 
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
@@ -50,7 +52,7 @@ public class Visualizer {
 
     }
 
-    public int getWidht() {
+    public int getWidth() {
         return width;
     }
 
@@ -69,6 +71,15 @@ public class Visualizer {
 
     public int getY() {
         return posY;
+    }
+    public int getSnapX() {
+        if(snapX==-100067)return posX;
+        return snapX;
+    }
+
+    public int getSnapY() {
+        if(snapY==-100067)return posY;
+        return snapY;
     }
 
     public boolean isBufferUpToDate() {
@@ -226,4 +237,10 @@ public class Visualizer {
 
         return temp.asIntBuffer();
     }
+
+    final public void setSnap(int x, int y) {
+        snapX=x;
+        snapY=y;
+    }
+
 }

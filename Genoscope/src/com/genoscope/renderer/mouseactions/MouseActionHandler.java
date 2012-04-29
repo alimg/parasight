@@ -8,10 +8,11 @@ package com.genoscope.renderer.mouseactions;
  *
  * @author alim
  */
-public interface MouseActionHandler {
+public abstract class MouseActionHandler {
     
-    void mouseDown();
-    void mouseUp();
-    void mouseMove(int x,int y,int buttons);
+    abstract public void mouseDown();
+    abstract public void mouseUp();
+    abstract public void mouseMove(int x,int y,int buttons);
+    abstract public void update();
     
 }

@@ -40,18 +40,19 @@ public class GenoscopeRenderer {
         int lineMax=0;
         for(Visualizer v: clients)
         {
-            if(x+v.getWidht()>GLHandler.getWidth())
+            if(x+v.getWidth()>GLHandler.getWidth())
             {
                 y+=lineMax+verticalGap;
                 lineMax=0;
                 x=horizonalGap;
             }
             v.setPosition(x,y);
-            x+=v.getWidht()+horizonalGap;
+            x+=v.getWidth()+horizonalGap;
             if(lineMax<v.getHeight())
                 lineMax=v.getHeight();
                 
         }
+        mouseHandlers[0].update();
     }
     
     public void addVisualizer(Visualizer v)
@@ -122,7 +123,8 @@ public class GenoscopeRenderer {
             {
                 //translate then draw;
                 glPushMatrix();
-                glTranslatef(v.getX(), v.getY(), 0);
+                glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                //glTranslatef(v.getX(), v.getY(), 0);
                 v.drawBuffered();
                 if(v.isHiglighted())
                 {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
@@ -132,8 +134,8 @@ public class GenoscopeRenderer {
                     glBegin(GL_LINE_LOOP);
                     glVertex2f(0, 0);
                     glVertex2f(0,v.getHeight());
-                    glVertex2f(v.getWidht(),v.getHeight());
-                    glVertex2f(v.getWidht(), 0);
+                    glVertex2f(v.getWidth(),v.getHeight());
+                    glVertex2f(v.getWidth(), 0);
                     glEnd();
                     //</editor-fold>
                 }
@@ -144,7 +146,7 @@ public class GenoscopeRenderer {
     }
 
     private boolean intersect(Visualizer v, int x, int y) {
-        if( x>v.getX() && x<v.getX()+v.getWidht() &&
+        if( x>v.getX() && x<v.getX()+v.getWidth() &&
                 y>v.getY() && y<v.getY()+v.getHeight() )
             return true;
         return false;

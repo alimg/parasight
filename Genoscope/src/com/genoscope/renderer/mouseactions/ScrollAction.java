@@ -8,7 +8,7 @@ package com.genoscope.renderer.mouseactions;
  *
  * @author alim
  */
-public class ScrollAction implements MouseActionHandler{
+public class ScrollAction extends MouseActionHandler{
 
     @Override
     public void mouseDown() {
@@ -24,5 +24,11 @@ public class ScrollAction implements MouseActionHandler{
     public void mouseMove(int x, int y, int buttons) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public void update() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     
 }
