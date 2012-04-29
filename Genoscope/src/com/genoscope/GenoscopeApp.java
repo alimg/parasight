@@ -5,7 +5,6 @@
 package com.genoscope;
 
 import com.genoscope.reader.Reader;
-import java.awt.Dimension;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -471,8 +470,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 				openMenuItemActionPerformed(evt);
 				return;
 			}
-			reader.readFile(file.getAbsolutePath(),state);
-			System.out.println( file.getAbsolutePath() );
+			Reader.readFile(file.getAbsolutePath(),state);
 		} else {
 			System.out.println("File access cancelled by user.");
 		}
@@ -581,7 +579,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
-	private Reader reader=new Reader();
 	protected State state;
 
 }
