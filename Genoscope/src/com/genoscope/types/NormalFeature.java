@@ -16,9 +16,9 @@ public class NormalFeature extends Feature{
     protected boolean strand;// verilen feature in hangi DNA strandinde oldugu
     
     // bazen bir Feature in blocklari olacak icinde bunlar da NormalFeature olarak dusunulebilir
-    ArrayList<NormalFeature> blocks;
+    ArrayList<Feature> blocks;
 
-    public NormalFeature(int length, int score, boolean strand, ArrayList<NormalFeature> blocks) {
+    public NormalFeature(int length, int score, boolean strand, ArrayList<Feature> blocks) {
         this.length = length;
         this.score = score;
         this.strand = strand;
@@ -27,11 +27,11 @@ public class NormalFeature extends Feature{
     
     
 
-    public ArrayList<NormalFeature> getBlocks() {
+    public ArrayList<Feature> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(ArrayList<NormalFeature> blocks) {
+    public void setBlocks(ArrayList<Feature> blocks) {
         this.blocks = blocks;
     }
 
@@ -51,7 +51,7 @@ public class NormalFeature extends Feature{
         this.score = score;
     }
 
-    public boolean isStrand() {
+    public boolean getStrand() {
         return strand;
     }
 
