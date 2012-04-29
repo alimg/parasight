@@ -22,7 +22,8 @@ public class Reader {
 		//get extension
 		lastInd=path.lastIndexOf('.');
 		extension=path.substring(lastInd+1);
-		System.out.println(extension);
+		System.out.print("File type is: "+extension);
+
 		switch (extension) {
 			case "bed":
 				System.out.println("bed");
@@ -30,9 +31,13 @@ public class Reader {
 			case "bla":
 				System.out.println("bla");
 				return 0;//null;
+			case "cn":
+				System.out.println("cn");
+				return 0;
 		}
-		JOptionPane.showMessageDialog(panel, "Unsupported file extension:"+path,
+
+		JOptionPane.showMessageDialog(panel, "Unsupported file extension: "+extension,
 				"Warning", JOptionPane.WARNING_MESSAGE);
-		return 0;//null;
+		return -1;//null;
 	}
 }
