@@ -57,7 +57,8 @@ public class BEDReader extends FileReader{
 					feature = new NormalFeature(1000000000,-1,val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
 					feature.setLength(Integer.parseInt(val[2])-Integer.parseInt(val[1]));
-					
+					feature.setSourceFile(path);
+
 					chr.addFeature(feature);
 				}
 
