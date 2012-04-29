@@ -83,7 +83,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         objectProperties = new javax.swing.JScrollPane();
-        insertObject = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         drawingPanel = new javax.swing.JPanel();
         OpenGLContainer = new javax.swing.JPanel();
         OpenGLPanel = new javax.swing.JPanel();
@@ -177,7 +177,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         viewControlLayout.setVerticalGroup(
@@ -205,11 +205,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectProperties.setPreferredSize(new java.awt.Dimension(250, 200));
         leftToolBar.add(objectProperties);
 
-        insertObject.setBorder(javax.swing.BorderFactory.createTitledBorder("Insert Object"));
-        insertObject.setMaximumSize(new java.awt.Dimension(32767, 150));
-        insertObject.setMinimumSize(new java.awt.Dimension(37, 150));
-        insertObject.setPreferredSize(new java.awt.Dimension(12, 150));
-        leftToolBar.add(insertObject);
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createTitledBorder("Object List"));
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(32567, 200));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(250, 200));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(250, 200));
+        leftToolBar.add(jScrollPane1);
 
         drawingPanel.setLayout(new javax.swing.BoxLayout(drawingPanel, javax.swing.BoxLayout.PAGE_AXIS));
 
@@ -542,7 +542,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JScrollBar horizontalScroll;
-    private javax.swing.JScrollPane insertObject;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -565,6 +564,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;

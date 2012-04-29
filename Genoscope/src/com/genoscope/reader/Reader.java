@@ -12,7 +12,7 @@ import javax.swing.JPanel;
  * @author Furkan Mustafa Akdemir
  */
 public class Reader {
-	static public int readFile(String path){
+	static public int readFile(String path,State state){
 		 final JPanel panel = new JPanel();
 		//variables for extension check
 		String extension;
