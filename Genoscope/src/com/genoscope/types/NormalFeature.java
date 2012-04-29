@@ -4,7 +4,7 @@
  */
 package com.genoscope.types;
 
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  *
@@ -16,22 +16,22 @@ public class NormalFeature extends Feature{
     protected boolean strand;// verilen feature in hangi DNA strandinde oldugu
     
     // bazen bir Feature in blocklari olacak icinde bunlar da NormalFeature olarak dusunulebilir
-    ArrayList<Feature> blocks;
+    Vector<Feature> blocks;
 
-    public NormalFeature(int length, int score, boolean strand, ArrayList<Feature> blocks) {
+    public NormalFeature(int length, int score, boolean strand) {
         this.length = length;
         this.score = score;
         this.strand = strand;
-        this.blocks = blocks;
+        this.blocks = new <Feature>Vector();
     }
     
     
 
-    public ArrayList<Feature> getBlocks() {
+    public Vector<Feature> getBlocks() {
         return blocks;
     }
 
-    public void setBlocks(ArrayList<Feature> blocks) {
+    public void setBlocks(Vector<Feature> blocks) {
         this.blocks = blocks;
     }
 
