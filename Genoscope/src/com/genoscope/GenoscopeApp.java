@@ -54,20 +54,19 @@ public class GenoscopeApp extends javax.swing.JFrame {
         fileChooser.setFileFilter(addFileFilters());
         fileChooser.setFileHidingEnabled(true);
 //		fileChooser.setCurrentDirectory( new File( "./") ); 
-
-        //initialize
-        state = new State();
-    }
-
-    public State getAppState() {
-        return state;
-    }
-    //required for File Filter DO NOT DELETE
-
-    private FileFilter addFileFilters() {
-        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.falan, *.cb)",
-                "cn", "bed", "cb", "falan");
-    }
+		
+		//initialize
+		state=new State();
+	}
+        
+        public State getAppState(){
+            return state;
+        }
+	//required for File Filter DO NOT DELETE
+	private FileFilter addFileFilters(){
+		return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
+				"cn", "bed","cb","rd");
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.

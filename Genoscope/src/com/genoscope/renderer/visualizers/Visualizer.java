@@ -5,6 +5,8 @@
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.TrueTypeFont;
+import java.awt.Font;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -33,10 +35,12 @@ public class Visualizer {
     private boolean useFBO = false;
     private int FBOid;
     private boolean needRecreateBuffers = false;
-    private int OVERSAMPLE=4;
+    private int OVERSAMPLE=2;
     private int snapX=-100067;
     private int snapY=-100067;
-
+    
+    static TrueTypeFont font=GLHandler.font;
+    
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
         setSize(w, h);
@@ -164,6 +168,7 @@ public class Visualizer {
             System.out.println("textId " + textId);
             //</editor-fold>
         }
+        
     }
 
     /**
@@ -191,15 +196,15 @@ public class Visualizer {
     }
 
     public final void drawBuffered() {
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
         
         glEnable(GL_TEXTURE_2D);
-        GL20.glUseProgram(0);
+        //GL20.glUseProgram(0);
 
         //glRasterPos3f(10,500,0); 
         //glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer); 
 
         glBindTexture(GL_TEXTURE_2D, textId);
+        
         GL20.glUseProgram(GLHandler.shaderprogram);
         GL20.glUniform1i(GLHandler.imgUniform, 0);
         GL20.glUniform2f(GLHandler.sizeUniform, width, height);

@@ -11,55 +11,75 @@ import java.util.Vector;
  * @author Ahmet Kerim SENOL
  */
 public class Chromosome {
-    private int length;
-    private String name;
-    private String sourceFile;
-    private Vector<Feature> features;
 
-    public Chromosome(int length, String name, String sourceFile) {
-        this.length = length;
-        this.name = name;
-	this.sourceFile = sourceFile;
-        this.features = new <Feature>Vector();
-    }
+	private int length;
+	private String name;
+	private String sourceFile;
+	private Vector<Feature> features;
+	private int start;
+	private int end;
 
-    public Chromosome() {
-        
-    }
+	public Chromosome(int length, String name, String sourceFile) {
+		this.length = length;
+		this.name = name;
+		this.sourceFile = sourceFile;
+		this.features = new <Feature>Vector();
+		start = 1000000000;
+		end = 0;
+	}
 
-    public void addFeature(Feature feature){
-        if(feature.getPosition() > length)
-            length = feature.getPosition();
-        if(feature.getClass().equals(Cytoband.class)){
-            int featureLength = ((Cytoband)feature).getLength();
-            if(feature.getPosition() + featureLength > length)
-                length = feature.getPosition()+featureLength;
-        }
-        features.add(feature);
-    }
+	public Chromosome() {
+	}
 
-    public Vector<Feature> getFeatures(){
-        return features;
-    }
+	public void addFeature(Feature feature) {
+		if (feature.getPosition() < start) {
+			start = feature.getPosition();
+		}
+		if (feature.getClass().equals(Cytoband.class)) {
+			int featureLength = ((Cytoband) feature).getLength();
+			if (feature.getPosition() + featureLength > end) {
+				end = feature.getPosition() + featureLength;
+			}
+		}
+		if (feature.getClass().equals(NormalFeature.class)) {
+			int featureLength = ((NormalFeature) feature).getLength();
+			if (feature.getPosition() + featureLength > end) {
+				end = feature.getPosition() + featureLength;
+			}
+		}
+		length = end - start;
+		features.add(feature);
+	}
 
-    public int getLength() {
-        return length;
-    }
+	public int getStart() {
+		return start;
+	}
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public int getEnd() {
+		return end;
+	}
 
-    public String getSourceFile(){
-	return sourceFile;
-    }
-	
-    public String getName() {
-        return name;
-    }
+	public Vector<Feature> getFeatures() {
+		return features;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public int getLength() {
+		return length;
+	}
 
+	public void setLength(int length) {
+		this.length = length;
+	}
+
+	public String getSourceFile() {
+		return sourceFile;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }
