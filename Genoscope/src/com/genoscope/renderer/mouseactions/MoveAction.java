@@ -8,7 +8,7 @@ import com.genoscope.renderer.visualizers.Visualizer;
 import java.util.*;
 
 /**
- * Replace the visualizers. 
+ * Move and snap
  * @author alim
  */
 public  class MoveAction extends MouseActionHandler {
@@ -21,29 +21,21 @@ public  class MoveAction extends MouseActionHandler {
     {
         System.out.println(" moveaction ");
         setVisualizers(c);
-        
     }
 
     class MTreeMap extends TreeMap<Object, Object> {
 
         public Object put(Integer i) {
-            
             if(containsKey(i))
-            {
-                
                 return super.put(i, ((Integer)get(i))+1);
-            }
             return super.put(i, 0);
         }
 
         @Override
         public Object remove(Object key) {
-            
             if(containsKey(key))
-            {
                 if(((Integer)get(key) )>0 )
                     return super.put(key, ((Integer)get(key))-1);
-            }
             return super.remove(key);
         }
         

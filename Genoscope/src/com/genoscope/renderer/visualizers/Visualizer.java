@@ -4,6 +4,7 @@
  */
 package com.genoscope.renderer.visualizers;
 
+import com.genoscope.renderer.GLFontRenderer;
 import com.genoscope.renderer.GLHandler;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -36,7 +37,9 @@ public class Visualizer {
     private int OVERSAMPLE=4;
     private int snapX=-100067;
     private int snapY=-100067;
-
+    
+    GLFontRenderer font;
+    
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
         setSize(w, h);
