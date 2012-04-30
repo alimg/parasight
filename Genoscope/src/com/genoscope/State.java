@@ -6,6 +6,7 @@ package com.genoscope;
 
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.visualizers.BEDVisualizer;
 import com.genoscope.renderer.visualizers.CBVisualizer;
 import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
@@ -44,7 +45,7 @@ public class State {
 
         switch (extension) {
             case "bed":
-                renderer.addVisualizer(new ChromosomeVisualizer(800,80,chr));
+                renderer.addVisualizer(new BEDVisualizer(800,80,chr));
                 break;
             case "cb":
                 renderer.addVisualizer(new CBVisualizer(800, 80, chr));
