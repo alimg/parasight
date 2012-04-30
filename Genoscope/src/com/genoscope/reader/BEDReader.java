@@ -50,7 +50,7 @@ public class BEDReader extends FileReader{
 					if(val[0].equals("track"))
 						header = false;
 				}else{
-					val = line.split("	");
+					val = line.split("\t");
 
 					if(!chromosomeAdded)
 					{

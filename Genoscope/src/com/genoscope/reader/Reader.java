@@ -28,15 +28,18 @@ public class Reader {
 			case "bed":
 				System.out.println("reading: "+path+"\n------------");
 				new BEDReader().readFile(path, state);
+				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cb":
 				System.out.println("reading: "+path+"\n------------");
 				new CBReader().readFile(path, state);
+				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cn":
-			JOptionPane.showMessageDialog(panel, "This extension will be added: "+extension,
-					"Warning", JOptionPane.WARNING_MESSAGE);
 				System.out.println("reading: "+path);
+				JOptionPane.showMessageDialog(panel, "This extension will be added: "+extension,
+						"Warning", JOptionPane.WARNING_MESSAGE);
+				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 		}
 
