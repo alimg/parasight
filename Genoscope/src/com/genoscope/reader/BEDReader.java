@@ -44,10 +44,10 @@ public class BEDReader extends FileReader{
 				}else{
 					val = line.split("	");
 
-					System.out.println("Adding Chromosome to State: '"+val[0].substring(3)+"'");
-
 					if(!chromosomeAdded)
 					{
+						System.out.println("Adding Chromosome to State: '"+val[0].substring(3)+"'");
+
 						chrNo = Integer.parseInt(val[0].substring(3));
 						chr = new Chromosome(1000000000, chrNo, val[0], path);
 						state.addChromosome(chr);
