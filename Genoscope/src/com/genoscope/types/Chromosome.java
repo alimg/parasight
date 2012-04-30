@@ -15,12 +15,16 @@ public class Chromosome {
     private String name;
     private String sourceFile;
     private Vector<Feature> features;
+    private int start;
+    private int end;
 
     public Chromosome(int length, String name, String sourceFile) {
         this.length = length;
         this.name = name;
 	this.sourceFile = sourceFile;
         this.features = new <Feature>Vector();
+        start = 1000000000;
+        end = 0;
     }
 
     public Chromosome() {
@@ -28,16 +32,27 @@ public class Chromosome {
     }
 
     public void addFeature(Feature feature){
-        if(feature.getPosition() > length)
-            length = feature.getPosition();
+        if(feature.getPosition() < start)
+            start = feature.getPosition();
         if(feature.getClass().equals(Cytoband.class)){
             int featureLength = ((Cytoband)feature).getLength();
-            if(feature.getPosition() + featureLength > length)
-                length = feature.getPosition()+featureLength;
+            if(feature.getPosition() + featureLength > end)
+                end = feature.getPosition()+featureLength;
         }
+        if(feature.getClass().equals(NormalFeature.class)){
+            int featureLength = ((NormalFeature)feature).getLength();
+            if(feature.getPosition() + featureLength > end)
+                end = feature.getPosition()+featureLength;
+        }
+        length = end - start;
         features.add(feature);
     }
-
+    public int getStart(){
+        return start;
+    }
+    public int getEnd(){
+        return end;
+    }
     public Vector<Feature> getFeatures(){
         return features;
     }
