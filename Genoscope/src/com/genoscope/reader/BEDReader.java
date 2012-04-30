@@ -42,7 +42,7 @@ public class BEDReader extends FileReader{
 						header = false;
 				}else{
 					val = line.split("	");
-					
+
 					chr = state.getChromosome(val[0]);
 					if(chr == null){
 						System.out.println("Adding Chromosome to State: '"+val[0].substring(3)+"'");
@@ -50,7 +50,7 @@ public class BEDReader extends FileReader{
 						chrNo = Integer.parseInt(val[0].substring(3));
 
 						chr = new Chromosome(1000000000, chrNo, val[0]);
-						
+
 						state.addChromosome(chr);
 					}
 					

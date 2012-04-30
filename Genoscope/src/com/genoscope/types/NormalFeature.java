@@ -25,8 +25,6 @@ public class NormalFeature extends Feature{
         this.blocks = new <Feature>Vector();
     }
 
-
-
     public Vector<Feature> getBlocks() {
         return blocks;
     }
@@ -58,6 +56,5 @@ public class NormalFeature extends Feature{
     public void setStrand(boolean strand) {
         this.strand = strand;
     }
-
 
 }
