@@ -167,6 +167,7 @@ public class Visualizer {
             System.out.println("textId " + textId);
             //</editor-fold>
         }
+        
     }
 
     /**
@@ -194,15 +195,15 @@ public class Visualizer {
     }
 
     public final void drawBuffered() {
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
         
         glEnable(GL_TEXTURE_2D);
-        GL20.glUseProgram(0);
+        //GL20.glUseProgram(0);
 
         //glRasterPos3f(10,500,0); 
         //glDrawPixels(width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer); 
 
         glBindTexture(GL_TEXTURE_2D, textId);
+        
         GL20.glUseProgram(GLHandler.shaderprogram);
         GL20.glUniform1i(GLHandler.imgUniform, 0);
         GL20.glUniform2f(GLHandler.sizeUniform, width, height);
