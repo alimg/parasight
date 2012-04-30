@@ -25,5 +25,5 @@ public class Cytoband extends Feature{
     public void setLength(int length) {
         this.length = length;
     }
-    
+
 }
