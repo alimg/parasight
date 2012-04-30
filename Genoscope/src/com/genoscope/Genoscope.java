@@ -65,12 +65,6 @@ public class Genoscope {
         app.getAppState().setRenderer(renderer);
         //System.out.println("Trying LWJGL");
         
-        GLHandler.setRenderer(renderer);
-        GenoscopeApp app=new GenoscopeApp();
-        app.setVisible(true);
-        app.getAppState().setRenderer(renderer);
-        //System.out.println("Trying LWJGL");
-       
         
        
         app.OpenGLPanel.setMinimumSize(new Dimension(0,0));
