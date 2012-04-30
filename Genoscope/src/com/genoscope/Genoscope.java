@@ -25,20 +25,7 @@ public class Genoscope {
 
     private static Object renderLocker=new Object();
     private static RendererThread renderThread;
-    /**
-     * @param args the command line arguments
-     */
-    static boolean ok=false;
-    public static void main(String[] args) {
-        //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
-        final GenoscopeRenderer renderer=new GenoscopeRenderer();
-        
-        GLHandler.setRenderer(renderer);
-        GenoscopeApp app=new GenoscopeApp();
-        app.setVisible(true);
-        app.getAppState().setRenderer(renderer);
-        //System.out.println("Trying LWJGL");
-        final Canvas c=new Canvas() {
+    public static final Canvas canvas=new Canvas() {
             @Override
             public Dimension getSize() {
                 //return new Dimension(0,0);
@@ -73,25 +60,40 @@ public class Genoscope {
             
             
         };
+    /**
+     * @param args the command line arguments
+     */
+    static boolean ok=false;
+    public static void main(String[] args) {
+        //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
+        final GenoscopeRenderer renderer=new GenoscopeRenderer();
         
+        GLHandler.setRenderer(renderer);
+        GenoscopeApp app=new GenoscopeApp();
+        app.setVisible(true);
+        app.getAppState().setRenderer(renderer);
+        //System.out.println("Trying LWJGL");
+       
+        
+       
         app.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
-        app.OpenGLPanel.add(c);
-        GLHandler.setGLCanvas( c );
+        app.OpenGLPanel.add(canvas);
+        GLHandler.setGLCanvas( canvas );
         //c.setFocusable(false);
         try {
-            Display.setParent(c);
+            Display.setParent(canvas);
             
             Display.setVSyncEnabled(true);
 
             app.pack();
 
-            c.addComponentListener(new ComponentAdapter() {
+            canvas.addComponentListener(new ComponentAdapter() {
                 @Override
                 public void componentResized(ComponentEvent e)
                 {
                     //System.out.println(" resize "+c.getSize());
-                    renderThread.setSize(c.getSize());
+                    renderThread.setSize(canvas.getSize());
                     synchronized(renderThread)
                     {
                         renderThread.notifyAll();
@@ -101,7 +103,7 @@ public class Genoscope {
 
             
             renderThread=new RendererThread(renderer);
-            renderThread.setSize(c.getSize());
+            renderThread.setSize(canvas.getSize());
             renderThread.start();
             
         } catch (LWJGLException e1) {
