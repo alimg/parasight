@@ -40,7 +40,7 @@ public class CBReader extends FileReader{
 			Chromosome chr = null;
 			Cytoband cytoband;
 			int length = 0;
-
+ 
 			scanner = new Scanner(file);
 
 			while (scanner.hasNextLine()) {
