@@ -47,12 +47,12 @@ public class State {
                 renderer.addVisualizer(new ChromosomeVisualizer(800,80,chr));
                 break;
             case "cb":
-                renderer.addVisualizer(new CBVisualizer(800, 500, chr));
+                renderer.addVisualizer(new CBVisualizer(800, 80, chr));
                 break;
             case "cn":
                 break;
             default:
-                renderer.addVisualizer(new ChromosomeVisualizer(800,500,chr));
+                renderer.addVisualizer(new ChromosomeVisualizer(800,80,chr));
                 break;
         }
     }
