@@ -17,8 +17,8 @@ public class ChromosomeVisualizer extends Visualizer{
         super(w,h);
         this.chromosome = chr;
     }
-    public int getPosXY(int position){
-        return getWidth()*(position/chromosome.getLength());
+    public float getPosXY(int position){
+        return (float)getWidth()*(position/chromosome.getLength());
     }
     @Override
     public void draw(){

@@ -44,11 +44,12 @@ public class State {
 
         switch (extension) {
             case "bed":
+                renderer.addVisualizer(new ChromosomeVisualizer(500,80,chr));
                 break;
             case "cb":
+                renderer.addVisualizer(new CBVisualizer(500, 80, chr));
                 break;
             case "cn":
-                renderer.addVisualizer(new CBVisualizer(500, 80, chr));
                 break;
             default:
                 renderer.addVisualizer(new ChromosomeVisualizer(500,80,chr));

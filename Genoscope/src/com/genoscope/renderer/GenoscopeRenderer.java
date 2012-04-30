@@ -57,7 +57,9 @@ public class GenoscopeRenderer {
     
     public void addVisualizer(Visualizer v)
     {
-        clients.add(v);
+        synchronized(clients){
+            clients.add(v);
+        }
     }
     
     void mouseDown(int i)
@@ -104,17 +106,18 @@ public class GenoscopeRenderer {
             resetLayout();
             updated=true;
         }
-        for(Visualizer v: clients)
+        synchronized(clients)
         {
-            if(! v.isBufferUpToDate())
+            for(Visualizer v: clients)
             {
-                glPushMatrix();
-                v.initBufferMode();
-                v.updateBuffer();
-                glPopMatrix();
+                if(! v.isBufferUpToDate())
+                {
+                    glPushMatrix();
+                    v.initBufferMode();
+                    v.updateBuffer();
+                    glPopMatrix();
+                }
             }
-        }
-        
         GLHandler.setup();
         glClear( GL_COLOR_BUFFER_BIT );
         for(Visualizer v: clients)
@@ -142,6 +145,7 @@ public class GenoscopeRenderer {
                 glPopMatrix();
                 
             }
+        }
         }
     }
 
