@@ -24,16 +24,18 @@ public class Chromosome {
     }
 
     public Chromosome() {
-            throw new UnsupportedOperationException("Not yet implemented");
+        
     }
 
     public void addFeature(Feature feature){
+        if(feature.getPosition() > length)
+            length = feature.getPosition();
         features.add(feature);
     }
 
     public Vector<Feature> getFeatures(){
         return features;
-	}
+    }
 
     public int getChrNo() {
         return chrNo;
@@ -58,5 +60,5 @@ public class Chromosome {
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }
