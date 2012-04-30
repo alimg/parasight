@@ -27,17 +27,26 @@ public class Reader {
 
 		switch (extension) {
 			case "bed":
-				System.out.println("reading: " + path + "\n------------");
+				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
 				new BEDReader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cb":
-				System.out.println("reading: " + path + "\n------------");
+				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
 				new CBReader().readFile(path, state);
+				System.out.println("------------ Read Complete -----------\n");
+				return 0;
+			case "rd":
+				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
+				new RDReader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cn":
 				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
 				JOptionPane.showMessageDialog(panel, "This extension will be added: " + extension,
 						"Warning", JOptionPane.WARNING_MESSAGE);
 				System.out.println("------------ Read Complete -----------\n");
