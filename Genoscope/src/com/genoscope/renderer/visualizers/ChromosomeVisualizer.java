@@ -9,13 +9,16 @@ import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 /**
  *
- * @author PC
+ * @author Alper
  */
 public class ChromosomeVisualizer extends Visualizer{
     Chromosome chromosome;
     public ChromosomeVisualizer(int w,int h,Chromosome chr){
         super(w,h);
         this.chromosome = chr;
+    }
+    public int getPosXY(int position){
+        return getWidth()*(position/chromosome.getLength());
     }
     @Override
     public void draw(){
