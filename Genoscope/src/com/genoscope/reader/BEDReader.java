@@ -17,12 +17,11 @@ import javax.swing.JPanel;
  *
  * @author Furkan Mustafa Akdemir
  */
-public class BEDReader extends FileReader{
+public class BEDReader extends FileReader {
 
 	@Override
 	public Chromosome readFile(String path, State state) {
-		if(state.checkChromosome(path))
-		{
+		if (state.checkChromosome(path)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
@@ -46,25 +45,25 @@ public class BEDReader extends FileReader{
 			while (scanner.hasNextLine()) {
 
 				line = scanner.nextLine();
-				val=line.split(" ");
-				if(header == true){
-					if(val[0].equals("track"))
+				val = line.split(" ");
+				if (header == true) {
+					if (val[0].equals("track")) {
 						header = false;
-				}else{
+					}
+				} else {
 					val = line.split("\t");
 
-					if(!chromosomeAdded)
-					{
+					if (!chromosomeAdded) {
 						chrName = val[0];
 						System.out.println("Adding Chromosome to State: '" + chrName + "'");
 
 						chr = new Chromosome(0, chrName, path);
 						state.addChromosome(chr);
-						chromosomeAdded=true;
+						chromosomeAdded = true;
 					}
-					
-					length = Integer.parseInt(val[2])-Integer.parseInt(val[1]);
-					feature = new NormalFeature(length,-1,val[5].equals("+"));
+
+					length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
+					feature = new NormalFeature(length, -1, val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
 
 					chr.addFeature(feature);
@@ -73,7 +72,7 @@ public class BEDReader extends FileReader{
 			}
 			return null;
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found:"+path);
+			System.out.println("File not found:" + path);
 			return null;
 		}
 	}

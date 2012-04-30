@@ -6,7 +6,7 @@ package com.genoscope.reader;
 
 import com.genoscope.State;
 import com.genoscope.types.Chromosome;
-import com.genoscope.types.Cytoband;
+import com.genoscope.types.ReadDepth;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  *
  * @author Furkan Mustafa Akdemir
  */
-public class CBReader extends FileReader {
+public class RDReader extends FileReader {
 
 	@Override
 	public Chromosome readFile(String path, State state) {
@@ -37,7 +37,7 @@ public class CBReader extends FileReader {
 			String line, chrName = "";
 			String[] val;
 			Chromosome chr = null;
-			Cytoband cytoband;
+			ReadDepth readDepth;
 			int length = 0;
 
 			scanner = new Scanner(file);
@@ -55,13 +55,14 @@ public class CBReader extends FileReader {
 				}
 
 				length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
-				cytoband = new Cytoband(val[3], Integer.parseInt(val[1]), length, val[4]);
+				readDepth = new ReadDepth(length, Integer.parseInt(val[3]));
+				readDepth.setPosition(Integer.parseInt(val[1]));
 
-				chr.addFeature(cytoband);
+				chr.addFeature(readDepth);
 			}
 			return null;
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(CBReader.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(RDReader.class.getName()).log(Level.SEVERE, null, ex);
 			return null;
 		}
 	}

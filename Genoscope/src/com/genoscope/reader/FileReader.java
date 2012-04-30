@@ -12,5 +12,6 @@ import com.genoscope.types.Chromosome;
  * @author Furkan Mustafa Akdemir
  */
 abstract public class FileReader {
+
 	abstract public Chromosome readFile(String path, State state);
 }

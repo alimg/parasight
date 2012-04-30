@@ -9,42 +9,41 @@ package com.genoscope.types;
  * @author Ahmet Kerim SENOL
  */
 public abstract class Feature {
-    protected String name;
-    protected String source; //formatlardan birinde hangi programdan geldigini belirtmek icin kullaniliyor.
-    protected int position; //position on chromosome
 
-    public Feature(String name, int position) {
-        this.name = name;
-        this.source = "";
-        this.position = position;
-    }
+	protected String name;
+	protected String source; //formatlardan birinde hangi programdan geldigini belirtmek icin kullaniliyor.
+	protected int position; //position on chromosome
 
-    public Feature() {
-    }
-    
-    public String getName() {
-        return name;
-    }
+	public Feature(String name, int position) {
+		this.name = name;
+		this.source = "";
+		this.position = position;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public Feature() {
+	}
 
-    public int getPosition() {
-        return position;
-    }
-    
-    public void setPosition(int position) {
-        this.position = position;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getSource() {
-        return source;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setSource(String source) {
-        this.source = source;
-    }
-    
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
 }
-
