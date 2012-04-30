@@ -54,5 +54,6 @@ public class CBVisualizer extends ChromosomeVisualizer{
             black = !black;
         }
         glLineWidth(2.0f);
+        System.out.println("draw");
     }
 }

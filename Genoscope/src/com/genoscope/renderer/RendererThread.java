@@ -7,6 +7,9 @@ package com.genoscope.renderer;
 import com.genoscope.Genoscope;
 import com.genoscope.renderer.GLHandler;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,21 +23,37 @@ import org.lwjgl.opengl.GL11;
  * @author alim
  */
 public class RendererThread extends Thread {
+
     private final static AtomicReference<Dimension> newCanvasSize = new AtomicReference<Dimension>();
-    boolean running=true;
-    RendererThread that=this;
+    boolean running = true;
+    RendererThread that = this;
     GenoscopeRenderer renderer;
-    public Object initSync=new Object();
+    public Object initSync = new Object();
+    public static Object exportSync = new Object();
+    private static BufferedImage image;
+    private static boolean screenshotReq = false;
+
     public RendererThread(GenoscopeRenderer renderer) {
-        this.renderer=renderer;
+        this.renderer = renderer;
     }
-    
-    
-    
-    public void setSize(Dimension s)
-    {
+
+    public static BufferedImage getScreenShot() {
+        synchronized (exportSync) {
+            screenshotReq = true;
+            try {
+                exportSync.wait();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RendererThread.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return image;
+
+    }
+
+    public void setSize(Dimension s) {
         newCanvasSize.set(s);
     }
+
     @Override
     public void run() {
         try {
@@ -44,81 +63,96 @@ public class RendererThread extends Thread {
             Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
         }
         GLHandler.init();
-        synchronized(initSync)
-        {
+        synchronized (initSync) {
             initSync.notify();
         }
         Dimension newDim;
-        int mButtonCount=Mouse.getButtonCount(),mouseState=0,mouseState_old=0;
-        while(!Display.isCloseRequested())
-        {
+        int mButtonCount = Mouse.getButtonCount(), mouseState = 0, mouseState_old = 0;
+        while (!Display.isCloseRequested()) {
 
             newDim = newCanvasSize.getAndSet(null);
 
-            if (newDim != null)
-            {
+            if (newDim != null) {
                 GL11.glViewport(0, 0, newDim.width, newDim.height);
-                GLHandler.setup(newDim.width,newDim.height);
-            }
-            else{
+                GLHandler.setup(newDim.width, newDim.height);
+            } else {
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                 GLHandler.render();
             }
             Display.update();
 
-            
+
             //System.out.println("mouse");
-            
-            while(Mouse.next())
-            {
-                
-                if(Mouse.isInsideWindow())
-                {
-                    int x=Mouse.getX();
-                    int y=Mouse.getY();
-                    renderer.mouseMove(x,GLHandler.getHeight()-y, mouseState );
+
+            while (Mouse.next()) {
+
+                if (Mouse.isInsideWindow()) {
+                    int x = Mouse.getX();
+                    int y = Mouse.getY();
+                    renderer.mouseMove(x, GLHandler.getHeight() - y, mouseState);
                     //System.out.println("mouse "+x+" "+y);
-                    mouseState=0;
-                    for(int i=0;i<mButtonCount;i++)
-                    {
-                        if(Mouse.isButtonDown(i))
-                        {
-                            mouseState|=1<<i;
+                    mouseState = 0;
+                    for (int i = 0; i < mButtonCount; i++) {
+                        if (Mouse.isButtonDown(i)) {
+                            mouseState |= 1 << i;
                             //System.out.println("mouse " +i+" "+Mouse.getEventButtonState());
                         }
-                        if( (((mouseState^mouseState_old)>>i)&1 )==1 )
-                        {
-                            if(Mouse.isButtonDown(i))
+                        if ((((mouseState ^ mouseState_old) >> i) & 1) == 1) {
+                            if (Mouse.isButtonDown(i)) {
                                 renderer.mouseDown(i);
-                            else renderer.mouseUp(i);
+                            } else {
+                                renderer.mouseUp(i);
+                            }
                         }
                     }
-                    mouseState_old=mouseState;
-                }
-                else {
+                    mouseState_old = mouseState;
+                } else {
                     /*
-                    //release mouse buttons when exited from screen
-                    mouseState=0;
-                    for(int i=0;i<mButtonCount;i++)
-                        if( (((mouseState^mouseState_old)>>i)&1 )==1 )
-                            renderer.mouseUp(i);
-                    mouseState_old=0;*/
+                     * //release mouse buttons when exited from screen
+                     * mouseState=0; for(int i=0;i<mButtonCount;i++) if(
+                     * (((mouseState^mouseState_old)>>i)&1 )==1 )
+                     * renderer.mouseUp(i);
+                    mouseState_old=0;
+                     */
                 }
             }
-            synchronized(this)
-            {
+            synchronized (this) {
                 try {
                     this.wait(30);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            if (screenshotReq) {
+                final int width=GLHandler.getWidth();
+                final int height=GLHandler.getHeight();
+                ByteBuffer buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
+
+                GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
+                GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
+                GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+                image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        int i = (x + (width * y)) * 4;
+                        
+                        int r = buffer.get(i) & 0xFF;
+                        int g = buffer.get(i + 1) & 0xFF;
+                        int b = buffer.get(i + 2) & 0xFF;
+                        int a = buffer.get(i + 3) & 0xFF;
+                        image.setRGB(x, height - (y + 1), (a << 24) | (r << 16) | (g << 8) | b);
+                    }
+                }
+
+                synchronized(exportSync){
+                exportSync.notify();
+                }
+
+            }
         }
-        running=false;
+        running = false;
         Display.destroy();
         System.exit(0);
     }
-    
-    
-    
 }
