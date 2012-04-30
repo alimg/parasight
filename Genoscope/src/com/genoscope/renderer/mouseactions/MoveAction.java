@@ -191,27 +191,28 @@ public  class MoveAction extends MouseActionHandler {
                     {
                     case N:
                         selected.setPosition(selected.getX(), selected.getY()+dy);
-                        selected.setSize(selected.getWidth(), selected.getHeight()-dy);
                         snap(selected);
+                        selected.setSize(selected.getWidth(), selected.getHeight()-dy);
                         break;
                     case S:
                         selected.setSize(selected.getWidth(), selected.getHeight()+dy);
                         break;
                     case W:
                         selected.setPosition(selected.getX()+dx, selected.getY());
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight());
                         snap(selected);
+                        selected.setSize(selected.getWidth()-dx, selected.getHeight());
                         break;
                     case E:
                         selected.setSize(selected.getWidth()+dx, selected.getHeight());
                         break;
                     case NE:
                         selected.setPosition(selected.getX(), selected.getY()+dy);
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
                         snap(selected);
+                        selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
                         break;
                     case NW:
                         selected.setPosition(selected.getX()+dx, selected.getY()+dy);
+                        snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
                         break;
                     case SE:
@@ -220,6 +221,7 @@ public  class MoveAction extends MouseActionHandler {
                         break;
                     case SW:
                         selected.setPosition(selected.getX()+dx, selected.getY());
+                        snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
                         break;
                     }
