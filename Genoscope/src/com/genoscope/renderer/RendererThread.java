@@ -148,6 +148,7 @@ public class RendererThread extends Thread {
                 synchronized(exportSync){
                 exportSync.notify();
                 }
+                screenshotReq=false;
 
             }
         }
