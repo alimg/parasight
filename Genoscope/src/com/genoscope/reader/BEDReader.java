@@ -10,6 +10,8 @@ import com.genoscope.types.NormalFeature;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,6 +21,13 @@ public class BEDReader extends FileReader{
 
 	@Override
 	public Chromosome readFile(String path, State state) {
+		if(state.checkChromosome(path))
+		{
+			final JPanel panel = new JPanel();
+			JOptionPane.showMessageDialog(panel, "File already added",
+					"Warning", JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
 		File file = new File(path);
 
 		try {
