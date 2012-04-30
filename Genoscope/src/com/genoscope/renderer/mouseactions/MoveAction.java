@@ -4,7 +4,9 @@
  */
 package com.genoscope.renderer.mouseactions;
 
+import com.genoscope.Genoscope;
 import com.genoscope.renderer.visualizers.Visualizer;
+import java.awt.Cursor;
 import java.util.*;
 
 /**
@@ -79,6 +81,7 @@ public  class MoveAction extends MouseActionHandler {
                 selected=c;
         if(selected!=null)
         {
+            Genoscope.canvas.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
             arX.remove(selected.getX());
             arX.remove(selected.getX()+selected.getWidth());
             arY.remove(selected.getY());
@@ -93,6 +96,7 @@ public  class MoveAction extends MouseActionHandler {
     public void mouseUp() {
         if(selected!=null)
         {
+            Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
             selected.setPosition(selected.getSnapX(), selected.getSnapY());
             arX.put(selected.getX());
             arX.put(selected.getX()+selected.getWidth());
