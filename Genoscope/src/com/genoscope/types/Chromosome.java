@@ -56,6 +56,7 @@ public class Chromosome {
 	public String getSourceFile(){
 		return sourceFile;
 	}
+	
     public String getName() {
         return name;
     }

@@ -36,7 +36,7 @@ public class State {
                 return true;
         return false;
     }
-        
+	
     public void addChromosome(Chromosome chr){
         chromosomeList.add(chr);
         renderer.addVisualizer(new ChromosomeVisualizer(500,100,chr));

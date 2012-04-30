@@ -18,7 +18,7 @@ import java.util.Scanner;
 public class BEDReader extends FileReader{
 
 	@Override
-	public int readFile(String path, State state) {
+	public Chromosome readFile(String path, State state) {
 		File file = new File(path);
 
 		try {
@@ -32,12 +32,6 @@ public class BEDReader extends FileReader{
 
 			scanner = new Scanner(file);
 			desc = "";
-			
-			if(state.checkChromosome(path))
-			{
-				System.out.println("File already added");
-				return -2;
-			}
 
 			while (scanner.hasNextLine()) {
 
@@ -65,10 +59,10 @@ public class BEDReader extends FileReader{
 				}
 
 			}
-			return 0;
+			return null;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:"+path);
-			return -1;
+			return null;
 		}
 	}
 }
