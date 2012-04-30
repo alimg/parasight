@@ -12,8 +12,8 @@ public class Cytoband extends Feature{
     protected int length;
     protected String gieStain;
 
-    public Cytoband(String name, String sourceFile,int chrNo, int position,int length,String gieStain) {
-        super(name,sourceFile,chrNo,position);
+    public Cytoband(String name, int chrNo, int position,int length) {
+        super(name,chrNo,position);
         this.length = length;
         this.gieStain = gieStain;
     }

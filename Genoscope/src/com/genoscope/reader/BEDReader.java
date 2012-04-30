@@ -26,7 +26,8 @@ public class BEDReader extends FileReader{
 			String line, desc;
 			String[] val;
 			boolean header = true;
-			Chromosome chr;
+			boolean chromosomeAdded = false;
+			Chromosome chr = null;
 			NormalFeature feature;
 			int chrNo = -1;
 
@@ -42,22 +43,20 @@ public class BEDReader extends FileReader{
 						header = false;
 				}else{
 					val = line.split("	");
-					
-					chr = state.getChromosome(val[0]);
-					if(chr == null){
+
+					if(!chromosomeAdded)
+					{
 						System.out.println("Adding Chromosome to State: '"+val[0].substring(3)+"'");
 
 						chrNo = Integer.parseInt(val[0].substring(3));
-
-						chr = new Chromosome(1000000000, chrNo, val[0]);
-						
+						chr = new Chromosome(1000000000, chrNo, val[0], path);
 						state.addChromosome(chr);
+						chromosomeAdded=true;
 					}
 					
 					feature = new NormalFeature(1000000000,-1,val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
 					feature.setLength(Integer.parseInt(val[2])-Integer.parseInt(val[1]));
-					feature.setSourceFile(path);
 
 					chr.addFeature(feature);
 				}

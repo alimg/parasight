@@ -63,8 +63,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
         }
 	//required for File Filter DO NOT DELETE
 	private FileFilter addFileFilters(){
-		return new FileNameExtensionFilter("supported files (*.cn, *.bed, *.falan, *.filan)",
-				"cn", "bed","falan","filan");
+		return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.falan, *.cb)",
+				"cn", "bed","cb","falan");
 	}
 
     /**

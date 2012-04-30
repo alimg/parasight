@@ -29,7 +29,9 @@ public class Reader {
 				System.out.println("reading: "+path+"\n------------");
 				new BEDReader().readFile(path, state);
 				return 0;
-			case "bla":
+			case "cb":
+			JOptionPane.showMessageDialog(panel, "This extension will be added: "+extension,
+					"Warning", JOptionPane.WARNING_MESSAGE);
 				System.out.println("reading: "+path);
 				return 0;
 			case "cn":

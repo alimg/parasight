@@ -14,7 +14,7 @@ public class NormalFeature extends Feature{
     protected int length; // bulungdugu chromosome uzerindeki uzunlugu
     protected int score;  // verilen ozellige gore bir skor
     protected boolean strand;// verilen feature in hangi DNA strandinde oldugu
-    
+
     // bazen bir Feature in blocklari olacak icinde bunlar da NormalFeature olarak dusunulebilir
     Vector<Feature> blocks;
 
@@ -24,8 +24,6 @@ public class NormalFeature extends Feature{
         this.strand = strand;
         this.blocks = new <Feature>Vector();
     }
-    
-    
 
     public Vector<Feature> getBlocks() {
         return blocks;
@@ -58,6 +56,5 @@ public class NormalFeature extends Feature{
     public void setStrand(boolean strand) {
         this.strand = strand;
     }
- 
-    
+
 }

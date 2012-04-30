@@ -19,6 +19,10 @@ public class ChromosomeVisualizer extends Visualizer{
     }
     @Override
     public void draw(){
+        glDisable(GL_TEXTURE_2D);
+        glClearColor(1, 1, 1, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glColor4f(0, 0, 0, 1);
         glLineWidth(5.0f);
         glBegin(GL_LINES);
         glVertex2f(0.0f,getHeight()/2.0f);
