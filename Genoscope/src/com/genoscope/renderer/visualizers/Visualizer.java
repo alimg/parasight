@@ -35,7 +35,7 @@ public class Visualizer {
     private boolean useFBO = false;
     private int FBOid;
     private boolean needRecreateBuffers = false;
-    private int OVERSAMPLE=4;
+    private int OVERSAMPLE=2;
     private int snapX=-100067;
     private int snapY=-100067;
     

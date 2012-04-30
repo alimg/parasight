@@ -26,6 +26,7 @@ public class BEDVisualizer extends ChromosomeVisualizer{
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
+        
         glColor4f(0, 0, 0, 1);
         glLineWidth(5.0f);
         glBegin(GL_LINES);
@@ -76,6 +77,11 @@ public class BEDVisualizer extends ChromosomeVisualizer{
             glEnd();
             black = !black;
         }
+        glColor4f(0, 0, 1, 1);
+        glEnable(GL_TEXTURE_2D);
+        font.drawString(20, getHeight()-20, "Deneme  e\n234 \\n\n\\\nn",1,1 );
+        glDisable(GL_TEXTURE_2D);
+        
         glLineWidth(2.0f);
     }
 }
