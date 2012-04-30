@@ -4,6 +4,7 @@
  */
 package com.genoscope.renderer;
 import java.awt.Canvas;
+import java.awt.Font;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,6 +26,8 @@ public class GLHandler {
     static private int width;
     static private int height;
     static public boolean FBOEnabled;
+    
+    public static TrueTypeFont font=null;
 
 
     public static int getHeight() {
@@ -72,7 +75,7 @@ public class GLHandler {
             GL20.glUseProgram(shaderprogram);
             i=glGetError();
             if(i!=GL_NO_ERROR)
-                System.out.println(" error "+i);
+                System.out.println(" error init "+i);
             imgUniform = GL20.glGetUniformLocation(shaderprogram, "baseImage");
             sizeUniform = GL20.glGetUniformLocation(shaderprogram, "baseSize");
             
@@ -92,6 +95,8 @@ public class GLHandler {
         FBOEnabled = GLContext.getCapabilities().GL_EXT_framebuffer_object;
         System.out.println("framebuffer enabled "+FBOEnabled);
         
+        GL20.glUseProgram(0);
+        font=new TrueTypeFont(new Font("serif", 0&Font.ITALIC | Font.BOLD, 12), true);
         
     }
     

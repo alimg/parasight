@@ -24,8 +24,13 @@ public class ChromosomeVisualizer extends Visualizer{
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
-        glColor4f(0, 0, 0, 1);
+        glColor4f(0, 0, 1, 1);
         glLineWidth(5.0f);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        font.drawString(20, getHeight()-20, "denemeMMe",1,1 );
+        glDisable(GL_BLEND);
+        glDisable(GL_TEXTURE_2D);
         glBegin(GL_LINES);
         glVertex2f(0.0f,getHeight()/2.0f);
         glVertex2f(getWidth(),getHeight()/2.0f);

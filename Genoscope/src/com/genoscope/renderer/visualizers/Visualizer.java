@@ -4,8 +4,9 @@
  */
 package com.genoscope.renderer.visualizers;
 
-import com.genoscope.renderer.GLFontRenderer;
 import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.TrueTypeFont;
+import java.awt.Font;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -38,7 +39,7 @@ public class Visualizer {
     private int snapX=-100067;
     private int snapY=-100067;
     
-    GLFontRenderer font;
+    static TrueTypeFont font=GLHandler.font;
     
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
