@@ -25,25 +25,20 @@ public class Genoscope {
 
     private static Object renderLocker=new Object();
     private static RendererThread renderThread;
-    public static final Canvas canvas=new Canvas() {
+    public static Canvas canvas=new Canvas() {
             @Override
             public Dimension getSize() {
-                //return new Dimension(0,0);
                 return super.getSize();
             }
-
             @Override
             public void repaint() {
-                //super.repaint();
                 synchronized(renderThread)
                 {
                     renderThread.notifyAll();
                 }
             }
-
             @Override
             public void paint(Graphics g) {
-                //super.paint(g);
 		if(renderThread==null)
                     return;
                 synchronized(renderThread)
@@ -51,15 +46,11 @@ public class Genoscope {
                     renderThread.notifyAll();
                 }
             }
-
             @Override
             public void paintAll(Graphics g) {
-                //super.paintAll(g);
             }
-
-            
-            
         };
+        
     /**
      * @param args the command line arguments
      */
@@ -67,6 +58,12 @@ public class Genoscope {
     public static void main(String[] args) {
         //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
         final GenoscopeRenderer renderer=new GenoscopeRenderer();
+        
+        GLHandler.setRenderer(renderer);
+        GenoscopeApp app=new GenoscopeApp();
+        app.setVisible(true);
+        app.getAppState().setRenderer(renderer);
+        //System.out.println("Trying LWJGL");
         
         GLHandler.setRenderer(renderer);
         GenoscopeApp app=new GenoscopeApp();
