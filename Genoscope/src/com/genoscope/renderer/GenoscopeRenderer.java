@@ -131,6 +131,7 @@ public class GenoscopeRenderer {
                     GL20.glUseProgram(0);
                     glColor4f(0,0,0,1);
                     glDisable(GL_TEXTURE_2D);
+                    glLineWidth(1);
                     glBegin(GL_LINE_LOOP);
                     glVertex2f(0, 0);
                     glVertex2f(0,v.getHeight());
