@@ -15,49 +15,57 @@ import com.genoscope.types.Pair;
 import java.util.Vector;
 
 public class State {
-    private Vector<Chromosome> chromosomeList;
-    private Vector<Pair> pairList;
-    private Vector<Visualizer> visualizerList;
-    private GenoscopeRenderer renderer;
-    public State(){
-        chromosomeList = new <Chromosome>Vector();
-        pairList = new <Pair>Vector();
-        visualizerList = new <Visualizer>Vector();
-    }
-    public void setRenderer(GenoscopeRenderer renderer){
-        this.renderer = renderer;
-    }
-    public int importData(String fileName){
-        int returnID = Reader.readFile(fileName,this);
-        return returnID;
-    }
-    public boolean checkChromosome(String path){
-        for(Chromosome i:chromosomeList)
-            if(i.getSourceFile().equals(path))
-                return true;
-        return false;
-    }
-	
-    public void addChromosome(Chromosome chr){
-        chromosomeList.add(chr);
-        int lastInd=chr.getSourceFile().lastIndexOf('.');
-	String extension=chr.getSourceFile().substring(lastInd+1);
 
-        switch (extension) {
-            case "bed":
-                renderer.addVisualizer(new BEDVisualizer(800,80,chr));
-                break;
-            case "cb":
-                renderer.addVisualizer(new CBVisualizer(800, 80, chr));
-                break;
-            case "cn":
-                break;
-            default:
-                renderer.addVisualizer(new ChromosomeVisualizer(800,80,chr));
-                break;
-        }
-    }
-    public void addPair(Pair pair){
-        pairList.add(pair);
-    }
+	private Vector<Chromosome> chromosomeList;
+	private Vector<Pair> pairList;
+	private Vector<Visualizer> visualizerList;
+	private GenoscopeRenderer renderer;
+
+	public State() {
+		chromosomeList = new <Chromosome>Vector();
+		pairList = new <Pair>Vector();
+		visualizerList = new <Visualizer>Vector();
+	}
+
+	public void setRenderer(GenoscopeRenderer renderer) {
+		this.renderer = renderer;
+	}
+
+	public int importData(String fileName) {
+		int returnID = Reader.readFile(fileName, this);
+		return returnID;
+	}
+
+	public boolean checkChromosome(String path) {
+		for (Chromosome i : chromosomeList) {
+			if (i.getSourceFile().equals(path)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public void addChromosome(Chromosome chr) {
+		chromosomeList.add(chr);
+		int lastInd = chr.getSourceFile().lastIndexOf('.');
+		String extension = chr.getSourceFile().substring(lastInd + 1);
+
+		switch (extension) {
+			case "bed":
+				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
+				break;
+			case "cb":
+				renderer.addVisualizer(new CBVisualizer(800, 80, chr));
+				break;
+			case "cn":
+				break;
+			default:
+				renderer.addVisualizer(new ChromosomeVisualizer(800, 80, chr));
+				break;
+		}
+	}
+
+	public void addPair(Pair pair) {
+		pairList.add(pair);
+	}
 }

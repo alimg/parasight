@@ -8,22 +8,22 @@ package com.genoscope.types;
  *
  * @author Ahmet Kerim SENOL
  */
-public class Cytoband extends Feature{
-    protected int length;
-    protected String gieStain;
+public class Cytoband extends Feature {
 
-    public Cytoband(String name, int position,int length,String gieStain) {
-        super(name, position);
-        this.length = length;
-        this.gieStain = gieStain;
-    }
+	protected int length;
+	protected String gieStain;
 
-    public int getLength() {
-        return length;
-    }
+	public Cytoband(String name, int position, int length, String gieStain) {
+		super(name, position);
+		this.length = length;
+		this.gieStain = gieStain;
+	}
 
-    public void setLength(int length) {
-        this.length = length;
-    }
+	public int getLength() {
+		return length;
+	}
 
+	public void setLength(int length) {
+		this.length = length;
+	}
 }
