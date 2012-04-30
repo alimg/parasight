@@ -14,12 +14,14 @@ public class Chromosome {
     private int length;
     private int chrNo;
     private String name;
+	private String sourceFile;
     private Vector<Feature> features;
 
-    public Chromosome(int length, int chrNo, String name) {
+    public Chromosome(int length, int chrNo, String name, String sourceFile) {
         this.length = length;
         this.chrNo = chrNo;
         this.name = name;
+		this.sourceFile = sourceFile;
         this.features = new <Feature>Vector();
     }
 
@@ -51,6 +53,9 @@ public class Chromosome {
         this.length = length;
     }
 
+	public String getSourceFile(){
+		return sourceFile;
+	}
     public String getName() {
         return name;
     }
