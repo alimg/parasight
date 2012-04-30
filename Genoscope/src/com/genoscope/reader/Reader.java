@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  */
 public class Reader {
 	static public int readFile(String path,State state){
-		 final JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		//variables for extension check
 		String extension;
 		int lastInd;
