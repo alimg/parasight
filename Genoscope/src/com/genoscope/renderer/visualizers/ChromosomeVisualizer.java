@@ -5,17 +5,19 @@
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.types.Chromosome;
-import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 /**
  *
- * @author PC
+ * @author Alper
  */
 public class ChromosomeVisualizer extends Visualizer{
     Chromosome chromosome;
     public ChromosomeVisualizer(int w,int h,Chromosome chr){
         super(w,h);
         this.chromosome = chr;
+    }
+    public float getPosX(int position){
+        return (float)getWidth()*((float)position/chromosome.getLength());
     }
     @Override
     public void draw(){

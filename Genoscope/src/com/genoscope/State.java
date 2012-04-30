@@ -6,6 +6,7 @@ package com.genoscope;
 
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.visualizers.CBVisualizer;
 import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
 import com.genoscope.types.Chromosome;
@@ -13,7 +14,6 @@ import com.genoscope.types.Pair;
 import java.util.Vector;
 
 public class State {
-    static int ERROR = -1;
     private Vector<Chromosome> chromosomeList;
     private Vector<Pair> pairList;
     private Vector<Visualizer> visualizerList;
@@ -30,23 +30,31 @@ public class State {
         int returnID = Reader.readFile(fileName,this);
         return returnID;
     }
-    public Chromosome getChromosome(String name){
+    public boolean checkChromosome(String path){
         for(Chromosome i:chromosomeList)
-            if(i.getName().equals(name))
-                return i;
-        return null;
+            if(i.getSourceFile().equals(path))
+                return true;
+        return false;
     }
-    
-    public Chromosome getChromosome(int id){
-        for(Chromosome i:chromosomeList)
-            if(i.getChrNo() == id)
-                return i;
-        return null;
-    }
-    
+	
     public void addChromosome(Chromosome chr){
         chromosomeList.add(chr);
-        renderer.addVisualizer(new ChromosomeVisualizer(500,100,chr));
+        int lastInd=chr.getSourceFile().lastIndexOf('.');
+	String extension=chr.getSourceFile().substring(lastInd+1);
+
+        switch (extension) {
+            case "bed":
+                renderer.addVisualizer(new ChromosomeVisualizer(800,80,chr));
+                break;
+            case "cb":
+                renderer.addVisualizer(new CBVisualizer(800, 500, chr));
+                break;
+            case "cn":
+                break;
+            default:
+                renderer.addVisualizer(new ChromosomeVisualizer(800,500,chr));
+                break;
+        }
     }
     public void addPair(Pair pair){
         pairList.add(pair);

@@ -10,6 +10,8 @@ import com.genoscope.types.NormalFeature;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -19,19 +21,27 @@ public class BEDReader extends FileReader{
 
 	@Override
 	public Chromosome readFile(String path, State state) {
+		if(state.checkChromosome(path))
+		{
+			final JPanel panel = new JPanel();
+			JOptionPane.showMessageDialog(panel, "File already added",
+					"Warning", JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
 		File file = new File(path);
 
 		try {
-			Scanner scanner, lineScanner;
-			String line, desc;
+			Scanner scanner;
+			String line;
 			String[] val;
 			boolean header = true;
-			Chromosome chr;
+			boolean chromosomeAdded = false;
+			Chromosome chr = null;
 			NormalFeature feature;
-			int chrNo = -1;
+			String chrName;
+			int length = 0;
 
 			scanner = new Scanner(file);
-			desc = "";
 
 			while (scanner.hasNextLine()) {
 
@@ -41,23 +51,21 @@ public class BEDReader extends FileReader{
 					if(val[0].equals("track"))
 						header = false;
 				}else{
-					val = line.split("	");
-					
-					chr = state.getChromosome(val[0]);
-					if(chr == null){
-						System.out.println("Adding Chromosome to State: '"+val[0].substring(3)+"'");
+					val = line.split("\t");
 
-						chrNo = Integer.parseInt(val[0].substring(3));
+					if(!chromosomeAdded)
+					{
+						chrName = val[0];
+						System.out.println("Adding Chromosome to State: '" + chrName + "'");
 
-						chr = new Chromosome(1000000000, chrNo, val[0]);
-						
+						chr = new Chromosome(0, chrName, path);
 						state.addChromosome(chr);
+						chromosomeAdded=true;
 					}
 					
-					feature = new NormalFeature(1000000000,-1,val[5].equals("+"));
+					length = Integer.parseInt(val[2])-Integer.parseInt(val[1]);
+					feature = new NormalFeature(length,-1,val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
-					feature.setLength(Integer.parseInt(val[2])-Integer.parseInt(val[1]));
-					feature.setSourceFile(path);
 
 					chr.addFeature(feature);
 				}

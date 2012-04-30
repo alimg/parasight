@@ -10,10 +10,12 @@ package com.genoscope.types;
  */
 public class Cytoband extends Feature{
     protected int length;
+    protected String gieStain;
 
-    public Cytoband(String name, String source, int chrNo, int position,int length) {
-        super(name,source,chrNo,position);
+    public Cytoband(String name, int position,int length,String gieStain) {
+        super(name, position);
         this.length = length;
+        this.gieStain = gieStain;
     }
 
     public int getLength() {
