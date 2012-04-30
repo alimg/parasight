@@ -57,7 +57,7 @@ public class BEDReader extends FileReader{
 						chrName = val[0];
 						System.out.println("Adding Chromosome to State: '" + chrName + "'");
 
-						chr = new Chromosome(1000000000, chrName, path);
+						chr = new Chromosome(0, chrName, path);
 						state.addChromosome(chr);
 						chromosomeAdded=true;
 					}

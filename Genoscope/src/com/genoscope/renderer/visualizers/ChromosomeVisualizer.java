@@ -5,7 +5,6 @@
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.types.Chromosome;
-import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
 /**
  *
@@ -17,8 +16,8 @@ public class ChromosomeVisualizer extends Visualizer{
         super(w,h);
         this.chromosome = chr;
     }
-    public float getPosXY(int position){
-        return (float)getWidth()*(position/chromosome.getLength());
+    public float getPosX(int position){
+        return (float)getWidth()*((float)position/chromosome.getLength());
     }
     @Override
     public void draw(){

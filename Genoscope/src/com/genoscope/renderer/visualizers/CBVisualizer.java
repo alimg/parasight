@@ -35,17 +35,22 @@ public class CBVisualizer extends ChromosomeVisualizer{
         glVertex2f(getWidth(),getHeight()/4.0f);
         glVertex2f(getWidth(),3*getHeight()/4.0f);
         glEnd();
-        glBegin(GL_QUADS);
         boolean black = true;
         for(Feature i:chromosome.getFeatures()){
+            glBegin(GL_POLYGON);
+            float x1 = getPosX(i.getPosition());
+            float y1 = h;
+            float x2 = getPosX(i.getPosition()+((Cytoband)i).getLength());
+            float y2 = 3*h;
             if(black)
                 glColor4f(0,0,0,1);
             else
-                glColor4f(0.5f,0.5f,0.5f,1);
-            glVertex2f(getPosXY(i.getPosition()),h);
-            glVertex2f(getPosXY(i.getPosition()+((Cytoband)i).getLength()),h);
-            glVertex2f(getPosXY(i.getPosition()+((Cytoband)i).getLength()),3*h);
-            glVertex2f(getPosXY(i.getPosition()),3*h);
+                glColor4f(0.8f,0.8f,0.8f,1);
+            glVertex2f(x1,y1);
+            glVertex2f(x2,y1);
+            glVertex2f(x2,y2);
+            glVertex2f(x1,y2);
+            glEnd();
             black = !black;
         }
         glLineWidth(2.0f);
