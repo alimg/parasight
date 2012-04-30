@@ -39,6 +39,7 @@ public class CBReader extends FileReader{
 			String[] val;
 			Chromosome chr = null;
 			Cytoband cytoband;
+			int length = 0;
 
 			scanner = new Scanner(file);
 
@@ -51,12 +52,12 @@ public class CBReader extends FileReader{
 				{
 					chrName = val[0];
 					System.out.println("Adding Chromosome to State: '" + chrName + "'");
-					chr = new Chromosome(1000000000, chrName, path);
+					chr = new Chromosome(0, chrName, path);
 					state.addChromosome(chr);
 				}
 
-				cytoband = new Cytoband(val[3], Integer.parseInt(val[1]),
-						Integer.parseInt(val[2])-Integer.parseInt(val[1]), val[4]);
+				length = Integer.parseInt(val[2])-Integer.parseInt(val[1]);
+				cytoband = new Cytoband(val[3], Integer.parseInt(val[1]),length, val[4]);
 
 				chr.addFeature(cytoband);
 			}
