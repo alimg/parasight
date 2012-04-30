@@ -4,7 +4,6 @@
  */
 package com.genoscope;
 
-import com.genoscope.reader.BEDReader;
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
 import com.genoscope.renderer.visualizers.CBVisualizer;
@@ -13,7 +12,6 @@ import com.genoscope.renderer.visualizers.Visualizer;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Pair;
 import java.util.Vector;
-import javax.swing.JOptionPane;
 
 public class State {
     private Vector<Chromosome> chromosomeList;
