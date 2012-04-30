@@ -30,11 +30,12 @@ public class Reader {
 				new BEDReader().readFile(path, state);
 				return 0;
 			case "cb":
-			JOptionPane.showMessageDialog(panel, "This extension will be added: "+extension,
-					"Warning", JOptionPane.WARNING_MESSAGE);
-				System.out.println("reading: "+path);
+				System.out.println("reading: "+path+"\n------------");
+				new CBReader().readFile(path, state);
 				return 0;
 			case "cn":
+			JOptionPane.showMessageDialog(panel, "This extension will be added: "+extension,
+					"Warning", JOptionPane.WARNING_MESSAGE);
 				System.out.println("reading: "+path);
 				return 0;
 		}

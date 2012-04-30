@@ -12,14 +12,12 @@ import java.util.Vector;
  */
 public class Chromosome {
     private int length;
-    private int chrNo;
     private String name;
     private String sourceFile;
     private Vector<Feature> features;
 
-    public Chromosome(int length, int chrNo, String name, String sourceFile) {
+    public Chromosome(int length, String name, String sourceFile) {
         this.length = length;
-        this.chrNo = chrNo;
         this.name = name;
 	this.sourceFile = sourceFile;
         this.features = new <Feature>Vector();
@@ -42,14 +40,6 @@ public class Chromosome {
 
     public Vector<Feature> getFeatures(){
         return features;
-    }
-
-    public int getChrNo() {
-        return chrNo;
-    }
-
-    public void setChrNo(int chrNo) {
-        this.chrNo = chrNo;
     }
 
     public int getLength() {

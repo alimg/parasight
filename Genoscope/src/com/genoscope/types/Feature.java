@@ -11,27 +11,17 @@ package com.genoscope.types;
 public abstract class Feature {
     protected String name;
     protected String source; //formatlardan birinde hangi programdan geldigini belirtmek icin kullaniliyor.
-    protected int chrNo; //varsa. yoksa -1 filan olabilir.
     protected int position; //position on chromosome
 
-    public Feature(String name, int chrNo, int position) {
+    public Feature(String name, int position) {
         this.name = name;
         this.source = "";
-        this.chrNo = chrNo;
         this.position = position;
     }
 
     public Feature() {
     }
     
-    public int getChrNo() {
-        return chrNo;
-    }
-    
-    public void setChrNo(int chrNo) {
-        this.chrNo = chrNo;
-    }
-
     public String getName() {
         return name;
     }
