@@ -10,10 +10,12 @@ import java.util.Vector;
  *
  * @author alim
  */
-public class GroupVisualizer extends Visualizer
+public class VisualizerGroup extends Visualizer
 {
+    
+    Vector <Visualizer> subs;
 
-    public GroupVisualizer(int w, int h) {
+    public VisualizerGroup(int w, int h) {
         super(w, h);
         
     }
@@ -30,11 +32,17 @@ public class GroupVisualizer extends Visualizer
         
     }
     
+    
     public void addVisulizer(Visualizer v)
     {
         
+    
     }
     
+    public Vector<Visualizer> getVisualizers()
+    {
+        return null;
+    }
     public Vector<Visualizer> release()
     {
         return null;

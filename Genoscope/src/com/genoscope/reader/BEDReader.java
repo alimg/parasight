@@ -16,19 +16,26 @@ import javax.swing.JPanel;
 /**
  *
  * @author Furkan Mustafa Akdemir
+ * This class reads a BED type genome annotation data and adds this data to state
+ * as a Chromosome object
  */
 public class BEDReader extends FileReader {
-	
+
+	/**
+	 * File reading method for BED format which generates a chromosome and adds to state
+	 * @param path shows the path of BED file
+	 * @param state current state of Genoscope
+	 */
 	@Override
-	public Chromosome readFile(String path, State state) {
+	public int readFile(String path, State state) {
 		if (state.checkChromosome(path)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
-			return null;
+			return -2;
 		}
 		File file = new File(path);
-		
+
 		try {
 			Scanner scanner;
 			String line;
@@ -39,11 +46,11 @@ public class BEDReader extends FileReader {
 			NormalFeature feature;
 			String chrName;
 			int length = 0;
-			
+
 			scanner = new Scanner(file);
-			
+
 			while (scanner.hasNextLine()) {
-				
+
 				line = scanner.nextLine();
 				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0) {
 					continue;
@@ -55,19 +62,19 @@ public class BEDReader extends FileReader {
 					}
 				} else {
 					val = line.split("\t");
-					
+
 					if (!chromosomeAdded) {
 						chrName = val[0];
 						System.out.println("Adding Chromosome to State: '" + chrName + "'");
-						
+
 						chr = new Chromosome(0, chrName, path);
 						chromosomeAdded = true;
 					}
-					
+
 					length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
 					feature = new NormalFeature(length, -1, val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
-					
+
 					chr.addFeature(feature);
 				}
 			}
@@ -75,10 +82,10 @@ public class BEDReader extends FileReader {
 			if(chr != null)
 				state.addChromosome(chr);
 
-			return null;
+			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);
-			return null;
+			return -1;
 		}
 	}
 }

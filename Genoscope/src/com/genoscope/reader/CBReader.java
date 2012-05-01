@@ -18,17 +18,24 @@ import javax.swing.JPanel;
 /**
  *
  * @author Furkan Mustafa Akdemir
+ * This class reads a BED type genome annotation data and adds this data to state
+ * as a Chromosome object
  */
 public class CBReader extends FileReader {
 
+	/**
+	 * File reading method for Cytoband format which generates a chromosome and adds to state
+	 * @param path shows the path of Cytoband file
+	 * @param state current state of Genoscope
+	 */
 	@Override
-	public Chromosome readFile(String path, State state) {
+	public int readFile(String path, State state) {
 		try {
 			if (state.checkChromosome(path)) {
 				final JPanel panel = new JPanel();
 				JOptionPane.showMessageDialog(panel, "File already added",
 						"Warning", JOptionPane.WARNING_MESSAGE);
-				return null;
+				return -2;
 			}
 
 			File file = new File(path);
@@ -69,10 +76,10 @@ public class CBReader extends FileReader {
 			if(chr != null)
 				state.addChromosome(chr);
 
-			return null;
+			return 0;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(CBReader.class.getName()).log(Level.SEVERE, null, ex);
-			return null;
+			return -1;
 		}
 	}
 }

@@ -137,13 +137,6 @@ public class GLHandler {
 
         glViewport( 0, 0, width, height );
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        
-        glClear( GL_COLOR_BUFFER_BIT );
-        
-        
-        /*if(renderer!=null)
-            renderer.draw();*/
-        
     }
 
     protected static void render( ) {

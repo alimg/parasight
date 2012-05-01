@@ -4,30 +4,49 @@
  */
 package com.genoscope.renderer.mouseactions;
 
+import com.genoscope.renderer.GenoscopeRenderer.ViewConfig;
+
 /**
  *
  * @author alim
  */
 public class ScrollAction extends MouseActionHandler{
+    ViewConfig view;
+    private int x;
+    private int y;
 
+    public ScrollAction(ViewConfig conf) {
+        view=conf;
+    }
+
+    int state=0;
+    
     @Override
     public void mouseDown() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        state=1;
     }
 
     @Override
     public void mouseUp() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        state=0;
     }
 
     @Override
     public void mouseMove(int x, int y, int buttons) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        final int dx=x-this.x;
+        final int dy=y-this.y;
+        this.x=x;
+        this.y=y;
+        if(state==1)
+        {
+            view.setPos(view.pos[0]+dx,view.pos[1]+dy );
+            
+        }
     }
 
     @Override
     public void update() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
     }
     
     

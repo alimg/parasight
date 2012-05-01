@@ -106,6 +106,7 @@ public class RendererThread extends Thread {
                             }
                         }
                     }
+                    renderer.mouseWheel(Mouse.getEventDWheel());
                     mouseState_old = mouseState;
                 } else {
                     /*

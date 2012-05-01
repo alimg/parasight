@@ -1,10 +1,9 @@
 package com.genoscope.renderer;
 
 import com.genoscope.renderer.mouseactions.MouseActionHandler;
-import com.genoscope.renderer.GLHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
+import com.genoscope.renderer.mouseactions.ScrollAction;
 import com.genoscope.renderer.visualizers.Visualizer;
-import java.util.ArrayList;
 import java.util.Vector;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
@@ -17,18 +16,40 @@ import org.lwjgl.opengl.GL20;
 public class GenoscopeRenderer {
     public final static int EDIT_MODE=1;
     public final static int NAVIGATE_MODE=0;
+    private final static float WHEEL_SENS=1;
 
     private int horizonalGap=15;//pixels
     private int verticalGap=15;//pixels
-    private Vector<Visualizer> clients= new Vector<Visualizer>();
+    private Vector<Visualizer> clients= new <Visualizer>Vector();
     private int mMode=0;
     
     private int MPX=0,MPY=0;
     
+    public class ViewConfig{
+        public float pos[]={0,0,0};
+
+        public void setPos(float x,float y)
+        {
+            pos[0]=x;
+            pos[1]=y;
+            if(pos[0]>0)pos[0]=0;
+            if(pos[1]>0)pos[1]=0;
+        }
+        private void translate() {
+            glMatrixMode(GL_PROJECTION);
+            
+            glTranslatef(pos[0], pos[1], pos[2]);
+            glMatrixMode(GL_MODELVIEW);
+        }
+    }
+    private ViewConfig mViewConfig=new ViewConfig();
     private MouseActionHandler mouseHandlers[]=new MouseActionHandler[5];
+    private MoveAction mMoveAction;
+    private ScrollAction mScrollAction;
     public GenoscopeRenderer()
     {
-        mouseHandlers[0]=new MoveAction(clients);
+        mouseHandlers[0]=mMoveAction=new MoveAction(clients);
+        mouseHandlers[1]=mScrollAction=new ScrollAction(mViewConfig);
     }
     /**
      * Arranges position of all clients 
@@ -59,30 +80,42 @@ public class GenoscopeRenderer {
     {
         synchronized(clients){
             clients.add(v);
+            resetLayout();
         }
+        //GLHandler.requestPaint();
     }
     
     void mouseDown(int i)
     {
-        //System.out.println("down "+i);
-        if(mouseHandlers[i]!=null)
-            mouseHandlers[i].mouseDown();
+        synchronized(clients)
+        {
+            //System.out.println("down "+i);
+            if(mouseHandlers[i]!=null)
+                mouseHandlers[i].mouseDown();
+        }
     }
     
     void mouseUp(int i)
     {
+        synchronized(clients)
+        {
         if(mouseHandlers[i]!=null)
             mouseHandlers[i].mouseUp();
         //System.out.println("up "+i);
-        
+        }
     }
+    void mouseWheel(int eventDWheel) {
+        mViewConfig.setPos(mViewConfig.pos[0],mViewConfig.pos[1]+WHEEL_SENS*eventDWheel);
+    }
+    
     void mouseMove(int x, int y, int buttons) {
-        MPX=x;
-        MPY=y;
+        synchronized(clients)
+        {
+        MPX=(int) (-mViewConfig.pos[0]+x);
+        MPY=(int) (-mViewConfig.pos[1]+y);
         
-        for(MouseActionHandler m:mouseHandlers)
-            if(m!=null)
-                m.mouseMove(x, y, buttons);
+        mMoveAction.mouseMove(MPX, MPY, buttons);
+        mScrollAction.mouseMove(x, y, buttons);
         Visualizer r=null;
         for(Visualizer v: clients)
         {
@@ -94,6 +127,7 @@ public class GenoscopeRenderer {
             r.setHighlight(true);
         GLHandler.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
+        }
     }
 
     
@@ -120,6 +154,10 @@ public class GenoscopeRenderer {
             }
             GLHandler.setup();
             glClear( GL_COLOR_BUFFER_BIT );
+            
+            mViewConfig.translate();
+            
+            
             for(Visualizer v: clients)
             {
                 if(v.isBufferUpToDate())
@@ -156,6 +194,8 @@ public class GenoscopeRenderer {
             return true;
         return false;
     }
+
+
 
 
     

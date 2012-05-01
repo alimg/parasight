@@ -49,22 +49,22 @@ public  class MoveAction extends MouseActionHandler {
 
     class MTreeMap extends TreeMap<Object, Object> {
 
-        public Object put(Integer i) {
-            if(containsKey(i))
-                return super.put(i, ((Integer)get(i))+1);
-            return super.put(i, 0);
+        public Object put(Integer key) {
+            if(containsKey(key))
+                return super.put(key, ((Integer)get(key))+1);
+            return super.put(key, 1);
         }
 
         @Override
         public Object remove(Object key) {
             if(containsKey(key))
-                if(((Integer)get(key) )>0 )
+                if(((Integer)get(key) )>1 )
                     return super.put(key, ((Integer)get(key))-1);
             return super.remove(key);
         }
         
     }
-    MTreeMap arX=new <Integer,Integer>MTreeMap();
+    MTreeMap arX=new <Integer,Integer>MTreeMap(); //snapping array
     MTreeMap arY=new <Integer,Integer>MTreeMap();
     
     /**
@@ -88,11 +88,11 @@ public  class MoveAction extends MouseActionHandler {
         for(Visualizer v:clients)
             if(v!=null)
             {
-                System.out.println(" add ");
-                arX.put(v.getX(),0);
-                arX.put(v.getX()+v.getWidth(),0);
-                arY.put(v.getY(),0);
-                arY.put(v.getY()+v.getHeight(),0);
+                //System.out.println(" add ");
+                arX.put(v.getX());
+                arX.put(v.getX()+v.getWidth());
+                arY.put(v.getY());
+                arY.put(v.getY()+v.getHeight());
             }
     }
     @Override
@@ -190,7 +190,7 @@ public  class MoveAction extends MouseActionHandler {
                     switch(resizeW)
                     {
                     case N:
-                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
+                        selected.setPosition(selected.getX(), selected.getY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth(), selected.getHeight()-dy);
                         break;
@@ -206,12 +206,12 @@ public  class MoveAction extends MouseActionHandler {
                         selected.setSize(selected.getWidth()+dx, selected.getHeight());
                         break;
                     case NE:
-                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
+                        selected.setPosition(selected.getX(), selected.getY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
                         break;
                     case NW:
-                        selected.setPosition(selected.getSnapX()+dx, selected.getSnapY()+dy);
+                        selected.setPosition(selected.getX()+dx, selected.getY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
                         break;
@@ -220,7 +220,7 @@ public  class MoveAction extends MouseActionHandler {
                         snap(selected);
                         break;
                     case SW:
-                        selected.setPosition(selected.getSnapX()+dx, selected.getY());
+                        selected.setPosition(selected.getX()+dx, selected.getY());
                         snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
                         break;
@@ -275,14 +275,14 @@ public  class MoveAction extends MouseActionHandler {
         
         if(d==null)a=u;
         else if(u==null)a=d;
-        else if(sx-d>u-sx)a=u;
+        else if(sy-d>u-sy)a=u;
         else a=d;
         
         d=(Integer) arY.floorKey(sye);
         u=(Integer) arY.higherKey(sye);
         if(d==null)b=u;
         else if(u==null)b=d;
-        else if(sx-d>u-sx)b=u;
+        else if(sy-d>u-sy)b=u;
         else b=d;
         aa=Math.abs(a-sy);
         bb=Math.abs(b-sye);
