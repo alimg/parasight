@@ -49,8 +49,8 @@ public class GenoscopeRenderer {
             }
         };
         
-        private int boundW;
-        private int boundH;
+        public int boundW;
+        public int boundH;
         
         public void updateScrollbars()
         {

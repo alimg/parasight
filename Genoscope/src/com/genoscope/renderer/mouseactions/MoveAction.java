@@ -164,76 +164,86 @@ public  class MoveAction extends MouseActionHandler {
         this.y=y;
         switch (action)
         {
-            case NONE:
-                
-                f=0;
-                for(Visualizer c:clients)
+        case NONE:
+
+            f=0;
+            for(Visualizer c:clients)
+            {
+                t=getArea(c, x, y);
+                if(t>0)
                 {
-                    t=getArea(c, x, y);
-                    if(t>0)
-                    {
-                        Genoscope.canvas.setCursor(Cursor.getPredefinedCursor(t));
-                        resizeW=t;
-                        f=1;
-                    }
+                    Genoscope.canvas.setCursor(Cursor.getPredefinedCursor(t));
+                    resizeW=t;
+                    f=1;
                 }
-                if(f==0)
+            }
+            if(f==0)
+            {
+                resizeW=0;
+                if(buttons==0)
+                    Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
+            }
+            break;
+        case MOVING:
+            if(selected!=null)
+            {
+                selected.setPosition(selected.getX()+dx, selected.getY()+dy);
+                snap(selected);
+            }
+            break;
+        case RESIZING:
+            if(selected!=null)
+            {
+                switch(resizeW)
                 {
-                    resizeW=0;
-                    if(buttons==0)
-                        Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
-                }
-                break;
-            case MOVING:
-                if(selected!=null)
-                {
+                case N:
+                    selected.setPosition(selected.getX(), selected.getY()+dy);
+                    snap(selected);
+                    selected.setSize(selected.getWidth(), selected.getHeight()-dy);
+                    break;
+                case S:
+                    selected.setSize(selected.getWidth(), selected.getHeight()+dy);
+                    break;
+                case W:
+                    selected.setPosition(selected.getX()+dx, selected.getY());
+                    snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight());
+                    break;
+                case E:
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight());
+                    break;
+                case NE:
+                    selected.setPosition(selected.getX(), selected.getY()+dy);
+                    snap(selected);
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
+                    break;
+                case NW:
                     selected.setPosition(selected.getX()+dx, selected.getY()+dy);
                     snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
+                    break;
+                case SE:
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight()+dy);
+                    snap(selected);
+                    break;
+                case SW:
+                    selected.setPosition(selected.getX()+dx, selected.getY());
+                    snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
+                    break;
                 }
-                break;
-            case RESIZING:
-                if(selected!=null)
-                {
-                    switch(resizeW)
-                    {
-                    case N:
-                        selected.setPosition(selected.getX(), selected.getY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth(), selected.getHeight()-dy);
-                        break;
-                    case S:
-                        selected.setSize(selected.getWidth(), selected.getHeight()+dy);
-                        break;
-                    case W:
-                        selected.setPosition(selected.getX()+dx, selected.getY());
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight());
-                        break;
-                    case E:
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight());
-                        break;
-                    case NE:
-                        selected.setPosition(selected.getX(), selected.getY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
-                        break;
-                    case NW:
-                        selected.setPosition(selected.getX()+dx, selected.getY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
-                        break;
-                    case SE:
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight()+dy);
-                        snap(selected);
-                        break;
-                    case SW:
-                        selected.setPosition(selected.getX()+dx, selected.getY());
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
-                        break;
-                    }
-                }
-                break;
+            }
+            break;
+        }
+        if(selected!=null && arX.size()>0)
+        {
+            int a=view.boundW;
+            if(a<selected.getSnapX()+selected.getWidth())
+                a=selected.getSnapX()+selected.getWidth();
+            int b=view.boundH;
+            if(b<selected.getSnapY()+selected.getHeight())
+                b=selected.getSnapY()+selected.getHeight();
+            view.setViewBound(a,b);
         }
     }
     
