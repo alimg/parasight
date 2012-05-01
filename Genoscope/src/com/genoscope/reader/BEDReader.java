@@ -46,8 +46,9 @@ public class BEDReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split(" ");
-				if(val.length < 6 )
+				if (val.length < 6) {
 					continue;
+				}
 				if (header == true) {
 					if (val[0].equals("track")) {
 						header = false;
@@ -70,9 +71,9 @@ public class BEDReader extends FileReader {
 
 					chr.addFeature(feature);
 				}
-				scanner.close();
-
 			}
+			scanner.close();
+
 			return null;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);
