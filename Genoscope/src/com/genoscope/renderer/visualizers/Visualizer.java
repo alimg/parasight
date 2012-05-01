@@ -5,7 +5,9 @@
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.renderer.GLHandler;
+import com.genoscope.renderer.GenoscopeRenderer;
 import com.genoscope.renderer.TrueTypeFont;
+import com.genoscope.renderer.mouseactions.MoveAction;
 import java.awt.Font;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -17,7 +19,10 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.util.glu.GLU;
 
 /**
- *
+ * This is base Visualizer class that handles buffering and input operations. 
+ * 
+ * @see GLHandler
+ * 
  * @author alim
  */
 public class Visualizer {
@@ -47,6 +52,13 @@ public class Visualizer {
 
     }
 
+    /**
+     * Changes only size of appearance. 
+     * <b>NOTE: doneResizing() must be called to request actual rendering</b>
+     * @param w width
+     * @param h height
+     * @see MoveAction
+     */
     public void setSize(int w, int h) {
         if(w<50||h<50)
             return;
@@ -55,12 +67,17 @@ public class Visualizer {
         if(!useFBO)
             buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
     }
+    /**
+     * Called after resizing to request actual redrawing of this visualizer 
+     * (ie buffer update).
+     * @see MoveAction
+     */
     public void doneResizing()
     {
         updateNeeded=true;
         needRecreateBuffers = true;
     }
-
+    
     public int getWidth() {
         return width;
     }
@@ -69,32 +86,60 @@ public class Visualizer {
         return height;
     }
 
+    /**
+     * Set position to appear
+     * @param x
+     * @param y 
+     */
     public void setPosition(int x, int y) {
         posX = x;
         posY = y;
     }
 
+    /**
+    * @return vertical distance to the top left corner of screen
+    */
     public int getX() {
         return posX;
     }
-
+    /**
+    * @return horizonal distance to the top corner of screen
+    */
     public int getY() {
         return posY;
     }
+    
+    /**
+     * 
+     * @return x 
+     * @see MoveAction
+     */
     public int getSnapX() {
         if(snapX==-100067)return posX;
         return snapX;
     }
 
+    /**
+     * 
+     * @return y 
+     * @see MoveAction
+     */
     public int getSnapY() {
         if(snapY==-100067)return posY;
         return snapY;
     }
 
+    /**
+     * 
+     * @return true if this visualizer needs redrawing
+     */
     public boolean isBufferUpToDate() {
         return !updateNeeded;
     }
-
+    /**
+     * Called by GenoscopeRenderer when update is needed
+     * @see GenoscopeRenderer
+     */
     public final void initBufferMode() {
         
         glMatrixMode(GL_PROJECTION);
@@ -135,6 +180,10 @@ public class Visualizer {
         needRecreateBuffers = false;
     }
 
+    /**
+     * Called by GenoscopeRenderer when update is needed
+     * @see GenoscopeRenderer
+     */
     public final void updateBuffer() {
         updateNeeded = false;//
 
@@ -178,9 +227,10 @@ public class Visualizer {
     }
 
     /**
-     * Called when update needed
-     *
-     * @param gl
+     * Implement this class to do visualization of genomic data. This class is
+     * called when buffers are being update for this visualizer.
+     * 
+     * @see Visualizer
      */
     public void draw() {
 
@@ -201,6 +251,10 @@ public class Visualizer {
         glEnd();
     }
 
+    /**
+     * Draws the Visualizer's last state from buffers.
+     * @see GenoscopeRenderer
+     */
     public final void drawBuffered() {
         
         glEnable(GL_TEXTURE_2D);
@@ -232,12 +286,19 @@ public class Visualizer {
     }
 
     /**
-     * is selected
+     * Highlight visualizer. GenoscopeRenderer draws a frame for highlighted 
+     * visualizers.
+     * 
+     * @param h set if this visualizer is highlighted
      */
     public final void setHighlight(boolean h) {
         higlighted = h;
     }
 
+    /**
+     * 
+     * @see GenoscopeRenderer
+     */
     public final boolean isHiglighted() {
         return higlighted;
     }
@@ -249,9 +310,20 @@ public class Visualizer {
         return temp.asIntBuffer();
     }
 
+    /**
+     * 
+     * @param x 
+     * @see MoveAction
+     */
     final public void setSnapX(int x) {
         snapX=x;
     }
+    
+    /**
+     * 
+     * @param y 
+     * @see MoveAction
+     */
     final public void setSnapY(int y) {
         snapY=y;
     }
