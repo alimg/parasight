@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * @author Furkan Mustafa Akdemir
  */
 public class BEDReader extends FileReader {
-
+	
 	@Override
 	public Chromosome readFile(String path, State state) {
 		if (state.checkChromosome(path)) {
@@ -28,7 +28,7 @@ public class BEDReader extends FileReader {
 			return null;
 		}
 		File file = new File(path);
-
+		
 		try {
 			Scanner scanner;
 			String line;
@@ -39,14 +39,15 @@ public class BEDReader extends FileReader {
 			NormalFeature feature;
 			String chrName;
 			int length = 0;
-
+			
 			scanner = new Scanner(file);
-
+			
 			while (scanner.hasNextLine()) {
-
+				
 				line = scanner.nextLine();
-				if(line.replaceAll("\t", "").replaceAll(" ", "").length() == 0)
+				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0) {
 					continue;
+				}
 				if (header == true) {
 					val = line.split(" ");
 					if (val[0].equals("track")) {
@@ -54,25 +55,25 @@ public class BEDReader extends FileReader {
 					}
 				} else {
 					val = line.split("\t");
-
+					
 					if (!chromosomeAdded) {
 						chrName = val[0];
 						System.out.println("Adding Chromosome to State: '" + chrName + "'");
-
+						
 						chr = new Chromosome(0, chrName, path);
 						state.addChromosome(chr);
 						chromosomeAdded = true;
 					}
-
+					
 					length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
 					feature = new NormalFeature(length, -1, val[5].equals("+"));
 					feature.setPosition(Integer.parseInt(val[1]));
-
+					
 					chr.addFeature(feature);
 				}
 			}
 			scanner.close();
-
+			
 			return null;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);
