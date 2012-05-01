@@ -18,6 +18,9 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
     }
     @Override
     public void draw(){
+        glDisable(GL_TEXTURE_2D);
+        glClearColor(1, 1, 1, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
         float h = getHeight()/4.0f;
         float w = getWidth();
         int min=+BIG;
@@ -31,7 +34,7 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
                 max = f.getScore();
         }
         glLineWidth(5.0f);
-        glColor4f(0, 0, 0, 1);
+        glColor4f(0, 0, 0, 0.8f);
         glBegin(GL_LINES);
         glVertex2f(0.0f,h);
         glVertex2f(w,h);
@@ -46,18 +49,22 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
             float ratio = (float)(f.getScore()-min) / (max-min);
             System.out.println(ratio);
             glBegin(GL_QUADS);
-            glColor4f(ratio,1-ratio,0,1);
+      
+          //      glColor4f(1,ratio*2,0,1);
+      
+                glColor4f(ratio,1-ratio,0,1);
+            
             glVertex2f(getPosX(f.getPosition()),h);
             
             glVertex2f(getPosX(f.getPosition()+f.getLength()), h);
             
-            glVertex2f(getPosX(f.getPosition()+f.getLength()), h + 2*h/ratio);
+            glVertex2f(getPosX(f.getPosition()+f.getLength()), h + 2*h*ratio);
           
-            glVertex2f(getPosX(f.getPosition()), h + 2*h/ratio);
+            glVertex2f(getPosX(f.getPosition()), h + 2*h*ratio);
          
             glEnd();
                      
         }
-
+       
     }
 }
