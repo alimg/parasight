@@ -5,6 +5,7 @@
 package com.genoscope.renderer.mouseactions;
 
 import com.genoscope.Genoscope;
+import com.genoscope.renderer.GenoscopeRenderer.ViewConfig;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.Cursor;
 import java.util.*;
@@ -39,12 +40,14 @@ public  class MoveAction extends MouseActionHandler {
     private int resizeDirX,resizeDirY;
     
     Visualizer selected=null;
+    private final ViewConfig view;
     
   
-    public MoveAction(Vector<Visualizer> c)
+    public MoveAction(Vector<Visualizer> c, ViewConfig conf)
     {
         System.out.println(" moveaction ");
         setVisualizers(c);
+        view=conf;
     }
 
     class MTreeMap extends TreeMap<Object, Object> {
@@ -94,6 +97,8 @@ public  class MoveAction extends MouseActionHandler {
                 arY.put(v.getY());
                 arY.put(v.getY()+v.getHeight());
             }
+        if(arX.size()>0)
+            view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
     @Override
     public void mouseDown() {
@@ -147,6 +152,7 @@ public  class MoveAction extends MouseActionHandler {
             }
         }
         selected=null;
+        view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
 
     @Override

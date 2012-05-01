@@ -4,7 +4,10 @@ import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.mouseactions.ScrollAction;
 import com.genoscope.renderer.visualizers.Visualizer;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.Vector;
+import javax.swing.JScrollBar;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 
@@ -24,16 +27,62 @@ public class GenoscopeRenderer {
     private int mMode=0;
     
     private int MPX=0,MPY=0;
+
+    
+    
     
     public class ViewConfig{
         public float pos[]={0,0,0};
+        private JScrollBar hScroll;
+        private JScrollBar vScroll;
+        
+        private AdjustmentListener hAdjustmenListener=new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                pos[0]=-e.getValue();
+            }
+        };
+        private AdjustmentListener vAdjustmenListener=new AdjustmentListener() {
+            @Override
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                pos[1]=-e.getValue();
+            }
+        };
+        
+        private int boundW;
+        private int boundH;
+        
+        public void updateScrollbars()
+        {
+            hScroll.setMinimum(0);
+            hScroll.setMaximum(boundW);
+            hScroll.setVisibleAmount(GLHandler.getWidth());
+            hScroll.setValue((int)-pos[0]);
+            
+            vScroll.setMinimum(0);
+            vScroll.setMaximum(boundH);
+            vScroll.setVisibleAmount(GLHandler.getHeight());
+            vScroll.setValue((int)-pos[1]);
+        }
+        
+        public void setViewBound(int w,int h)
+        {
+            boundW=w;
+            boundH=h;
+            updateScrollbars();
+        }
 
         public void setPos(float x,float y)
         {
             pos[0]=x;
             pos[1]=y;
+            if(GLHandler.getWidth()-pos[0]>boundW)
+                pos[0]=GLHandler.getWidth()-boundW;
+            if(GLHandler.getHeight()-pos[1]>boundH)
+                pos[1]=GLHandler.getHeight()-boundH;
             if(pos[0]>0)pos[0]=0;
             if(pos[1]>0)pos[1]=0;
+            updateScrollbars();
         }
         private void translate() {
             glMatrixMode(GL_PROJECTION);
@@ -48,7 +97,7 @@ public class GenoscopeRenderer {
     private ScrollAction mScrollAction;
     public GenoscopeRenderer()
     {
-        mouseHandlers[0]=mMoveAction=new MoveAction(clients);
+        mouseHandlers[0]=mMoveAction=new MoveAction(clients,mViewConfig);
         mouseHandlers[1]=mScrollAction=new ScrollAction(mViewConfig);
     }
     /**
@@ -201,6 +250,10 @@ public class GenoscopeRenderer {
 
 
 
-
-    
+    public void setScrollbars(JScrollBar horizontalScroll, JScrollBar verticalScroll) {
+        mViewConfig.hScroll=horizontalScroll;
+        mViewConfig.vScroll=verticalScroll;
+        horizontalScroll.addAdjustmentListener(mViewConfig.hAdjustmenListener);
+        verticalScroll.addAdjustmentListener(mViewConfig.vAdjustmenListener);
+    }   
 }
