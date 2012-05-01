@@ -68,6 +68,7 @@ public class RendererThread extends Thread {
         }
         Dimension newDim;
         int mButtonCount = Mouse.getButtonCount(), mouseState = 0, mouseState_old = 0;
+        boolean needUpdate=true;
         while (!Display.isCloseRequested()) {
 
             newDim = newCanvasSize.getAndSet(null);
@@ -75,7 +76,7 @@ public class RendererThread extends Thread {
             if (newDim != null) {
                 GL11.glViewport(0, 0, newDim.width, newDim.height);
                 GLHandler.setup(newDim.width, newDim.height);
-            } else {
+            } else  if(needUpdate){
                 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
                 GLHandler.render();
             }
@@ -123,16 +124,17 @@ public class RendererThread extends Thread {
                     Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (screenshotReq) {
+            if (screenshotReq) //<editor-fold defaultstate="collapsed" desc="bind screenshot to image">
+            {
                 final int width=GLHandler.getWidth();
                 final int height=GLHandler.getHeight();
                 ByteBuffer buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
-
+                
                 GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
                 GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
                 GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
                 image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
+                
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
                         int i = (x + (width * y)) * 4;
@@ -144,13 +146,14 @@ public class RendererThread extends Thread {
                         image.setRGB(x, height - (y + 1), (a << 24) | (r << 16) | (g << 8) | b);
                     }
                 }
-
+                
                 synchronized(exportSync){
-                exportSync.notify();
+                    exportSync.notify();
                 }
                 screenshotReq=false;
-
+                
             }
+            //</editor-fold>
         }
         running = false;
         Display.destroy();

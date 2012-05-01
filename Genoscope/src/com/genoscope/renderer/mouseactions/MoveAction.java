@@ -190,7 +190,7 @@ public  class MoveAction extends MouseActionHandler {
                     switch(resizeW)
                     {
                     case N:
-                        selected.setPosition(selected.getX(), selected.getY()+dy);
+                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth(), selected.getHeight()-dy);
                         break;
@@ -206,12 +206,12 @@ public  class MoveAction extends MouseActionHandler {
                         selected.setSize(selected.getWidth()+dx, selected.getHeight());
                         break;
                     case NE:
-                        selected.setPosition(selected.getX(), selected.getY()+dy);
+                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
                         break;
                     case NW:
-                        selected.setPosition(selected.getX()+dx, selected.getY()+dy);
+                        selected.setPosition(selected.getSnapX()+dx, selected.getSnapY()+dy);
                         snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
                         break;
@@ -220,7 +220,7 @@ public  class MoveAction extends MouseActionHandler {
                         snap(selected);
                         break;
                     case SW:
-                        selected.setPosition(selected.getX()+dx, selected.getY());
+                        selected.setPosition(selected.getSnapX()+dx, selected.getY());
                         snap(selected);
                         selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
                         break;
