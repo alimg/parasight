@@ -4,7 +4,6 @@
  */
 package com.genoscope;
 
-
 import com.genoscope.reader.Reader;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -51,22 +50,48 @@ public class GenoscopeApp extends javax.swing.JFrame {
         initComponents();
         //Do not change If you don't know
         fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.setFileFilter(addFileFilters());
+        fileChooser.setFileFilter(addReadableFileFilters());
         fileChooser.setFileHidingEnabled(true);
-//		fileChooser.setCurrentDirectory( new File( "./") ); 
-		
-		//initialize
-		state=new State();
-	}
+
+        pdfChooser.setAcceptAllFileFilterUsed(false);
+        pdfChooser.setFileFilter(addPdfFileFilters());
+
+        pngChooser.setAcceptAllFileFilterUsed(false);
+        pngChooser.setFileFilter(addPngFileFilters());
         
-        public State getAppState(){
-            return state;
-        }
-	//required for File Filter DO NOT DELETE
-	private FileFilter addFileFilters(){
-		return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
-				"cn", "bed","cb","rd");
-	}
+        jpgChooser.setAcceptAllFileFilterUsed(false);
+        jpgChooser.setFileFilter(addJpgFileFilters());
+
+//		fileChooser.setCurrentDirectory( new File( "./") ); 
+
+        //initialize
+        state = new State();
+    }
+
+    public State getAppState() {
+        return state;
+    }
+    //required for File Filter DO NOT DELETE
+
+    private FileFilter addReadableFileFilters() {
+        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
+                "cn", "bed", "cb", "rd");
+    }
+
+    private FileFilter addPdfFileFilters() {
+        return new FileNameExtensionFilter("Printable Document Format (*.pdf)", "pdf");
+
+    }
+
+    private FileFilter addPngFileFilters() {
+        return new FileNameExtensionFilter("PNG File (*.png)", "png");
+
+    }
+    
+     private FileFilter addJpgFileFilters() {
+        return new FileNameExtensionFilter("JPG File (*.jpg)", "jpg","jpeg");
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,6 +104,9 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         jTextField1 = new javax.swing.JTextField();
+        pdfChooser = new javax.swing.JFileChooser();
+        pngChooser = new javax.swing.JFileChooser();
+        jpgChooser = new javax.swing.JFileChooser();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
@@ -134,6 +162,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -523,6 +555,34 @@ public class GenoscopeApp extends javax.swing.JFrame {
         });
         fileMenu.add(openMenuItem);
 
+        jMenu1.setText("Export as");
+
+        jMenuItem1.setText("PDF");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("JPG");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("PNG");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        fileMenu.add(jMenu1);
+
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
         saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -593,7 +653,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
 	private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-            // TODO add your handling code here:
+
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
@@ -626,8 +686,61 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        new PdfExporter().start();
     }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        int returnVal = pdfChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = pdfChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("pdf")) {
+                new PdfExporter(path + ".pdf").start();
+            } else {
+                new PdfExporter(path).start();
+            }
+        }
+
+
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        int returnVal = jpgChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jpgChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("jpg") && !extension.equals("jpeg")) {
+                new JpgExporter(path + ".jpg").start();
+            } else {
+                new JpgExporter(path).start();
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+        int returnVal = pngChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = pngChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("png")) {
+                new PngExporter(path + ".png").start();
+            } else {
+                new PngExporter(path).start();
+            }
+        }
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -655,8 +768,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
          * java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE,
          * null, ex); } catch (javax.swing.UnsupportedLookAndFeelException ex) {
          * java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE,
-         * null, ex);
-        }
+         * null, ex); }
          */
         //</editor-fold>
 
@@ -709,6 +821,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -723,6 +839,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JFileChooser jpgChooser;
     private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
@@ -735,6 +852,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JTree objectTree;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JFileChooser pdfChooser;
+    private javax.swing.JFileChooser pngChooser;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;

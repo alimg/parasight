@@ -20,7 +20,6 @@ public class ChromosomeVisualizer extends Visualizer{
         this.chromosome = chr;
     }
     public float getPosX(int position){
-      
         return (float)getWidth()*((float)(position-chromosome.getStart())/chromosome.getLength());
     }
     @Override
