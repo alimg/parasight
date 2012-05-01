@@ -46,7 +46,8 @@ public class CBReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split("\t");
-				if (val.length < 5) {
+				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0
+						|| val.length < 5) {
 					continue;
 				}
 

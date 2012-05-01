@@ -46,7 +46,8 @@ public class RDReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split("\t");
-				if (val.length < 4) {
+				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0
+						|| val.length < 4) {
 					continue;
 				}
 
