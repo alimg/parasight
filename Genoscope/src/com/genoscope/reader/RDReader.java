@@ -22,13 +22,13 @@ import javax.swing.JPanel;
 public class RDReader extends FileReader {
 
 	@Override
-	public Chromosome readFile(String path, State state) {
+	public int readFile(String path, State state) {
 		try {
 			if (state.checkChromosome(path)) {
 				final JPanel panel = new JPanel();
 				JOptionPane.showMessageDialog(panel, "File already added",
 						"Warning", JOptionPane.WARNING_MESSAGE);
-				return null;
+				return -2;
 			}
 
 			File file = new File(path);
@@ -71,10 +71,10 @@ public class RDReader extends FileReader {
 			if(chr != null)
 				state.addChromosome(chr);
 
-			return null;
+			return 0;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(RDReader.class.getName()).log(Level.SEVERE, null, ex);
 		}
-		return null;
+		return -1;
 	}
 }

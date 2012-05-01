@@ -5,13 +5,18 @@
 package com.genoscope.reader;
 
 import com.genoscope.State;
-import com.genoscope.types.Chromosome;
 
 /**
  *
  * @author Furkan Mustafa Akdemir
+ * This abstract class implies a reader method for extending class
  */
 abstract public class FileReader {
+	/**
+	 * File reading method for a format which changes state
+	 * @param path shows the path of file
+	 * @param state current state of Genoscope
+	 */
 
-	abstract public Chromosome readFile(String path, State state);
+	abstract public int readFile(String path, State state);
 }
