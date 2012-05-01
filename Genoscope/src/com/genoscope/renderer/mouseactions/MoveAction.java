@@ -174,7 +174,8 @@ public  class MoveAction extends MouseActionHandler {
                 if(f==0)
                 {
                     resizeW=0;
-                    Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
+                    if(buttons==0)
+                        Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
                 }
                 break;
             case MOVING:

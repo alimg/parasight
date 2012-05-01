@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.lwjgl.input.Keyboard;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GLContext;
@@ -105,7 +106,9 @@ public class GLHandler {
         System.out.println("framebuffer enabled "+FBOEnabled);
         
         GL20.glUseProgram(0);
-        font=new TrueTypeFont(new Font("serif", 0&Font.ITALIC | Font.BOLD, 12), true);
+        font=new TrueTypeFont(new Font("Courier New", Font.PLAIN, 12), false);
+        if(font==null)
+            font=new TrueTypeFont(new Font("sans serif", 0&Font.ITALIC | Font.BOLD, 12), true);
         
     }
     

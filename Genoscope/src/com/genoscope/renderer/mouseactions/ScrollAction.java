@@ -4,7 +4,9 @@
  */
 package com.genoscope.renderer.mouseactions;
 
+import com.genoscope.Genoscope;
 import com.genoscope.renderer.GenoscopeRenderer.ViewConfig;
+import java.awt.Cursor;
 
 /**
  *
@@ -24,11 +26,13 @@ public class ScrollAction extends MouseActionHandler{
     @Override
     public void mouseDown() {
         state=1;
+        Genoscope.canvas.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
     }
 
     @Override
     public void mouseUp() {
         state=0;
+        Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
     }
 
     @Override
