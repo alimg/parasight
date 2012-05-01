@@ -12,12 +12,12 @@ import javax.swing.JPanel;
  *
  * @author Furkan Mustafa Akdemir
  * This class is the main file reading class which decides to format reader and
- * calls this format reader depending on the extension
+ * calls this format reader depending on the extension with a static method
  */
 public class Reader {
 
 	/**
-	 * This method checks the extension of file and depending on the extension
+	 * This method checks the extension of file and depending on the extension,
 	 * calls corresponding format reader
 	 * @param path path of the genome annotation data file
 	 * @param state current state of genoscope
