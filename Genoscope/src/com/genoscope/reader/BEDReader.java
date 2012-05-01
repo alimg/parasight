@@ -61,7 +61,6 @@ public class BEDReader extends FileReader {
 						System.out.println("Adding Chromosome to State: '" + chrName + "'");
 						
 						chr = new Chromosome(0, chrName, path);
-						state.addChromosome(chr);
 						chromosomeAdded = true;
 					}
 					
@@ -73,7 +72,9 @@ public class BEDReader extends FileReader {
 				}
 			}
 			scanner.close();
-			
+			if(chr != null)
+				state.addChromosome(chr);
+
 			return null;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);

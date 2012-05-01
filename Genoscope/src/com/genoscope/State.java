@@ -54,7 +54,7 @@ public class State {
 			case "cb":
 				renderer.addVisualizer(new CBVisualizer(800, 80, chr));
 				break;
-                        case "rd":
+            case "rd":
 				renderer.addVisualizer(new ReadDepthVisualizer(800, 80, chr));
 				break;
 			case "cn":

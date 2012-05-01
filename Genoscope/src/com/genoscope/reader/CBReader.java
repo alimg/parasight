@@ -54,8 +54,10 @@ public class CBReader extends FileReader {
 				if (chr == null || !chrName.equals(val[0])) {
 					chrName = val[0];
 					System.out.println("Adding Chromosome to State: '" + chrName + "'");
+
+					if(chr != null)
+						state.addChromosome(chr);
 					chr = new Chromosome(0, chrName, path);
-					state.addChromosome(chr);
 				}
 
 				length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
@@ -64,6 +66,8 @@ public class CBReader extends FileReader {
 				chr.addFeature(cytoband);
 			}
 			scanner.close();
+			if(chr != null)
+				state.addChromosome(chr);
 
 			return null;
 		} catch (FileNotFoundException ex) {
