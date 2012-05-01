@@ -6,10 +6,7 @@ package com.genoscope;
 
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
-import com.genoscope.renderer.visualizers.BEDVisualizer;
-import com.genoscope.renderer.visualizers.CBVisualizer;
-import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
-import com.genoscope.renderer.visualizers.Visualizer;
+import com.genoscope.renderer.visualizers.*;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Pair;
 import java.util.Vector;
@@ -56,6 +53,9 @@ public class State {
 				break;
 			case "cb":
 				renderer.addVisualizer(new CBVisualizer(800, 80, chr));
+				break;
+                        case "rd":
+				renderer.addVisualizer(new ReadDepthVisualizer(800, 80, chr));
 				break;
 			case "cn":
 				break;
