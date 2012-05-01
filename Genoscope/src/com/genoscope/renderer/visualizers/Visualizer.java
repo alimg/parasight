@@ -34,7 +34,7 @@ public class Visualizer {
     private boolean higlighted;
     private boolean useFBO = false;
     private int FBOid;
-    private boolean needRecreateBuffers = false;
+    private boolean needRecreateBuffers = true;
     private int OVERSAMPLE=2;
     private int snapX=-100067;
     private int snapY=-100067;
@@ -48,12 +48,17 @@ public class Visualizer {
     }
 
     public void setSize(int w, int h) {
+        if(w<50||h<50)
+            return;
         width = w;
         height = h;
-        needRecreateBuffers = true;
         if(!useFBO)
             buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
-
+    }
+    public void doneResizing()
+    {
+        updateNeeded=true;
+        needRecreateBuffers = true;
     }
 
     public int getWidth() {
@@ -91,6 +96,7 @@ public class Visualizer {
     }
 
     public final void initBufferMode() {
+        
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glViewport(0, 0, OVERSAMPLE*width, OVERSAMPLE*height);
