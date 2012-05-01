@@ -53,6 +53,10 @@ public class CBVisualizer extends ChromosomeVisualizer{
             glEnd();
             black = !black;
         }
+        glColor4f(0, 0, 1, 1);
+        glEnable(GL_TEXTURE_2D);
+        font.drawString(0, getHeight()-15, chromosome.getName() ,1,1 );
+        glDisable(GL_TEXTURE_2D);
         glLineWidth(2.0f);
         System.out.println("draw");
     }

@@ -12,9 +12,18 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GLContext;
 import org.lwjgl.util.glu.GLU;
+
 /**
- *
+ * 
+ * Initializes OpenGL to draw application, loads shader program and provides 
+ * access to view and library configuration. This class is transition layer from
+ * library level to application level by maintaining rendering and viewport
+ * resizing operations. 
+ * 
+ * @see RendererThread
+ * 
  * @author alim
+ * 
  */
 public class GLHandler {
     private static GenoscopeRenderer renderer=null;
@@ -105,7 +114,11 @@ public class GLHandler {
         setup(width,height);
     }
     
-  
+    /**
+    * Viewport setup
+    * @param w
+    * @param h 
+    */
     public static void setup( int w, int h ) {
         width=w;
         height=h;

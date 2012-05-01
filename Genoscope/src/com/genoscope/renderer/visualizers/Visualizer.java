@@ -286,8 +286,8 @@ public class Visualizer {
     }
 
     /**
-     * Highlight visualizer. GenoscopeRenderer draws a frame for highlighted 
-     * visualizers.
+     * Set highlighting value to let GenoscopeRenderer draw a frame around 
+     * visualizer.
      * 
      * @param h set if this visualizer is highlighted
      */
@@ -328,4 +328,8 @@ public class Visualizer {
         snapY=y;
     }
 
+    final public void destroy()
+    {
+        //TODO free fbo's and buffers 
+    }
 }

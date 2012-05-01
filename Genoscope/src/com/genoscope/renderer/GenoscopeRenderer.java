@@ -53,6 +53,7 @@ public class GenoscopeRenderer {
     }
     /**
      * Arranges position of all clients 
+     * @see Visualizer
      */
     public void resetLayout()
     {
@@ -133,6 +134,9 @@ public class GenoscopeRenderer {
     
 
     private boolean updated=false;
+    /**
+     * @see GLHandler
+     */
     void draw() {
        
         if(!updated)
