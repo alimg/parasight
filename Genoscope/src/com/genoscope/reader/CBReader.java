@@ -46,6 +46,10 @@ public class CBReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split("\t");
+				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0
+						|| val.length < 5) {
+					continue;
+				}
 
 				if (chr == null || !chrName.equals(val[0])) {
 					chrName = val[0];
@@ -59,6 +63,8 @@ public class CBReader extends FileReader {
 
 				chr.addFeature(cytoband);
 			}
+			scanner.close();
+
 			return null;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(CBReader.class.getName()).log(Level.SEVERE, null, ex);
