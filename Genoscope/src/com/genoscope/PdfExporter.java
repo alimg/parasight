@@ -20,6 +20,12 @@ import java.io.FileOutputStream;
  */
 public class PdfExporter extends Thread{
 
+    String fileName;
+    
+    public PdfExporter(String loc){
+        fileName = loc;
+    }
+    
     @Override
     public void run() {
         
@@ -28,16 +34,15 @@ public class PdfExporter extends Thread{
         try {
             PdfWriter writer;
             writer = PdfWriter.getInstance(document,
-                    new FileOutputStream("my_jtable_shapes.pdf"));
+                    new FileOutputStream(fileName));
             document.open();
             PdfContentByte cb = writer.getDirectContent();
             PdfTemplate tp = cb.createTemplate(500, 500);
             Graphics2D g2 = new PdfGraphics2D(cb,500,500);
-            float[] scales = { 1f, 1f, 1f, 0.5f };
+            float[] scales = { 1f, 1f, 1f, 1f };
             float[] offsets = new float[4];
             RescaleOp rop = new RescaleOp(scales, offsets, null);
-            
-            g2.drawImage(RendererThread.getScreenShot(),rop,0,0);
+            g2.drawImage(RendererThread.getScreenShot(4),rop,0,0);
             g2.dispose();
             cb.addTemplate(tp, 30, 300);
         } catch (Exception e) {
