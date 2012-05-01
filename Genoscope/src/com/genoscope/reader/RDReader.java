@@ -18,9 +18,17 @@ import javax.swing.JPanel;
 /**
  *
  * @author Furkan Mustafa Akdemir
+ * This class reads a Read Depth type genome annotation data and adds this data to state
+ * as a Chromosome object
  */
 public class RDReader extends FileReader {
 
+
+	/**
+	 * File reading method for Read Depth format which generates a chromosome and adds to state
+	 * @param path shows the path of Read Depth file
+	 * @param state current state of Genoscope
+	 */
 	@Override
 	public int readFile(String path, State state) {
 		try {
