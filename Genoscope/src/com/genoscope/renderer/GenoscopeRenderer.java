@@ -64,7 +64,7 @@ public class GenoscopeRenderer {
     
     void mouseDown(int i)
     {
-        System.out.println("down "+i);
+        //System.out.println("down "+i);
         if(mouseHandlers[i]!=null)
             mouseHandlers[i].mouseDown();
     }
@@ -73,7 +73,7 @@ public class GenoscopeRenderer {
     {
         if(mouseHandlers[i]!=null)
             mouseHandlers[i].mouseUp();
-        System.out.println("up "+i);
+        //System.out.println("up "+i);
         
     }
     void mouseMove(int x, int y, int buttons) {
