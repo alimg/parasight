@@ -46,6 +46,8 @@ public class RDReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split("\t");
+				if(val.length < 4 )
+					continue;
 
 				if (chr == null || !chrName.equals(val[0])) {
 					chrName = val[0];
@@ -60,6 +62,7 @@ public class RDReader extends FileReader {
 
 				chr.addFeature(readDepth);
 			}
+			scanner.close();
 			return null;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(RDReader.class.getName()).log(Level.SEVERE, null, ex);

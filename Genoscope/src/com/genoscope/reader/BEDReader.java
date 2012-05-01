@@ -46,6 +46,8 @@ public class BEDReader extends FileReader {
 
 				line = scanner.nextLine();
 				val = line.split(" ");
+				if(val.length < 6 )
+					continue;
 				if (header == true) {
 					if (val[0].equals("track")) {
 						header = false;
@@ -68,6 +70,7 @@ public class BEDReader extends FileReader {
 
 					chr.addFeature(feature);
 				}
+				scanner.close();
 
 			}
 			return null;
