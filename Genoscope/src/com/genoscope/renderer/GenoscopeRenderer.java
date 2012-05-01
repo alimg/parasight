@@ -118,6 +118,8 @@ public class GenoscopeRenderer {
                 x=horizonalGap;
             }
             v.setPosition(x,y);
+            v.setSnapX(x);
+            v.setSnapY(y);
             x+=v.getWidth()+horizonalGap;
             if(lineMax<v.getHeight())
                 lineMax=v.getHeight();
