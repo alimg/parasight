@@ -209,7 +209,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="drawingPanel" max="32767" attributes="0"/>
-                      <Component id="leftToolBar" pref="523" max="32767" attributes="0"/>
+                      <Component id="leftToolBar" pref="517" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -292,7 +292,7 @@
                               <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="8" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -652,7 +652,7 @@
                 <Component class="javax.swing.JTree" name="objectTree">
                   <Properties>
                     <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
-                      <TreeModel code="Chromosomes&#xa; Chromosome 1&#xa;  BED Features&#xa;  ReadDepth Features&#xa; Chromosome 2&#xa;  BED Features&#xa; Chromosome 3&#xa;  Cytobands&#xa;Pairings&#xa; Insertion-Deletion&#xa; Similarity"/>
+                      <TreeModel code=""/>
                     </Property>
                   </Properties>
                 </Component>

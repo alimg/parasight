@@ -8,8 +8,10 @@ import com.genoscope.reader.Reader;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTree;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
@@ -66,6 +68,12 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         //initialize
         state = new State();
+        DefaultMutableTreeNode chromosome = new DefaultMutableTreeNode("Chromosomes");
+        DefaultMutableTreeNode pairings = new DefaultMutableTreeNode("Pairings");
+        ((DefaultMutableTreeNode)objectTree.getModel().getRoot()).add(chromosome);
+        ((DefaultMutableTreeNode)objectTree.getModel().getRoot()).add(pairings);
+        state.setChromosomeTree(chromosome);
+        state.setPairingTree(pairings);
     }
 
     public State getAppState() {
@@ -247,7 +255,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -346,28 +354,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectList.setPreferredSize(new java.awt.Dimension(12, 150));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Chromosomes");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 1");
-        javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("ReadDepth Features");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 2");
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 3");
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Cytobands");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Pairings");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Insertion-Deletion");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Similarity");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
         objectTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         objectList.setViewportView(objectTree);
 
@@ -536,7 +522,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                 .addContainerGap())
         );
 

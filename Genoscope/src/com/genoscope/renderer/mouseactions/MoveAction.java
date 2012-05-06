@@ -150,9 +150,9 @@ public  class MoveAction extends MouseActionHandler {
                 action=NONE;
                 selected.doneResizing();
             }
-            view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
         }
         selected=null;
+        view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
 
     @Override
