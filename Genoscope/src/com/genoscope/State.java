@@ -64,6 +64,7 @@ public class State {
 		chromosomeList.add(chr);
 		int lastInd = chr.getSourceFile().lastIndexOf('.');
 		String extension = chr.getSourceFile().substring(lastInd + 1);
+                String fileName = chr.getSourceFile().substring(Math.max(chr.getSourceFile().lastIndexOf('/'),chr.getSourceFile().lastIndexOf('\\'))+1);
                 for(Enumeration p = chromosomeTree.children();p.hasMoreElements();){
                     DefaultMutableTreeNode chrNode = (DefaultMutableTreeNode) p.nextElement();
                     if(chrNode.getUserObject().equals(chr.getName())){
@@ -74,15 +75,19 @@ public class State {
                 if(chromosomeNode == null){
                     chromosomeNode = new DefaultMutableTreeNode(chr.getName());
                     chromosomeTree.add(chromosomeNode);
+                    System.out.println("New chromosome " + chr.getName() + " added to tree");
                 }
 		switch (extension) {
 			case "bed":
+                                chromosomeNode.add(new DefaultMutableTreeNode("BED data (" + fileName + ")"));
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
 			case "cb":
+                                chromosomeNode.add(new DefaultMutableTreeNode("CytoBand data (" + fileName + ")"));
 				renderer.addVisualizer(new CBVisualizer(800, 80, chr));
 				break;
-            case "rd":
+                        case "rd":
+                                chromosomeNode.add(new DefaultMutableTreeNode("ReadDepth data (" + fileName + ")"));
 				renderer.addVisualizer(new ReadDepthVisualizer(800, 80, chr));
 				break;
 			case "cn":

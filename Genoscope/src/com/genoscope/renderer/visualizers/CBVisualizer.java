@@ -4,6 +4,7 @@
  */
 package com.genoscope.renderer.visualizers;
 
+import com.genoscope.GenoscopeApp;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Cytoband;
 import com.genoscope.types.Feature;

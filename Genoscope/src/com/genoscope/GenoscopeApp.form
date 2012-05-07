@@ -326,6 +326,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Show Labels"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBox2">
                   <Properties>
@@ -654,6 +657,7 @@
                     <Property name="model" type="javax.swing.tree.TreeModel" editor="org.netbeans.modules.form.editors2.TreeModelEditor">
                       <TreeModel code=""/>
                     </Property>
+                    <Property name="editable" type="boolean" value="true"/>
                   </Properties>
                 </Component>
               </SubComponents>

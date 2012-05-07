@@ -20,6 +20,7 @@ public class GenoscopeRenderer {
     public final static int EDIT_MODE=1;
     public final static int NAVIGATE_MODE=0;
     private final static float WHEEL_SENS=1;
+    public static boolean drawAll = false;
 
     private int horizonalGap=15;//pixels
     private int verticalGap=15;//pixels
@@ -199,7 +200,7 @@ public class GenoscopeRenderer {
         {
             for(Visualizer v: clients)
             {
-                if(! v.isBufferUpToDate())
+                if(! v.isBufferUpToDate() || drawAll == true)
                 {
                     glPushMatrix();
                     v.initBufferMode();
@@ -241,6 +242,7 @@ public class GenoscopeRenderer {
                 }
         }
         }
+        drawAll = false;
     }
 
     private boolean intersect(Visualizer v, int x, int y) {

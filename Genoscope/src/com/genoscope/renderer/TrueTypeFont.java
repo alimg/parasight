@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package com.genoscope.renderer;
+import com.genoscope.GenoscopeApp;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -303,6 +304,9 @@ public class TrueTypeFont {
 			float scaleX, float scaleY,
 			int format
 			) {
+            
+                if(GenoscopeApp.showLabels == false)
+                    return;
 		
 		IntObject intObject = null;
 		int charCurrent;

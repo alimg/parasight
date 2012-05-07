@@ -5,10 +5,13 @@
 package com.genoscope;
 
 import com.genoscope.reader.Reader;
+import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.RendererThread;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTree;
+import javax.swing.Renderer;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -18,6 +21,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author alim
  */
 public class GenoscopeApp extends javax.swing.JFrame {
+    public static boolean showLabels;
 
     /**
      * Creates new form GenoscopeApp
@@ -70,8 +74,12 @@ public class GenoscopeApp extends javax.swing.JFrame {
         state = new State();
         DefaultMutableTreeNode chromosome = new DefaultMutableTreeNode("Chromosomes");
         DefaultMutableTreeNode pairings = new DefaultMutableTreeNode("Pairings");
-        ((DefaultMutableTreeNode)objectTree.getModel().getRoot()).add(chromosome);
-        ((DefaultMutableTreeNode)objectTree.getModel().getRoot()).add(pairings);
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) objectTree.getModel().getRoot();
+        root.add(chromosome);
+        root.add(pairings);
+        objectTree.expandRow(0);
+        objectTree.expandRow(1);
+        objectTree.expandRow(2);
         state.setChromosomeTree(chromosome);
         state.setPairingTree(pairings);
     }
@@ -217,6 +225,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton4.setToolTipText("Select an area to zoom at");
 
         jCheckBox1.setText("Show Labels");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         jCheckBox2.setText("Show Colors");
 
@@ -355,6 +368,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         objectTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        objectTree.setEditable(true);
         objectList.setViewportView(objectTree);
 
         leftToolBar.add(objectList);
@@ -727,6 +741,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        showLabels = jCheckBox1.isSelected();
+        GenoscopeRenderer.drawAll = true;
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments
