@@ -224,6 +224,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton4.setText("Zoom Tool");
         jButton4.setToolTipText("Select an area to zoom at");
 
+        jCheckBox1.setSelected(true);
         jCheckBox1.setText("Show Labels");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
