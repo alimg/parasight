@@ -43,7 +43,7 @@ public class Visualizer {
     private int OVERSAMPLE=2;
     private int snapX=-100067;
     private int snapY=-100067;
-    
+    private boolean visible = true;
     static TrueTypeFont font=GLHandler.font;
     
     public Visualizer(int w, int h) {
@@ -76,6 +76,14 @@ public class Visualizer {
     {
         updateNeeded=true;
         needRecreateBuffers = true;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
     
     public int getWidth() {
