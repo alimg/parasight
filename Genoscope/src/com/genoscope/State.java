@@ -43,6 +43,7 @@ public class State {
         
 	public void setRenderer(GenoscopeRenderer renderer) {
 		this.renderer = renderer;
+                visualizerList = renderer.getVisualizerList();
 	}
 
 	public int importData(String fileName) {
@@ -58,6 +59,13 @@ public class State {
 		}
 		return false;
 	}
+        
+        public Visualizer getChromosomeVisualizer(String name){
+		for (Visualizer i : visualizerList)
+			if (((ChromosomeVisualizer)i).getChromosomeName().equals(name))
+				return i;
+                return null;
+        }
 
 	public void addChromosome(Chromosome chr) {
                 DefaultMutableTreeNode chromosomeNode = null;

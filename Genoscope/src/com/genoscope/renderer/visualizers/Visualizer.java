@@ -8,7 +8,6 @@ import com.genoscope.renderer.GLHandler;
 import com.genoscope.renderer.GenoscopeRenderer;
 import com.genoscope.renderer.TrueTypeFont;
 import com.genoscope.renderer.mouseactions.MoveAction;
-import java.awt.Font;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.IntBuffer;
@@ -78,6 +77,35 @@ public class Visualizer {
         needRecreateBuffers = true;
     }
 
+
+    /**
+    * @return vertical distance to the top left corner of screen
+    */
+    public int getPosX() {
+        return posX;
+    }
+    public int getX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    /**
+    * @return horizonal distance to the top corner of screen
+    */
+    public int getPosY() {
+        return posY;
+    }
+    public int getY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
+    }
+
     public boolean isVisible() {
         return visible;
     }
@@ -102,19 +130,6 @@ public class Visualizer {
     public void setPosition(int x, int y) {
         posX = x;
         posY = y;
-    }
-
-    /**
-    * @return vertical distance to the top left corner of screen
-    */
-    public int getX() {
-        return posX;
-    }
-    /**
-    * @return horizonal distance to the top corner of screen
-    */
-    public int getY() {
-        return posY;
     }
     
     /**

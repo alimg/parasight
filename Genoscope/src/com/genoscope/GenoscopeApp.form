@@ -410,8 +410,9 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="jTextField2">
+                        <Component class="javax.swing.JTextField" name="objName">
                           <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 2147483647]"/>
                             </Property>
@@ -423,7 +424,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField2ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="objNameActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -446,7 +447,7 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="jTextField3">
+                        <Component class="javax.swing.JTextField" name="objPosX">
                           <Properties>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 2147483647]"/>
@@ -459,7 +460,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField3ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="objPosXActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -484,7 +485,7 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="jTextField4">
+                        <Component class="javax.swing.JTextField" name="objPosY">
                           <Properties>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[150, 2147483647]"/>
@@ -497,7 +498,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField4ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="objPosYActionPerformed"/>
                           </Events>
                         </Component>
                       </SubComponents>
@@ -522,10 +523,13 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+                        <Component class="javax.swing.JCheckBox" name="objVisible">
                           <Properties>
                             <Property name="alignmentX" type="float" value="0.5"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="objVisibleActionPerformed"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -678,6 +682,9 @@
                     </Property>
                     <Property name="editable" type="boolean" value="true"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="objectTreeMousePressed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

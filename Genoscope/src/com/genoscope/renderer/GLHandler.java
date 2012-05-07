@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.lwjgl.input.Keyboard;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GLContext;

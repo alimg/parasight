@@ -6,6 +6,8 @@ package com.genoscope;
 
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
+import com.genoscope.renderer.visualizers.Visualizer;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,8 +20,6 @@ import javax.swing.tree.DefaultMutableTreeNode;
  * @author alim
  */
 public class GenoscopeApp extends javax.swing.JFrame {
-    public static boolean showLabels;
-
     /**
      * Creates new form GenoscopeApp
      */
@@ -134,16 +134,16 @@ public class GenoscopeApp extends javax.swing.JFrame {
         propertiesPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         objectName = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        objName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         objectName1 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        objPosX = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         objectName2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        objPosY = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         objectName3 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        objVisible = new javax.swing.JCheckBox();
         objectList = new javax.swing.JScrollPane();
         objectTree = new javax.swing.JTree();
         drawingPanel = new javax.swing.JPanel();
@@ -309,15 +309,16 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel1.add(objectName);
 
-        jTextField2.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField2.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField2.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        objName.setEditable(false);
+        objName.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objName.setMinimumSize(new java.awt.Dimension(150, 22));
+        objName.setPreferredSize(new java.awt.Dimension(150, 22));
+        objName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                objNameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2);
+        jPanel1.add(objName);
 
         propertiesPanel.add(jPanel1);
 
@@ -327,15 +328,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName1.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel2.add(objectName1);
 
-        jTextField3.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField3.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField3.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        objPosX.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objPosX.setMinimumSize(new java.awt.Dimension(150, 22));
+        objPosX.setPreferredSize(new java.awt.Dimension(150, 22));
+        objPosX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                objPosXActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField3);
+        jPanel2.add(objPosX);
 
         propertiesPanel.add(jPanel2);
 
@@ -347,15 +348,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName2.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel3.add(objectName2);
 
-        jTextField4.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField4.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField4.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        objPosY.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objPosY.setMinimumSize(new java.awt.Dimension(150, 22));
+        objPosY.setPreferredSize(new java.awt.Dimension(150, 22));
+        objPosY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                objPosYActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField4);
+        jPanel3.add(objPosY);
 
         propertiesPanel.add(jPanel3);
 
@@ -367,8 +368,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName3.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel4.add(objectName3);
 
-        jCheckBox3.setAlignmentX(0.5F);
-        jPanel4.add(jCheckBox3);
+        objVisible.setAlignmentX(0.5F);
+        objVisible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objVisibleActionPerformed(evt);
+            }
+        });
+        jPanel4.add(objVisible);
 
         propertiesPanel.add(jPanel4);
 
@@ -384,6 +390,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
         objectTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
         objectTree.setEditable(true);
+        objectTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                objectTreeMousePressed(evt);
+            }
+        });
         objectList.setViewportView(objectTree);
 
         leftToolBar.add(objectList);
@@ -688,17 +699,23 @@ public class GenoscopeApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void objNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_objNameActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void objPosXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosXActionPerformed
+        int a = Integer.parseInt(objPosX.getText());
+        if(a != 0){
+            selectedVisualizer.setPosX(a);
+        }
+    }//GEN-LAST:event_objPosXActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    private void objPosYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosYActionPerformed
+        int a = Integer.parseInt(objPosY.getText());
+        if(a != 0){
+            selectedVisualizer.setPosY(a);
+        }
+    }//GEN-LAST:event_objPosYActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
     }//GEN-LAST:event_saveMenuItemActionPerformed
@@ -766,6 +783,24 @@ public class GenoscopeApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
+        Visualizer a = state.getChromosomeVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString());
+        if(a == null)
+            return;
+        setSelectedVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString(),a);
+    }//GEN-LAST:event_objectTreeMousePressed
+
+    private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed
+        selectedVisualizer.setVisible(objVisible.isSelected());
+    }//GEN-LAST:event_objVisibleActionPerformed
+
+    public void setSelectedVisualizer(String name,Visualizer a){
+        objName.setText(name);
+        objPosX.setText(a.getPosX() + "");
+        objPosY.setText(a.getPosY() + "");
+        objVisible.setSelected(a.isVisible());
+        selectedVisualizer = a;
+    }
     /**
      * @param args the command line arguments
      */
@@ -843,7 +878,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -860,14 +894,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JFileChooser jpgChooser;
     private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextField objName;
+    private javax.swing.JTextField objPosX;
+    private javax.swing.JTextField objPosY;
+    private javax.swing.JCheckBox objVisible;
     private javax.swing.JScrollPane objectList;
     private javax.swing.JLabel objectName;
     private javax.swing.JLabel objectName1;
@@ -886,4 +921,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
     protected State state;
+    public static boolean showLabels;
+    public Visualizer selectedVisualizer;
 }

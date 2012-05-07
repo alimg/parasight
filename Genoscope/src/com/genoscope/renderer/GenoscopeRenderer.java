@@ -29,6 +29,10 @@ public class GenoscopeRenderer {
     
     private int MPX=0,MPY=0;
 
+    public Vector<Visualizer> getVisualizerList() {
+        return clients;
+    }
+
     
     
     
@@ -216,7 +220,7 @@ public class GenoscopeRenderer {
             
             for(Visualizer v: clients)
             {
-                if(v.isBufferUpToDate())
+                if(v.isBufferUpToDate() && v.isVisible())
                 {
                     //translate then draw;
                     glPushMatrix();
