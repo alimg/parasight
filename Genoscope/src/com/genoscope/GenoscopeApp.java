@@ -6,12 +6,9 @@ package com.genoscope;
 
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
-import com.genoscope.renderer.RendererThread;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTree;
-import javax.swing.Renderer;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -123,6 +120,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         pdfChooser = new javax.swing.JFileChooser();
         pngChooser = new javax.swing.JFileChooser();
         jpgChooser = new javax.swing.JFileChooser();
+        jPanel5 = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
@@ -196,6 +194,17 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GenoScope");
         setMinimumSize(new java.awt.Dimension(700, 555));
@@ -217,6 +226,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jLabel1.setText("Zoom");
 
         jButton2.setText("+");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("-");
 
@@ -748,6 +762,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         GenoscopeRenderer.drawAll = true;
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -835,6 +853,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
