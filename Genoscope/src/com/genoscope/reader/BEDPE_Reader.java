@@ -83,13 +83,14 @@ public class BEDPE_Reader extends FileReader {
 								System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
 								state.addChromosome(chr2);
 							}
+							if(pairBlock != null) state.addBlockPair(pairBlock);
 						}
+
 						chr2Name = val[3];
 						chr2 = state.getChromosome(path, chr2Name);
 						if (chr2 == null) {
 							chr2 = new Chromosome(0, chr2Name, path);
 						}
-						if(pairBlock != null) state.addBlockPair(pairBlock);
 						pairBlock = new PairBlock(chr1, chr2);
 						chr2Added = true;
 					}
