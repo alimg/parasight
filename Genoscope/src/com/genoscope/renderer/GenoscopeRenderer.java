@@ -140,7 +140,7 @@ public class GenoscopeRenderer {
         if(v instanceof InterChromosomeV ||v instanceof PairingVisualier)
         {
             interVisualizers.add((InterChromosomeV)v);
-            System.out.print("pairing added");
+            System.out.println("pairing added");
         }
         else{
             synchronized(clients){
@@ -224,6 +224,9 @@ public class GenoscopeRenderer {
                     glPopMatrix();
                 }
             }
+            for(InterChromosomeV v: interVisualizers)
+                if(v.getCoordinatesUpdated() )
+                    v.setCoordinatesUpdateHandled();
             GLHandler.setup();
             glClear( GL_COLOR_BUFFER_BIT );
             

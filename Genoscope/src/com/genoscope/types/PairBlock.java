@@ -24,6 +24,11 @@ public class PairBlock {
 	public void addPair(Pair pair){
 		pairings.add(pair);
 	}
+        public Vector<Pair> getPairings()
+        {
+            return pairings;
+        
+        }
 
 	public Chromosome getFirst() {
 		return chromosome1;

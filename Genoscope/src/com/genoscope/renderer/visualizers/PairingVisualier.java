@@ -5,6 +5,7 @@
 package com.genoscope.renderer.visualizers;
 
 
+import com.genoscope.types.Pair;
 import com.genoscope.types.PairBlock;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -16,13 +17,15 @@ public class PairingVisualier extends InterChromosomeV{
     
     private ChromosomeVisualizer v1;
     private ChromosomeVisualizer v2;
+    private PairBlock pairs;
     
     
     public PairingVisualier(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2, PairBlock pairing) {
-        super(1, 1);
+        super(50, 50);
         //setSize(1, 1);
         this.v1=v1;
         this.v2=v2;
+        this.pairs=pairing;
     }
     
     @Override
@@ -37,15 +40,14 @@ public class PairingVisualier extends InterChromosomeV{
         if(v1.getCoordinatesUpdated() || v2.getCoordinatesUpdated())
         {
             setVisible(true);
-            v1.setCoordinatesUpdateHandled();
-            v2.setCoordinatesUpdateHandled();
             int x=Math.min(v1.getX(), v2.getX());
             int y=Math.min(v1.getY(), v2.getY());
             int ex=Math.max(v1.getX()+v1.getWidth(), v2.getX()+v2.getWidth());
-            int ey=Math.min(v1.getY()+v1.getHeight(), v2.getY()+v2.getHeight());
+            int ey=Math.max(v1.getY()+v1.getHeight(), v2.getY()+v2.getHeight());
             
             setPosition(x,y);
             setSize(ex-x,ey-y);
+            doneResizing();
             System.out.println("  "+x+" "+ y+" "+ex+" "+ey);
         }
     }
@@ -55,15 +57,26 @@ public class PairingVisualier extends InterChromosomeV{
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
-        System.out.println("buffer update");
-        glLoadIdentity();
-        glBegin(GL_LINES);
-        glColor4f(0, 1, 0, 1);
-        glVertex2f(getWidth(), getHeight() );
-        glColor4f(1, 0, 0, 1);
-        glVertex2f(0, 0);
-        glEnd();
         
+        float v1x=v1.getX()-getX();
+        float v1y=getHeight()-v1.getY()+getY();
+        float v2x=v2.getX()-getX();
+        float v2y=getHeight()-v2.getY()+getY();
+        
+        glLoadIdentity();
+        glLineWidth(2);
+        
+        glBegin(GL_LINES);
+        for(Pair p:pairs.getPairings())
+        {
+            glColor4f(0, 0, 0, 1);
+            glVertex2f(v1x+v1.getPosX(p.getFirst().getPosition()),v1y-v1.getHeight()/2.f);
+            glVertex2f(v2x+v2.getPosX(p.getSecond().getPosition()),v2y-v2.getHeight()/2.f);
+            
+            glVertex2f(v1x+v1.getPosX(p.getFirst().getPosition()+p.getFirst().getLength()),v1y-v1.getHeight()/2.f);
+            glVertex2f(v2x+v2.getPosX(p.getSecond().getPosition()+p.getSecond().getLength()),v2y-v2.getHeight()/2.f);
+        }
+        glEnd();
         
     }
     
