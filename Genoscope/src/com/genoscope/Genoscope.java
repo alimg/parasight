@@ -66,12 +66,11 @@ public class Genoscope {
         app.getAppState().setRenderer(renderer);
         //System.out.println("Trying LWJGL");
         
-        
-       
         app.OpenGLPanel.setMinimumSize(new Dimension(0,0));
         //f.OpenGLPanel.setLayout(new BorderLayout());
         app.OpenGLPanel.add(canvas);
         GLHandler.setGLCanvas( canvas );
+        renderer.setScrollbars(app.horizontalScroll,app.verticalScroll);
         //c.setFocusable(false);
         try {
             Display.setParent(canvas);

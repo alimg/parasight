@@ -4,20 +4,22 @@
  */
 package com.genoscope;
 
-
 import com.genoscope.reader.Reader;
+import com.genoscope.renderer.GenoscopeRenderer;
+import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
+import com.genoscope.renderer.visualizers.Visualizer;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  *
  * @author alim
  */
 public class GenoscopeApp extends javax.swing.JFrame {
-
     /**
      * Creates new form GenoscopeApp
      */
@@ -51,22 +53,58 @@ public class GenoscopeApp extends javax.swing.JFrame {
         initComponents();
         //Do not change If you don't know
         fileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooser.setFileFilter(addFileFilters());
+        fileChooser.setFileFilter(addReadableFileFilters());
         fileChooser.setFileHidingEnabled(true);
-//		fileChooser.setCurrentDirectory( new File( "./") ); 
-		
-		//initialize
-		state=new State();
-	}
+
+        pdfChooser.setAcceptAllFileFilterUsed(false);
+        pdfChooser.setFileFilter(addPdfFileFilters());
+
+        pngChooser.setAcceptAllFileFilterUsed(false);
+        pngChooser.setFileFilter(addPngFileFilters());
         
-        public State getAppState(){
-            return state;
-        }
-	//required for File Filter DO NOT DELETE
-	private FileFilter addFileFilters(){
-		return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
-				"cn", "bed","cb","rd");
-	}
+        jpgChooser.setAcceptAllFileFilterUsed(false);
+        jpgChooser.setFileFilter(addJpgFileFilters());
+
+//		fileChooser.setCurrentDirectory( new File( "./") ); 
+
+        //initialize
+        state = new State();
+        DefaultMutableTreeNode chromosome = new DefaultMutableTreeNode("Chromosomes");
+        DefaultMutableTreeNode pairings = new DefaultMutableTreeNode("Pairings");
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) objectTree.getModel().getRoot();
+        root.add(chromosome);
+        root.add(pairings);
+        objectTree.expandRow(0);
+        objectTree.expandRow(1);
+        objectTree.expandRow(2);
+        state.setChromosomeTree(chromosome);
+        state.setPairingTree(pairings);
+    }
+
+    public State getAppState() {
+        return state;
+    }
+    //required for File Filter DO NOT DELETE
+
+    private FileFilter addReadableFileFilters() {
+        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
+                "cn", "bed", "cb", "rd");
+    }
+
+    private FileFilter addPdfFileFilters() {
+        return new FileNameExtensionFilter("Printable Document Format (*.pdf)", "pdf");
+
+    }
+
+    private FileFilter addPngFileFilters() {
+        return new FileNameExtensionFilter("PNG File (*.png)", "png");
+
+    }
+    
+     private FileFilter addJpgFileFilters() {
+        return new FileNameExtensionFilter("JPG File (*.jpg)", "jpg","jpeg");
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -79,6 +117,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         jTextField1 = new javax.swing.JTextField();
+        pdfChooser = new javax.swing.JFileChooser();
+        pngChooser = new javax.swing.JFileChooser();
+        jpgChooser = new javax.swing.JFileChooser();
+        jPanel5 = new javax.swing.JPanel();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
@@ -92,16 +134,16 @@ public class GenoscopeApp extends javax.swing.JFrame {
         propertiesPanel = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         objectName = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        objName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         objectName1 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        objPosX = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         objectName2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        objPosY = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         objectName3 = new javax.swing.JLabel();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        objVisible = new javax.swing.JCheckBox();
         objectList = new javax.swing.JScrollPane();
         objectTree = new javax.swing.JTree();
         drawingPanel = new javax.swing.JPanel();
@@ -134,6 +176,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -147,6 +193,17 @@ public class GenoscopeApp extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         jTextField1.setText("jTextField1");
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GenoScope");
@@ -169,6 +226,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jLabel1.setText("Zoom");
 
         jButton2.setText("+");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("-");
 
@@ -176,7 +238,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton4.setText("Zoom Tool");
         jButton4.setToolTipText("Select an area to zoom at");
 
+        jCheckBox1.setSelected(true);
         jCheckBox1.setText("Show Labels");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         jCheckBox2.setText("Show Colors");
 
@@ -199,7 +267,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         viewControlLayout.setVerticalGroup(
@@ -241,15 +309,16 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel1.add(objectName);
 
-        jTextField2.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField2.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField2.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        objName.setEditable(false);
+        objName.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objName.setMinimumSize(new java.awt.Dimension(150, 22));
+        objName.setPreferredSize(new java.awt.Dimension(150, 22));
+        objName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                objNameActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2);
+        jPanel1.add(objName);
 
         propertiesPanel.add(jPanel1);
 
@@ -259,15 +328,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName1.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel2.add(objectName1);
 
-        jTextField3.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField3.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField3.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        objPosX.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objPosX.setMinimumSize(new java.awt.Dimension(150, 22));
+        objPosX.setPreferredSize(new java.awt.Dimension(150, 22));
+        objPosX.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                objPosXActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField3);
+        jPanel2.add(objPosX);
 
         propertiesPanel.add(jPanel2);
 
@@ -279,15 +348,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName2.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel3.add(objectName2);
 
-        jTextField4.setMaximumSize(new java.awt.Dimension(150, 2147483647));
-        jTextField4.setMinimumSize(new java.awt.Dimension(150, 22));
-        jTextField4.setPreferredSize(new java.awt.Dimension(150, 22));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        objPosY.setMaximumSize(new java.awt.Dimension(150, 2147483647));
+        objPosY.setMinimumSize(new java.awt.Dimension(150, 22));
+        objPosY.setPreferredSize(new java.awt.Dimension(150, 22));
+        objPosY.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                objPosYActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField4);
+        jPanel3.add(objPosY);
 
         propertiesPanel.add(jPanel3);
 
@@ -299,8 +368,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectName3.setPreferredSize(new java.awt.Dimension(90, 16));
         jPanel4.add(objectName3);
 
-        jCheckBox3.setAlignmentX(0.5F);
-        jPanel4.add(jCheckBox3);
+        objVisible.setAlignmentX(0.5F);
+        objVisible.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                objVisibleActionPerformed(evt);
+            }
+        });
+        jPanel4.add(objVisible);
 
         propertiesPanel.add(jPanel4);
 
@@ -314,29 +388,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectList.setPreferredSize(new java.awt.Dimension(12, 150));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("root");
-        javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Chromosomes");
-        javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 1");
-        javax.swing.tree.DefaultMutableTreeNode treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
-        treeNode3.add(treeNode4);
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("ReadDepth Features");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 2");
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("BED Features");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Chromosome 3");
-        treeNode4 = new javax.swing.tree.DefaultMutableTreeNode("Cytobands");
-        treeNode3.add(treeNode4);
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
-        treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("Pairings");
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Insertion-Deletion");
-        treeNode2.add(treeNode3);
-        treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Similarity");
-        treeNode2.add(treeNode3);
-        treeNode1.add(treeNode2);
         objectTree.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        objectTree.setEditable(true);
+        objectTree.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                objectTreeMousePressed(evt);
+            }
+        });
         objectList.setViewportView(objectTree);
 
         leftToolBar.add(objectList);
@@ -504,7 +562,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -522,6 +580,34 @@ public class GenoscopeApp extends javax.swing.JFrame {
             }
         });
         fileMenu.add(openMenuItem);
+
+        jMenu1.setText("Export as");
+
+        jMenuItem1.setText("PDF");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("JPG");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem3.setText("PNG");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem3);
+
+        fileMenu.add(jMenu1);
 
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
@@ -593,7 +679,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
 	private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
-            // TODO add your handling code here:
+
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
@@ -613,22 +699,108 @@ public class GenoscopeApp extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton10ActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void objNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_objNameActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    private void objPosXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosXActionPerformed
+        int a = Integer.parseInt(objPosX.getText());
+        if(a != 0){
+            selectedVisualizer.setPosX(a);
+        }
+    }//GEN-LAST:event_objPosXActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    private void objPosYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosYActionPerformed
+        int a = Integer.parseInt(objPosY.getText());
+        if(a != 0){
+            selectedVisualizer.setPosY(a);
+        }
+    }//GEN-LAST:event_objPosYActionPerformed
 
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        new PdfExporter().start();
     }//GEN-LAST:event_saveMenuItemActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+
+        int returnVal = pdfChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = pdfChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("pdf")) {
+                new PdfExporter(path + ".pdf").start();
+            } else {
+                new PdfExporter(path).start();
+            }
+        }
+
+
+
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        int returnVal = jpgChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = jpgChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("jpg") && !extension.equals("jpeg")) {
+                new JpgExporter(path + ".jpg").start();
+            } else {
+                new JpgExporter(path).start();
+            }
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+       
+        int returnVal = pngChooser.showSaveDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File file = pngChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            int lastInd = path.lastIndexOf('.');
+            String extension = path.substring(lastInd + 1);
+            if (!extension.equals("png")) {
+                new PngExporter(path + ".png").start();
+            } else {
+                new PngExporter(path).start();
+            }
+        }
+
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        showLabels = jCheckBox1.isSelected();
+        GenoscopeRenderer.drawAll = true;
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
+        Visualizer a = state.getChromosomeVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString());
+        if(a == null)
+            return;
+        setSelectedVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString(),a);
+    }//GEN-LAST:event_objectTreeMousePressed
+
+    private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed
+        selectedVisualizer.setVisible(objVisible.isSelected());
+    }//GEN-LAST:event_objVisibleActionPerformed
+
+    public void setSelectedVisualizer(String name,Visualizer a){
+        objName.setText(name);
+        objPosX.setText(a.getPosX() + "");
+        objPosY.setText(a.getPosY() + "");
+        objVisible.setSelected(a.isVisible());
+        selectedVisualizer = a;
+    }
     /**
      * @param args the command line arguments
      */
@@ -655,8 +827,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
          * java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE,
          * null, ex); } catch (javax.swing.UnsupportedLookAndFeelException ex) {
          * java.util.logging.Logger.getLogger(GenoscopeApp.class.getName()).log(java.util.logging.Level.SEVERE,
-         * null, ex);
-        }
+         * null, ex); }
          */
         //</editor-fold>
 
@@ -685,7 +856,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JScrollBar horizontalScroll;
+    public javax.swing.JScrollBar horizontalScroll;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
@@ -707,25 +878,31 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JFileChooser jpgChooser;
     private javax.swing.JPanel leftToolBar;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JTextField objName;
+    private javax.swing.JTextField objPosX;
+    private javax.swing.JTextField objPosY;
+    private javax.swing.JCheckBox objVisible;
     private javax.swing.JScrollPane objectList;
     private javax.swing.JLabel objectName;
     private javax.swing.JLabel objectName1;
@@ -735,11 +912,15 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JTree objectTree;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
+    private javax.swing.JFileChooser pdfChooser;
+    private javax.swing.JFileChooser pngChooser;
     private javax.swing.JPanel propertiesPanel;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
-    private javax.swing.JScrollBar verticalScroll;
+    public javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
     protected State state;
+    public static boolean showLabels;
+    public Visualizer selectedVisualizer;
 }

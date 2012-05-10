@@ -5,9 +5,7 @@
 package com.genoscope.renderer;
 
 import com.genoscope.Genoscope;
-import com.genoscope.renderer.GLHandler;
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.nio.ByteBuffer;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,13 +30,15 @@ public class RendererThread extends Thread {
     public static Object exportSync = new Object();
     private static BufferedImage image;
     private static boolean screenshotReq = false;
+    private static int bpp;
 
     public RendererThread(GenoscopeRenderer renderer) {
         this.renderer = renderer;
     }
 
-    public static BufferedImage getScreenShot() {
+    public static BufferedImage getScreenShot(int bpp) {
         synchronized (exportSync) {
+            RendererThread.bpp=bpp;
             screenshotReq = true;
             try {
                 exportSync.wait();
@@ -106,6 +106,7 @@ public class RendererThread extends Thread {
                             }
                         }
                     }
+                    renderer.mouseWheel(Mouse.getEventDWheel());
                     mouseState_old = mouseState;
                 } else {
                     /*
@@ -124,7 +125,7 @@ public class RendererThread extends Thread {
                     Logger.getLogger(Genoscope.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            if (screenshotReq) //<editor-fold defaultstate="collapsed" desc="bind screenshot to image">
+            if (screenshotReq) 
             {
                 final int width=GLHandler.getWidth();
                 final int height=GLHandler.getHeight();
@@ -132,18 +133,30 @@ public class RendererThread extends Thread {
                 
                 GL11.glPixelStorei(GL11.GL_PACK_ALIGNMENT, 1);
                 GL11.glPixelStorei(GL11.GL_UNPACK_ALIGNMENT, 1);
-                GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
-                image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                
+                
+                
+                if(bpp == 4){
+                    GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer);
+                    image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                }
+                if(bpp == 3){
+                    GL11.glReadPixels(0, 0, width, height, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
+                    image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                    
+                }
                 
                 for (int x = 0; x < width; x++) {
                     for (int y = 0; y < height; y++) {
-                        int i = (x + (width * y)) * 4;
-                        
+                        int i = (x + (width * y)) * bpp;
+                        int a = 0xFF;
                         int r = buffer.get(i) & 0xFF;
                         int g = buffer.get(i + 1) & 0xFF;
                         int b = buffer.get(i + 2) & 0xFF;
-                        int a = buffer.get(i + 3) & 0xFF;
+                        if(bpp == 4)
+                            a = buffer.get(i + 3) & 0xFF;
                         image.setRGB(x, height - (y + 1), (a << 24) | (r << 16) | (g << 8) | b);
+                        
                     }
                 }
                 

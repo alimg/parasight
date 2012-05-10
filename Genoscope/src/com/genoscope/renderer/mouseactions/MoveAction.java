@@ -5,6 +5,9 @@
 package com.genoscope.renderer.mouseactions;
 
 import com.genoscope.Genoscope;
+import com.genoscope.GenoscopeApp;
+import com.genoscope.renderer.GenoscopeRenderer.ViewConfig;
+import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.Cursor;
 import java.util.*;
@@ -39,32 +42,34 @@ public  class MoveAction extends MouseActionHandler {
     private int resizeDirX,resizeDirY;
     
     Visualizer selected=null;
+    private final ViewConfig view;
     
   
-    public MoveAction(Vector<Visualizer> c)
+    public MoveAction(Vector<Visualizer> c, ViewConfig conf)
     {
         System.out.println(" moveaction ");
         setVisualizers(c);
+        view=conf;
     }
 
     class MTreeMap extends TreeMap<Object, Object> {
 
-        public Object put(Integer i) {
-            if(containsKey(i))
-                return super.put(i, ((Integer)get(i))+1);
-            return super.put(i, 0);
+        public Object put(Integer key) {
+            if(containsKey(key))
+                return super.put(key, ((Integer)get(key))+1);
+            return super.put(key, 1);
         }
 
         @Override
         public Object remove(Object key) {
             if(containsKey(key))
-                if(((Integer)get(key) )>0 )
+                if(((Integer)get(key) )>1 )
                     return super.put(key, ((Integer)get(key))-1);
             return super.remove(key);
         }
         
     }
-    MTreeMap arX=new <Integer,Integer>MTreeMap();
+    MTreeMap arX=new <Integer,Integer>MTreeMap(); //snapping array
     MTreeMap arY=new <Integer,Integer>MTreeMap();
     
     /**
@@ -88,27 +93,29 @@ public  class MoveAction extends MouseActionHandler {
         for(Visualizer v:clients)
             if(v!=null)
             {
-                System.out.println(" add ");
-                arX.put(v.getX(),0);
-                arX.put(v.getX()+v.getWidth(),0);
-                arY.put(v.getY(),0);
-                arY.put(v.getY()+v.getHeight(),0);
+                //System.out.println(" add ");
+                arX.put(v.getPosX());
+                arX.put(v.getPosX()+v.getWidth());
+                arY.put(v.getPosY());
+                arY.put(v.getPosY()+v.getHeight());
             }
+        if(arX.size()>0)
+            view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
     @Override
     public void mouseDown() {
         selected=null;
         for(Visualizer c:clients)
-            if(intersect(c, x, y))
+            if(intersect(c, x, y) && c.isVisible())
                 selected=c;
         if(selected!=null)
         {
             int a=getArea(selected,x,y);
             
-            arX.remove(selected.getX());
-            arX.remove(selected.getX()+selected.getWidth());
-            arY.remove(selected.getY());
-            arY.remove(selected.getY()+selected.getHeight());
+            arX.remove(selected.getPosX());
+            arX.remove(selected.getPosX()+selected.getWidth());
+            arY.remove(selected.getPosY());
+            arY.remove(selected.getPosY()+selected.getHeight());
             synchronized(clients)
             {
                 clients.remove(selected);
@@ -122,8 +129,10 @@ public  class MoveAction extends MouseActionHandler {
             else {
                 action=RESIZING;
             }
+            String name;
+            if(selected.getClass() == ChromosomeVisualizer.class)
+                name = ((ChromosomeVisualizer)selected).getChromosomeName();
         }
-        
     }
 
     @Override
@@ -132,10 +141,10 @@ public  class MoveAction extends MouseActionHandler {
         {
             
             selected.setPosition(selected.getSnapX(), selected.getSnapY());
-            arX.put(selected.getX());
-            arX.put(selected.getX()+selected.getWidth());
-            arY.put(selected.getY());
-            arY.put(selected.getY()+selected.getHeight());
+            arX.put(selected.getPosX());
+            arX.put(selected.getPosX()+selected.getWidth());
+            arY.put(selected.getPosY());
+            arY.put(selected.getPosY()+selected.getHeight());
             if(action==MOVING)
             {
                 Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
@@ -147,6 +156,7 @@ public  class MoveAction extends MouseActionHandler {
             }
         }
         selected=null;
+        view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
 
     @Override
@@ -158,11 +168,11 @@ public  class MoveAction extends MouseActionHandler {
         this.y=y;
         switch (action)
         {
-            case NONE:
-                
-                f=0;
-                for(Visualizer c:clients)
-                {
+        case NONE:
+
+            f=0;
+            for(Visualizer c:clients)
+                if(c.isVisible()){
                     t=getArea(c, x, y);
                     if(t>0)
                     {
@@ -171,62 +181,73 @@ public  class MoveAction extends MouseActionHandler {
                         f=1;
                     }
                 }
-                if(f==0)
-                {
-                    resizeW=0;
+            if(f==0)
+            {
+                resizeW=0;
+                if(buttons==0)
                     Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
-                }
-                break;
-            case MOVING:
-                if(selected!=null)
+            }
+            break;
+        case MOVING:
+            if(selected!=null)
+            {
+                selected.setPosition(selected.getPosX()+dx, selected.getY()+dy);
+                snap(selected);
+            }
+            break;
+        case RESIZING:
+            if(selected!=null)
+            {
+                switch(resizeW)
                 {
+                case N:
+                    selected.setPosition(selected.getPosX(), selected.getY()+dy);
+                    snap(selected);
+                    selected.setSize(selected.getWidth(), selected.getHeight()-dy);
+                    break;
+                case S:
+                    selected.setSize(selected.getWidth(), selected.getHeight()+dy);
+                    break;
+                case W:
+                    selected.setPosition(selected.getX()+dx, selected.getY());
+                    snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight());
+                    break;
+                case E:
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight());
+                    break;
+                case NE:
+                    selected.setPosition(selected.getX(), selected.getY()+dy);
+                    snap(selected);
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
+                    break;
+                case NW:
                     selected.setPosition(selected.getX()+dx, selected.getY()+dy);
                     snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
+                    break;
+                case SE:
+                    selected.setSize(selected.getWidth()+dx, selected.getHeight()+dy);
+                    snap(selected);
+                    break;
+                case SW:
+                    selected.setPosition(selected.getX()+dx, selected.getY());
+                    snap(selected);
+                    selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
+                    break;
                 }
-                break;
-            case RESIZING:
-                if(selected!=null)
-                {
-                    switch(resizeW)
-                    {
-                    case N:
-                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth(), selected.getHeight()-dy);
-                        break;
-                    case S:
-                        selected.setSize(selected.getWidth(), selected.getHeight()+dy);
-                        break;
-                    case W:
-                        selected.setPosition(selected.getX()+dx, selected.getY());
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight());
-                        break;
-                    case E:
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight());
-                        break;
-                    case NE:
-                        selected.setPosition(selected.getX(), selected.getSnapY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight()-dy);
-                        break;
-                    case NW:
-                        selected.setPosition(selected.getSnapX()+dx, selected.getSnapY()+dy);
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight()-dy);
-                        break;
-                    case SE:
-                        selected.setSize(selected.getWidth()+dx, selected.getHeight()+dy);
-                        snap(selected);
-                        break;
-                    case SW:
-                        selected.setPosition(selected.getSnapX()+dx, selected.getY());
-                        snap(selected);
-                        selected.setSize(selected.getWidth()-dx, selected.getHeight()+dy);
-                        break;
-                    }
-                }
-                break;
+            }
+            break;
+        }
+        if(selected!=null && arX.size()>0)
+        {
+            int a=view.boundW;
+            if(a<selected.getSnapX()+selected.getWidth())
+                a=selected.getSnapX()+selected.getWidth();
+            int b=view.boundH;
+            if(b<selected.getSnapY()+selected.getHeight())
+                b=selected.getSnapY()+selected.getHeight();
+            view.setViewBound(a,b);
         }
     }
     
@@ -275,14 +296,14 @@ public  class MoveAction extends MouseActionHandler {
         
         if(d==null)a=u;
         else if(u==null)a=d;
-        else if(sx-d>u-sx)a=u;
+        else if(sy-d>u-sy)a=u;
         else a=d;
         
         d=(Integer) arY.floorKey(sye);
         u=(Integer) arY.higherKey(sye);
         if(d==null)b=u;
         else if(u==null)b=d;
-        else if(sx-d>u-sx)b=u;
+        else if(sy-d>u-sy)b=u;
         else b=d;
         aa=Math.abs(a-sy);
         bb=Math.abs(b-sye);
