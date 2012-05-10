@@ -60,39 +60,37 @@ public class BEDPE_Reader extends FileReader {
 				} else {
 					val = line.split("\t");
 
-					if (!chr1Added || !chr1Name.equals(val[0])) {
-						if (chr1Added && !chr1Name.equals(val[0])) {
-							tmpChr = state.getChromosome(path, chr1Name);
-							if (tmpChr == null) {
-								System.out.println("Adding Chromosome to State: '" + chr1Name + "'");
-								state.addChromosome(chr1);
-							}
-						}
+					if (chr1 == null || !chr1Name.equals(val[0])) {
 						chr1Name = val[0];
-						chr1 = state.getChromosome(path, chr1Name);
-						if (chr1 == null) {
+						tmpChr = state.getChromosome(path, chr1Name);
+						if (tmpChr == null) {
+							System.out.println("\n1-Adding Chromosome to State: '" + chr1Name + "'");
 							chr1 = new Chromosome(0, chr1Name, path);
+							state.addChromosome(chr1);
+						} else {
+							chr1 = tmpChr;
 						}
-						chr1Added = true;
 					}
 
-					if (!chr2Added || !chr2Name.equals(val[3])) {
-						if (chr1Added && !chr1Name.equals(val[0])) {
-							tmpChr = state.getChromosome(path, chr1Name);
-							if (tmpChr == null) {
-								System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
-								state.addChromosome(chr2);
+					if (chr2 == null || !chr2Name.equals(val[3])) {
+						if (chr2 != null && !chr2Name.equals(val[3])) {
+							System.out.println("\nAdding Pair Block to State");
+							if (pairBlock != null) {
+								state.addPairBlock(pairBlock);
 							}
-							if(pairBlock != null) state.addBlockPair(pairBlock);
 						}
 
 						chr2Name = val[3];
-						chr2 = state.getChromosome(path, chr2Name);
-						if (chr2 == null) {
+						tmpChr = state.getChromosome(path, chr2Name);
+						if (tmpChr == null) {
+							System.out.println("\n2-Adding Chromosome to State: '" + chr2Name + "'");
 							chr2 = new Chromosome(0, chr2Name, path);
+							state.addChromosome(chr2);
+						} else {
+							chr2 = tmpChr;
 						}
+
 						pairBlock = new PairBlock(chr1, chr2);
-						chr2Added = true;
 					}
 
 					length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
@@ -111,14 +109,6 @@ public class BEDPE_Reader extends FileReader {
 				}
 			}
 			scanner.close();
-			if (chr1 != null) {
-				System.out.println("Adding Chromosome to State: '" + chr1Name + "'");
-				state.addChromosome(chr1);
-			}
-			if (chr2 != null) {
-				System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
-				state.addChromosome(chr2);
-			}
 
 			return 0;
 		} catch (FileNotFoundException e) {

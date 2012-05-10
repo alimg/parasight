@@ -122,11 +122,10 @@ public class State {
 		}
 	}
 
-	public void addBlockPair(PairBlock pairBlock) {
+	public void addPairBlock(PairBlock pairBlock) {
 		pairBlockList.add(pairBlock);
 		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName());
 		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName());
-		System.out.println((v1==null));
 		renderer.addVisualizer(new PairingVisualier(800, 80, v1, v2, pairBlock));
 	}
 }
