@@ -103,7 +103,7 @@ public class BEDPE_Reader extends FileReader {
 					feature2 = new NormalFeature(length, Integer.parseInt(val[7]), val[9].equals("+"));
 					feature2.setPosition(Integer.parseInt(val[4]));
 
-					chr1.addFeature(feature2);
+					chr2.addFeature(feature2);
 
 					pairBlock.addPair(new Pair(feature1, feature2));
 				}
