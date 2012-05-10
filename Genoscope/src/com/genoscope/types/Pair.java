@@ -9,6 +9,8 @@ package com.genoscope.types;
  * @author PC
  */
 public class Pair {
+	private NormalFeature firstFeature;
+	private NormalFeature secondFeature;
 
 	public Pair(NormalFeature first, NormalFeature second) {
 		firstFeature = first;
@@ -17,8 +19,6 @@ public class Pair {
 
 	public Pair() {
 	}
-	private NormalFeature firstFeature;
-	private NormalFeature secondFeature;
 
 	public NormalFeature getFirst() {
 		return firstFeature;

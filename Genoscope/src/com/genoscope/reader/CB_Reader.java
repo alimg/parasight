@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * This class reads a BED type genome annotation data and adds this data to state
  * as a Chromosome object
  */
-public class CBReader extends FileReader {
+public class CB_Reader extends FileReader {
 
 	/**
 	 * File reading method for Cytoband format which generates a chromosome and adds to state
@@ -78,7 +78,7 @@ public class CBReader extends FileReader {
 
 			return 0;
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(CBReader.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(CB_Reader.class.getName()).log(Level.SEVERE, null, ex);
 			return -1;
 		}
 	}

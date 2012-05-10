@@ -19,7 +19,7 @@ import javax.swing.JPanel;
  * This class reads a BED type genome annotation data and adds this data to state
  * as a Chromosome object
  */
-public class BEDReader extends FileReader {
+public class BED_Reader extends FileReader {
 
 	/**
 	 * File reading method for BED format which generates a chromosome and adds to state

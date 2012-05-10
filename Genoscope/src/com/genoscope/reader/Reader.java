@@ -37,19 +37,19 @@ public class Reader {
 			case "bed":
 				System.out.println("reading: " + path);
 				System.out.println("------------ Read Start --------------\n");
-				new BEDReader().readFile(path, state);
+				new BED_Reader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cb":
 				System.out.println("reading: " + path);
 				System.out.println("------------ Read Start --------------\n");
-				new CBReader().readFile(path, state);
+				new CB_Reader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "rd":
 				System.out.println("reading: " + path);
 				System.out.println("------------ Read Start --------------\n");
-				new RDReader().readFile(path, state);
+				new RD_Reader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cn":

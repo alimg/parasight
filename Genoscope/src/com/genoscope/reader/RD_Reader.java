@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * This class reads a Read Depth type genome annotation data and adds this data to state
  * as a Chromosome object
  */
-public class RDReader extends FileReader {
+public class RD_Reader extends FileReader {
 
 
 	/**
@@ -81,7 +81,7 @@ public class RDReader extends FileReader {
 
 			return 0;
 		} catch (FileNotFoundException ex) {
-			Logger.getLogger(RDReader.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(RD_Reader.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		return -1;
 	}
