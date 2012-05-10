@@ -706,14 +706,14 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void objPosXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosXActionPerformed
         int a = Integer.parseInt(objPosX.getText());
         if(a != 0){
-            selectedVisualizer.setPosX(a);
+            selectedVisualizer.setX(a);
         }
     }//GEN-LAST:event_objPosXActionPerformed
 
     private void objPosYActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objPosYActionPerformed
         int a = Integer.parseInt(objPosY.getText());
         if(a != 0){
-            selectedVisualizer.setPosY(a);
+            selectedVisualizer.setY(a);
         }
     }//GEN-LAST:event_objPosYActionPerformed
 
@@ -796,8 +796,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
     public void setSelectedVisualizer(String name,Visualizer a){
         objName.setText(name);
-        objPosX.setText(a.getPosX() + "");
-        objPosY.setText(a.getPosY() + "");
+        objPosX.setText(a.getX() + "");
+        objPosY.setText(a.getY() + "");
         objVisible.setSelected(a.isVisible());
         selectedVisualizer = a;
     }

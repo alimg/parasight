@@ -44,6 +44,14 @@ public class Visualizer {
     private int snapY=-100067;
     private boolean visible = true;
     static TrueTypeFont font=GLHandler.font;
+    /**
+     * if visualizer moved
+     */
+    private boolean coordsChanged=false;
+    /**
+     * is moving
+     */
+    private boolean moving=false;
     
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
@@ -81,31 +89,33 @@ public class Visualizer {
     /**
     * @return vertical distance to the top left corner of screen
     */
-    public int getPosX() {
-        return posX;
-    }
     public int getX() {
         return posX;
     }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
+    public void setX(int a) {
+        posX=a;
     }
-
     /**
     * @return horizonal distance to the top corner of screen
     */
-    public int getPosY() {
-        return posY;
-    }
     public int getY() {
         return posY;
     }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
+    public void setY(int a) {
+        posY=a;
     }
-
+    
+    /**
+     * Set position to appear
+     * @param x
+     * @param y 
+     */
+    public void setPosition(int x, int y) {
+        posX = x;
+        posY = y;
+    }
+    
+    
     public boolean isVisible() {
         return visible;
     }
@@ -122,16 +132,6 @@ public class Visualizer {
         return height;
     }
 
-    /**
-     * Set position to appear
-     * @param x
-     * @param y 
-     */
-    public void setPosition(int x, int y) {
-        posX = x;
-        posY = y;
-    }
-    
     /**
      * 
      * @return x 
@@ -314,7 +314,7 @@ public class Visualizer {
      * 
      * @param h set if this visualizer is highlighted
      */
-    public final void setHighlight(boolean h) {
+    public final void setSelected(boolean h) {
         higlighted = h;
     }
 
@@ -322,7 +322,7 @@ public class Visualizer {
      * 
      * @see GenoscopeRenderer
      */
-    public final boolean isHiglighted() {
+    public final boolean isSelected() {
         return higlighted;
     }
 
@@ -355,4 +355,28 @@ public class Visualizer {
     {
         //TODO free fbo's and buffers 
     }
+
+//for pairwise data;    
+    public boolean getCoordinatesUpdated() {
+        return coordsChanged;
+    }
+    
+    public boolean getCoordinatesChanging() {
+        return moving;
+    }
+
+    public void setCoordinatesChanging() {
+        moving=true;
+    }
+    public void setCoordinatesUpdateDone() {
+        moving=false;
+        coordsChanged=true;
+        
+    }
+    public void setCoordinatesUpdateHandled() {
+        coordsChanged=false;
+        
+    }
+
+   
 }

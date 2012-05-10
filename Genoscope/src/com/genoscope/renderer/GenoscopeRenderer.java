@@ -3,6 +3,8 @@ package com.genoscope.renderer;
 import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.mouseactions.ScrollAction;
+import com.genoscope.renderer.visualizers.InterChromosomeV;
+import com.genoscope.renderer.visualizers.PairingVisualier;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -25,6 +27,7 @@ public class GenoscopeRenderer {
     private int horizonalGap=15;//pixels
     private int verticalGap=15;//pixels
     private Vector<Visualizer> clients= new <Visualizer>Vector();
+    private Vector<InterChromosomeV> interVisualizers= new <InterChromosomeV>Vector();
     private int mMode=0;
     
     private int MPX=0,MPY=0;
@@ -32,9 +35,6 @@ public class GenoscopeRenderer {
     public Vector<Visualizer> getVisualizerList() {
         return clients;
     }
-
-    
-    
     
     public class ViewConfig{
         public float pos[]={0,0,0};
@@ -96,6 +96,7 @@ public class GenoscopeRenderer {
             glMatrixMode(GL_MODELVIEW);
         }
     }
+    
     private ViewConfig mViewConfig=new ViewConfig();
     private MouseActionHandler mouseHandlers[]=new MouseActionHandler[5];
     private MoveAction mMoveAction;
@@ -135,9 +136,15 @@ public class GenoscopeRenderer {
     
     public void addVisualizer(Visualizer v)
     {
-        synchronized(clients){
-            clients.add(v);
-            resetLayout();
+        if(v instanceof PairingVisualier)
+        {
+            interVisualizers.add((InterChromosomeV)v);
+        }
+        else{
+            synchronized(clients){
+                clients.add(v);
+                resetLayout();
+            }
         }
         //GLHandler.requestPaint();
     }
@@ -173,15 +180,7 @@ public class GenoscopeRenderer {
         
         mMoveAction.mouseMove(MPX, MPY, buttons);
         mScrollAction.mouseMove(x, y, buttons);
-        Visualizer r=null;
-        for(Visualizer v: clients)
-        {
-            if(intersect(v,MPX,MPY))
-                r=v;
-            v.setHighlight(false);
-        }
-        if(r!=null)
-            r.setHighlight(true);
+
         GLHandler.requestPaint();
         //System.out.println("x,y "+MPX+" "+MPY);
         }
@@ -212,6 +211,17 @@ public class GenoscopeRenderer {
                     glPopMatrix();
                 }
             }
+            for(InterChromosomeV v: interVisualizers)
+            {
+                v.updateState();
+                if(! v.isBufferUpToDate() || drawAll == true)
+                {
+                    glPushMatrix();
+                    v.initBufferMode();
+                    v.updateBuffer();
+                    glPopMatrix();
+                }
+            }
             GLHandler.setup();
             glClear( GL_COLOR_BUFFER_BIT );
             
@@ -227,7 +237,7 @@ public class GenoscopeRenderer {
                     glTranslatef(v.getSnapX(), v.getSnapY(), 0);
                     //glTranslatef(v.getX(), v.getY(), 0);
                     v.drawBuffered();
-                    if(v.isHiglighted())
+                    if(v.isSelected())
                     {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
                         GL20.glUseProgram(0);
                         glColor4f(0,0,0,1);
@@ -244,16 +254,23 @@ public class GenoscopeRenderer {
                     glPopMatrix();
 
                 }
-        }
+            }
+            for(Visualizer v: interVisualizers)
+            {
+                if(v.isBufferUpToDate() && v.isVisible())
+                {
+                    //translate then draw;
+                    glPushMatrix();
+                    glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                    //glTranslatef(v.getX(), v.getY(), 0);
+                    v.drawBuffered();
+                    
+                    glPopMatrix();
+
+                }
+            }
         }
         drawAll = false;
-    }
-
-    private boolean intersect(Visualizer v, int x, int y) {
-        if( x>v.getX() && x<v.getX()+v.getWidth() &&
-                y>v.getY() && y<v.getY()+v.getHeight() )
-            return true;
-        return false;
     }
 
 
