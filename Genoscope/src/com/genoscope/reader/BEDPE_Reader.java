@@ -122,4 +122,5 @@ public class BEDPE_Reader extends FileReader {
 			return -1;
 		}
 	}
+	
 }
