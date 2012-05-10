@@ -5,6 +5,7 @@
 package com.genoscope.renderer.visualizers;
 
 
+import com.genoscope.types.PairBlock;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
@@ -17,7 +18,7 @@ public class PairingVisualier extends InterChromosomeV{
     private ChromosomeVisualizer v2;
     
     
-    public PairingVisualier(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2) {
+    public PairingVisualier(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2, PairBlock pairing) {
         super(w, h);
         setSize(0, 0);
     }

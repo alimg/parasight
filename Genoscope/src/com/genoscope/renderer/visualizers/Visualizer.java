@@ -104,6 +104,18 @@ public class Visualizer {
     public void setY(int a) {
         posY=a;
     }
+    
+    /**
+     * Set position to appear
+     * @param x
+     * @param y 
+     */
+    public void setPosition(int x, int y) {
+        posX = x;
+        posY = y;
+    }
+    
+    
     public boolean isVisible() {
         return visible;
     }
@@ -120,16 +132,6 @@ public class Visualizer {
         return height;
     }
 
-    /**
-     * Set position to appear
-     * @param x
-     * @param y 
-     */
-    public void setPosition(int x, int y) {
-        posX = x;
-        posY = y;
-    }
-    
     /**
      * 
      * @return x 
