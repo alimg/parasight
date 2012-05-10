@@ -10,7 +10,10 @@ import com.genoscope.renderer.GenoscopeRenderer.ViewConfig;
 import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.Cursor;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.TreeMap;
+import java.util.Vector;
 
 /**
  * Move, resize and snap
@@ -43,6 +46,7 @@ public  class MoveAction extends MouseActionHandler {
     
     Visualizer selected=null;
     private final ViewConfig view;
+    private HashSet<Visualizer> selectionSet=new <Visualizer>HashSet();
     
   
     public MoveAction(Vector<Visualizer> c, ViewConfig conf)
@@ -94,10 +98,10 @@ public  class MoveAction extends MouseActionHandler {
             if(v!=null)
             {
                 //System.out.println(" add ");
-                arX.put(v.getPosX());
-                arX.put(v.getPosX()+v.getWidth());
-                arY.put(v.getPosY());
-                arY.put(v.getPosY()+v.getHeight());
+                arX.put(v.getX());
+                arX.put(v.getX()+v.getWidth());
+                arY.put(v.getY());
+                arY.put(v.getY()+v.getHeight());
             }
         if(arX.size()>0)
             view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
@@ -108,14 +112,25 @@ public  class MoveAction extends MouseActionHandler {
         for(Visualizer c:clients)
             if(intersect(c, x, y) && c.isVisible())
                 selected=c;
+        
+        //TODO: add support for multiple selection
+        Iterator<Visualizer>i=selectionSet.iterator();
+        while(i.hasNext())
+            i.next().setSelected(false);
+        
+        selectionSet.clear();
         if(selected!=null)
         {
+            selectionSet.add(selected);
+            
+            selected.setSelected(true);
+            
             int a=getArea(selected,x,y);
             
-            arX.remove(selected.getPosX());
-            arX.remove(selected.getPosX()+selected.getWidth());
-            arY.remove(selected.getPosY());
-            arY.remove(selected.getPosY()+selected.getHeight());
+            arX.remove(selected.getX());
+            arX.remove(selected.getX()+selected.getWidth());
+            arY.remove(selected.getY());
+            arY.remove(selected.getY()+selected.getHeight());
             synchronized(clients)
             {
                 clients.remove(selected);
@@ -139,12 +154,12 @@ public  class MoveAction extends MouseActionHandler {
     public void mouseUp() {
         if(selected!=null)
         {
-            
+            selected.setCoordinatesUpdateDone();
             selected.setPosition(selected.getSnapX(), selected.getSnapY());
-            arX.put(selected.getPosX());
-            arX.put(selected.getPosX()+selected.getWidth());
-            arY.put(selected.getPosY());
-            arY.put(selected.getPosY()+selected.getHeight());
+            arX.put(selected.getX());
+            arX.put(selected.getX()+selected.getWidth());
+            arY.put(selected.getY());
+            arY.put(selected.getY()+selected.getHeight());
             if(action==MOVING)
             {
                 Genoscope.canvas.setCursor(Cursor.getDefaultCursor());
@@ -191,17 +206,19 @@ public  class MoveAction extends MouseActionHandler {
         case MOVING:
             if(selected!=null)
             {
-                selected.setPosition(selected.getPosX()+dx, selected.getY()+dy);
+                selected.setCoordinatesChanging();
+                selected.setPosition(selected.getX()+dx, selected.getY()+dy);
                 snap(selected);
             }
             break;
         case RESIZING:
             if(selected!=null)
             {
+                selected.setCoordinatesChanging();
                 switch(resizeW)
                 {
                 case N:
-                    selected.setPosition(selected.getPosX(), selected.getY()+dy);
+                    selected.setPosition(selected.getX(), selected.getY()+dy);
                     snap(selected);
                     selected.setSize(selected.getWidth(), selected.getHeight()-dy);
                     break;
