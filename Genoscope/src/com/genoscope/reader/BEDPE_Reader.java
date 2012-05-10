@@ -74,7 +74,8 @@ public class BEDPE_Reader extends FileReader {
 
 					if (chr2 == null || !chr2Name.equals(val[3])) {
 						if (chr2 != null && !chr2Name.equals(val[3])) {
-							System.out.println("\nAdding Pair Block to State");
+							System.out.println("\nAdding Pair Block to State:\n\t"+
+									pairBlock.getFirst().getName()+" and "+pairBlock.getSecond().getName());
 							if (pairBlock != null) {
 								state.addPairBlock(pairBlock);
 							}
@@ -108,8 +109,14 @@ public class BEDPE_Reader extends FileReader {
 					pairBlock.addPair(new Pair(feature1, feature2));
 				}
 			}
-			scanner.close();
 
+			scanner.close();
+			if(pairBlock!=null)
+			{
+				System.out.println("\nAdding Pair Block to State:\n\t"+
+					pairBlock.getFirst().getName()+" and "+pairBlock.getSecond().getName());
+				state.addPairBlock(pairBlock);
+			}
 			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);

@@ -127,5 +127,19 @@ public class State {
 		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName());
 		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName());
 		renderer.addVisualizer(new PairingVisualier(800, 80, v1, v2, pairBlock));
+
+		DefaultMutableTreeNode pairingNode = null;
+		String name="Pairing: "+pairBlock.getFirst().getName()+"-"
+				+pairBlock.getSecond().getName();
+
+		for (Enumeration p = pairingTree.children(); p.hasMoreElements();) {
+			DefaultMutableTreeNode chrNode = (DefaultMutableTreeNode) p.nextElement();
+			if (chrNode.getUserObject().equals(name)) {
+				pairingNode = chrNode;
+				break;
+			}
+		}
+		pairingTree.add(new DefaultMutableTreeNode(name));
+		System.out.println("New pairing " + name + " added to tree");
 	}
 }
