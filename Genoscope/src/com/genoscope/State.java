@@ -112,6 +112,10 @@ public class State {
 				break;
 			case "cn":
 				break;
+			case "bedpe":
+				chromosomeNode.add(new DefaultMutableTreeNode("BEDPE data (" + fileName + ")"));
+				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
+				break;
 			default:
 				renderer.addVisualizer(new ChromosomeVisualizer(800, 80, chr));
 				break;
@@ -120,5 +124,8 @@ public class State {
 
 	public void addBlockPair(PairBlock pairBlock) {
 		pairBlockList.add(pairBlock);
+		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName());
+		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName());
+		renderer.addVisualizer(new PairingVisualier(800, 80, v1, v2, pairBlock));
 	}
 }

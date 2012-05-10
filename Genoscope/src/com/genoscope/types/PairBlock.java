@@ -11,9 +11,9 @@ import java.util.Vector;
  * @author Furkan Mustafa Akdemir
  */
 public class PairBlock {
-	private Vector<Pair> pairings;
 	private Chromosome chromosome1;
 	private Chromosome chromosome2;
+	private Vector<Pair> pairings;
 
 	public PairBlock(Chromosome chr1, Chromosome chr2){
 		chromosome1 = chr1;
@@ -23,5 +23,13 @@ public class PairBlock {
 
 	public void addPair(Pair pair){
 		pairings.add(pair);
+	}
+
+	public Chromosome getFirst() {
+		return chromosome1;
+	}
+
+	public Chromosome getSecond() {
+		return chromosome2;
 	}
 }
