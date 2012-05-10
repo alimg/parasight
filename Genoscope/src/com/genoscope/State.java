@@ -61,7 +61,7 @@ public class State {
 		return false;
 	}
 
-	public Chromosome getChromosome(String path,String name) {
+	public Chromosome getChromosome(String path, String name) {
 		for (Chromosome i : chromosomeList) {
 			if (i.getSourceFile().equals(path) && i.getName().equals(name)) {
 				return i;
@@ -129,8 +129,8 @@ public class State {
 		renderer.addVisualizer(new PairingVisualier(800, 80, v1, v2, pairBlock));
 
 		DefaultMutableTreeNode pairingNode = null;
-		String name="Pairing: "+pairBlock.getFirst().getName()+"-"
-				+pairBlock.getSecond().getName();
+		String name = "Pairing: " + pairBlock.getFirst().getName() + "-"
+				+ pairBlock.getSecond().getName();
 
 		for (Enumeration p = pairingTree.children(); p.hasMoreElements();) {
 			DefaultMutableTreeNode chrNode = (DefaultMutableTreeNode) p.nextElement();
@@ -139,6 +139,7 @@ public class State {
 				break;
 			}
 		}
+		
 		pairingTree.add(new DefaultMutableTreeNode(name));
 		System.out.println("New pairing " + name + " added to tree");
 	}
