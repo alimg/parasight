@@ -15,13 +15,13 @@ public class PairBlock {
 	private Chromosome chromosome1;
 	private Chromosome chromosome2;
 
-	PairBlock(Chromosome chr1, Chromosome chr2){
+	public PairBlock(Chromosome chr1, Chromosome chr2){
 		chromosome1 = chr1;
 		chromosome2 = chr2;
 		pairings = new <Pair>Vector();
 	}
 
-	void addPair(Pair pair){
+	public void addPair(Pair pair){
 		pairings.add(pair);
 	}
 }

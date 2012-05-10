@@ -61,11 +61,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         pngChooser.setAcceptAllFileFilterUsed(false);
         pngChooser.setFileFilter(addPngFileFilters());
-        
+
         jpgChooser.setAcceptAllFileFilterUsed(false);
         jpgChooser.setFileFilter(addJpgFileFilters());
 
-//		fileChooser.setCurrentDirectory( new File( "./") ); 
+//		fileChooser.setCurrentDirectory( new File( "./") );
 
         //initialize
         state = new State();
@@ -87,8 +87,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
     //required for File Filter DO NOT DELETE
 
     private FileFilter addReadableFileFilters() {
-        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd)",
-                "cn", "bed", "cb", "rd");
+        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd, *.bedpe)",
+                "cn", "bed", "cb", "rd","bedpe");
     }
 
     private FileFilter addPdfFileFilters() {
@@ -100,7 +100,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         return new FileNameExtensionFilter("PNG File (*.png)", "png");
 
     }
-    
+
      private FileFilter addJpgFileFilters() {
         return new FileNameExtensionFilter("JPG File (*.jpg)", "jpg","jpeg");
 
@@ -757,7 +757,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       
+
         int returnVal = pngChooser.showSaveDialog(this);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {

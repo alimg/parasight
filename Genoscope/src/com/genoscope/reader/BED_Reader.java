@@ -15,14 +15,15 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Furkan Mustafa Akdemir
- * This class reads a BED type genome annotation data and adds this data to state
- * as a Chromosome object
+ * @author Furkan Mustafa Akdemir This class reads a BED type genome annotation
+ * data and adds this data to state as a Chromosome object
  */
 public class BED_Reader extends FileReader {
 
 	/**
-	 * File reading method for BED format which generates a chromosome and adds to state
+	 * File reading method for BED format which generates a chromosome and adds
+	 * to state
+	 *
 	 * @param path shows the path of BED file
 	 * @param state current state of Genoscope
 	 */
@@ -79,8 +80,9 @@ public class BED_Reader extends FileReader {
 				}
 			}
 			scanner.close();
-			if(chr != null)
+			if (chr != null) {
 				state.addChromosome(chr);
+			}
 
 			return 0;
 		} catch (FileNotFoundException e) {

@@ -10,15 +10,16 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Furkan Mustafa Akdemir
- * This class is the main file reading class which decides to format reader and
- * calls this format reader depending on the extension with a static method
+ * @author Furkan Mustafa Akdemir This class is the main file reading class
+ * which decides to format reader and calls this format reader depending on the
+ * extension with a static method
  */
 public class Reader {
 
 	/**
 	 * This method checks the extension of file and depending on the extension,
 	 * calls corresponding format reader
+	 *
 	 * @param path path of the genome annotation data file
 	 * @param state current state of genoscope
 	 */
@@ -50,6 +51,12 @@ public class Reader {
 				System.out.println("reading: " + path);
 				System.out.println("------------ Read Start --------------\n");
 				new RD_Reader().readFile(path, state);
+				System.out.println("------------ Read Complete -----------\n");
+				return 0;
+			case "bedpe":
+				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
+				new BEDPE_Reader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
 			case "cn":

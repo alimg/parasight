@@ -61,6 +61,15 @@ public class State {
 		return false;
 	}
 
+	public Chromosome getChromosome(String path,String name) {
+		for (Chromosome i : chromosomeList) {
+			if (i.getSourceFile().equals(path) && i.getName().equals(name)) {
+				return i;
+			}
+		}
+		return null;
+	}
+
 	public Visualizer getChromosomeVisualizer(String name) {
 		for (Visualizer i : visualizerList) {
 			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name)) {
