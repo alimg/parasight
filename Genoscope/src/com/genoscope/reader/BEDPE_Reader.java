@@ -61,14 +61,14 @@ public class BEDPE_Reader extends FileReader {
 					val = line.split("\t");
 
 					if (!chr1Added || !chr1Name.equals(val[0])) {
-						if (chr1Added) {
+						if (chr1Added && !chr1Name.equals(val[0])) {
 							tmpChr = state.getChromosome(path, chr1Name);
 							if (tmpChr == null) {
+								System.out.println("Adding Chromosome to State: '" + chr1Name + "'");
 								state.addChromosome(chr1);
 							}
 						}
 						chr1Name = val[0];
-						System.out.println("Adding Chromosome to State: '" + chr1Name + "'");
 						chr1 = state.getChromosome(path, chr1Name);
 						if (chr1 == null) {
 							chr1 = new Chromosome(0, chr1Name, path);
@@ -77,18 +77,19 @@ public class BEDPE_Reader extends FileReader {
 					}
 
 					if (!chr2Added || !chr2Name.equals(val[3])) {
-						if (chr1Added) {
+						if (chr1Added && !chr1Name.equals(val[0])) {
 							tmpChr = state.getChromosome(path, chr1Name);
 							if (tmpChr == null) {
-								state.addChromosome(chr1);
+								System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
+								state.addChromosome(chr2);
 							}
 						}
 						chr2Name = val[3];
-						System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
 						chr2 = state.getChromosome(path, chr2Name);
 						if (chr2 == null) {
 							chr2 = new Chromosome(0, chr2Name, path);
 						}
+						if(pairBlock != null) state.addBlockPair(pairBlock);
 						pairBlock = new PairBlock(chr1, chr2);
 						chr2Added = true;
 					}
@@ -110,9 +111,11 @@ public class BEDPE_Reader extends FileReader {
 			}
 			scanner.close();
 			if (chr1 != null) {
+				System.out.println("Adding Chromosome to State: '" + chr1Name + "'");
 				state.addChromosome(chr1);
 			}
 			if (chr2 != null) {
+				System.out.println("Adding Chromosome to State: '" + chr2Name + "'");
 				state.addChromosome(chr2);
 			}
 
@@ -122,5 +125,4 @@ public class BEDPE_Reader extends FileReader {
 			return -1;
 		}
 	}
-	
 }
