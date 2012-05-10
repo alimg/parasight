@@ -32,6 +32,8 @@ public class Chromosome {
 	}
 
 	public void addFeature(Feature feature) {
+            synchronized (this)
+            {
 		if (feature.getPosition() < start) {
 			start = feature.getPosition();
 		}
@@ -55,6 +57,7 @@ public class Chromosome {
 		}
 		length = end - start;
 		features.add(feature);
+            }
 	}
 
 	public int getStart() {

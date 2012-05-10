@@ -19,13 +19,16 @@ public class PairingVisualier extends InterChromosomeV{
     
     
     public PairingVisualier(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2, PairBlock pairing) {
-        super(w, h);
-        setSize(0, 0);
+        super(1, 1);
+        //setSize(1, 1);
+        this.v1=v1;
+        this.v2=v2;
     }
     
     @Override
     public void updateState()
     {
+    
         if(v1.getCoordinatesChanging() || v2.getCoordinatesChanging())
         {
             setVisible(false);
@@ -43,7 +46,7 @@ public class PairingVisualier extends InterChromosomeV{
             
             setPosition(x,y);
             setSize(ex-x,ey-y);
-            
+            System.out.println("  "+x+" "+ y+" "+ex+" "+ey);
         }
     }
 

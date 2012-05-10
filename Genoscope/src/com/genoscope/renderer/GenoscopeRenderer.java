@@ -136,9 +136,11 @@ public class GenoscopeRenderer {
     
     public void addVisualizer(Visualizer v)
     {
-        if(v instanceof PairingVisualier)
+        System.out.println("adding visualizer");
+        if(v instanceof InterChromosomeV ||v instanceof PairingVisualier)
         {
             interVisualizers.add((InterChromosomeV)v);
+            System.out.print("pairing added");
         }
         else{
             synchronized(clients){

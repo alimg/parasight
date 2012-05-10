@@ -216,6 +216,7 @@ public class Visualizer {
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, FBOid);
         }
         GL20.glUseProgram(0);
+        System.out.println("buffer update");
         draw();
  
         if (useFBO) {
@@ -260,7 +261,6 @@ public class Visualizer {
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
-        System.out.println("buffer update");
         glLoadIdentity();
         glBegin(GL_POLYGON);
         glColor4f(0, 1, 0, 1);
