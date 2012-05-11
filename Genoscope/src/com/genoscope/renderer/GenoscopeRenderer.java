@@ -71,12 +71,12 @@ public class GenoscopeRenderer {
         {
             hScroll.setMinimum(0);
             hScroll.setMaximum(boundW);
-            hScroll.setVisibleAmount(GLHandler.getWidth());
+            hScroll.setVisibleAmount((int)(GLHandler.getWidth()/zoomFactor));
             hScroll.setValue((int)-pos[0]);
             
             vScroll.setMinimum(0);
             vScroll.setMaximum(boundH);
-            vScroll.setVisibleAmount(GLHandler.getHeight());
+            vScroll.setVisibleAmount((int)(GLHandler.getHeight()/zoomFactor));
             vScroll.setValue((int)-pos[1]);
         }
         
@@ -91,10 +91,10 @@ public class GenoscopeRenderer {
         {
             pos[0]=x;
             pos[1]=y;
-            if(GLHandler.getWidth()-pos[0]>boundW)
-                pos[0]=GLHandler.getWidth()-boundW;
-            if(GLHandler.getHeight()-pos[1]>boundH)
-                pos[1]=GLHandler.getHeight()-boundH;
+            if(GLHandler.getWidth()/zoomFactor-pos[0]>boundW)
+                pos[0]=GLHandler.getWidth()/zoomFactor-boundW;
+            if(GLHandler.getHeight()/zoomFactor-pos[1]>boundH)
+                pos[1]=GLHandler.getHeight()/zoomFactor-boundH;
             if(pos[0]>0)pos[0]=0;
             if(pos[1]>0)pos[1]=0;
             updateScrollbars();
@@ -108,7 +108,7 @@ public class GenoscopeRenderer {
         }
 
         private int getExactX(int x) {
-            return (int) (-mViewConfig.pos[1]+x/zoomFactor);
+            return (int) (-mViewConfig.pos[0]+x/zoomFactor);
         }
         private int getExactY(int y) {
             return (int) (-mViewConfig.pos[1]+y/zoomFactor);
@@ -116,6 +116,7 @@ public class GenoscopeRenderer {
 
         public void setZoomFactor(float zoomFactor) {
             this.zoomFactor = zoomFactor;
+            updateScrollbars();
         }
 
         public float getX() {
@@ -173,8 +174,10 @@ public class GenoscopeRenderer {
             x+=v.getWidth()+horizonalGap;
             if(lineMax<v.getHeight())
                 lineMax=v.getHeight();
-                
+            v.setCoordinatesUpdateDone();
         }
+        
+            
         mouseHandlers[0].update();
     }
     
