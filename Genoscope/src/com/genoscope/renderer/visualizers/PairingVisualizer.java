@@ -42,8 +42,8 @@ public class PairingVisualizer extends InterChromosomeV{
             setVisible(false);
             return;
         }
-        else 
-            setVisible(true);
+        //else 
+        //    setVisible(true);
             
         if(v1.getCoordinatesChanging() || v2.getCoordinatesChanging())
         {
