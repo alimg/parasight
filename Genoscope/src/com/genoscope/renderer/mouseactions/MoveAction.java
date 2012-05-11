@@ -171,7 +171,8 @@ public  class MoveAction extends MouseActionHandler {
             }
         }
         selected=null;
-        view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
+        if(!arX.isEmpty())
+            view.setViewBound((int)arX.lastKey(),(int)arY.lastKey() );
     }
 
     @Override

@@ -130,9 +130,9 @@ public class GLHandler {
         glClearColor (1.0f, 1.0f, 1.0f, 1.0f);
        // glEnable(GL_LINE_SMOOTH);
         //glEnable(GL13.GL_MULTISAMPLE);
-        glEnable(GL_POLYGON_SMOOTH);
+       //glEnable(GL_POLYGON_SMOOTH);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        //glBlendFunc (GL_SRC_ALPHA_SATURATE, GL_ONE);
+        //glBlendFunc(GL_SRC_ALPHA, GL_SRC_ALPHA_SATURATE);
         glEnable(GL_BLEND);
         //glEnable(GL_LINE_SMOOTH); 
         glDisable(GL_DEPTH_TEST);
