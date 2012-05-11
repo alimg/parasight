@@ -14,6 +14,10 @@ public class ChromosomeVisualizer extends Visualizer{
     
     float paddingTop=15;
     float paddingLeft=0;
+
+    public float getPaddingLeft() {
+        return paddingLeft;
+    }
     Chromosome chromosome;
     
     public String getChromosomeName(){
