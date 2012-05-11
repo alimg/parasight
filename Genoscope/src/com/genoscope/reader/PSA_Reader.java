@@ -55,7 +55,7 @@ public class PSA_Reader extends FileReader {
 				} else {
 					val = line.split("\t");
 
-					if (chr == null || chrName.equals(val[0])) {
+					if (chr == null || !chrName.equals(val[0])) {
 						chrName = val[0];
 						chr = state.getChromosome(path, chrName);
 						if(chr == null){
@@ -64,9 +64,6 @@ public class PSA_Reader extends FileReader {
 							state.addChromosome(chr);
 						}
 					}
-					if(val.length<7)
-						System.out.println("===========================\n"+line
-								+"\n===========================\n");
 
 					length = Integer.parseInt(val[7]);
 					cl=ColorPicker.getColor(val[3]);
@@ -77,9 +74,6 @@ public class PSA_Reader extends FileReader {
 				}
 			}
 			scanner.close();
-			if (chr != null) {
-				state.addChromosome(chr);
-			}
 
 			return 0;
 		} catch (FileNotFoundException e) {
