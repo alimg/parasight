@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 
 public class ColorPicker {
-    private static ArrayList<Color> colors = new ArrayList<Color>();
-   
+    private static ArrayList<Color> colors = new <Color>ArrayList();
+
     public static void addColor(Color c){
         colors.add(c);
     }
-    
+
     public static Color getColor(String name){
         Color ret=null;
         for(Color c: colors){
@@ -26,5 +26,5 @@ public class ColorPicker {
         }
         return ret;
     }
-    
+
 }
