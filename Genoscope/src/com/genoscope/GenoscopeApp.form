@@ -239,7 +239,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="drawingPanel" max="32767" attributes="0"/>
-                      <Component id="leftToolBar" pref="517" max="32767" attributes="0"/>
+                      <Component id="leftToolBar" pref="524" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -777,7 +777,6 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/com/genoscope/resources/floppy_35inch_blue.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Save Data"/>
                 <Property name="focusable" type="boolean" value="false"/>
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
