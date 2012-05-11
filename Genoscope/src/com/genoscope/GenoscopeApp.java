@@ -121,6 +121,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         pngChooser = new javax.swing.JFileChooser();
         jpgChooser = new javax.swing.JFileChooser();
         jPanel5 = new javax.swing.JPanel();
+        jFrame1 = new javax.swing.JFrame();
         mainPanel = new javax.swing.JPanel();
         leftToolBar = new javax.swing.JPanel();
         viewControl = new javax.swing.JPanel();
@@ -161,9 +162,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -203,6 +201,17 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -266,7 +275,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         viewControlLayout.setVerticalGroup(
@@ -435,7 +444,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/floppy_35inch_blue.png"))); // NOI18N
-        jButton6.setToolTipText("Save Data");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -475,21 +483,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton10);
         jToolBar1.add(jSeparator2);
-
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/undo_blue.png"))); // NOI18N
-        jButton11.setToolTipText("Undo");
-        jButton11.setFocusable(false);
-        jButton11.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton11);
-
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/redo_blue.png"))); // NOI18N
-        jButton12.setToolTipText("Redo");
-        jButton12.setFocusable(false);
-        jButton12.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton12);
-        jToolBar1.add(jSeparator3);
 
         jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/magnifier_plus_blue.png"))); // NOI18N
         jButton13.setToolTipText("Zoom In");
@@ -540,6 +533,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton18.setFocusable(false);
         jButton18.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton18.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton18);
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
@@ -561,7 +559,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -798,6 +796,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         selectedVisualizer.setVisible(objVisible.isSelected());
     }//GEN-LAST:event_objVisibleActionPerformed
 
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        exitMenuItemActionPerformed(null);
+    }//GEN-LAST:event_jButton18ActionPerformed
+
     public void setSelectedVisualizer(String name,Visualizer a){
         objName.setText(name);
         objPosX.setText(a.getX() + "");
@@ -863,8 +865,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     public javax.swing.JScrollBar horizontalScroll;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
@@ -882,6 +882,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JFrame jFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -894,7 +895,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
-    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JTextField jTextField1;

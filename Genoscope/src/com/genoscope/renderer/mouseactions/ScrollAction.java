@@ -43,7 +43,7 @@ public class ScrollAction extends MouseActionHandler{
         this.y=y;
         if(state==1)
         {
-            view.setPos(view.pos[0]+dx,view.pos[1]+dy );
+            view.setPos(view.getX()+dx,view.getY()+dy );
             
         }
     }
