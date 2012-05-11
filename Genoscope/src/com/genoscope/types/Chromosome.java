@@ -54,6 +54,12 @@ public class Chromosome {
 					end = feature.getPosition() + featureLength;
 				}
 			}
+                        if (feature.getClass().equals(PSA.class)) {
+				int featureLength = ((PSA) feature).getLength();
+				if (feature.getPosition() + featureLength > end) {
+					end = feature.getPosition() + featureLength;
+				}
+			}
 			length = end - start;
 			features.add(feature);
 		}
