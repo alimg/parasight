@@ -50,4 +50,8 @@ public class ChromosomeVisualizer extends Visualizer{
         glEnd();
         glLineWidth(2.0f);
     }
+
+    public String getChromosomePath() {
+        return chromosome.getSourceFile();
+    }
 }
