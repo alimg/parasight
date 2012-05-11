@@ -8,7 +8,6 @@ import com.genoscope.ColorPicker;
 import com.genoscope.State;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Color;
-import com.genoscope.types.NormalFeature;
 import com.genoscope.types.PSA;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -65,6 +64,9 @@ public class PSA_Reader extends FileReader {
 							state.addChromosome(chr);
 						}
 					}
+					if(val.length<7)
+						System.out.println("===========================\n"+line
+								+"\n===========================\n");
 
 					length = Integer.parseInt(val[7]);
 					cl=ColorPicker.getColor(val[3]);

@@ -4,6 +4,7 @@
  */
 package com.genoscope;
 
+import com.genoscope.reader.ColorReader;
 import com.genoscope.reader.Reader;
 import com.genoscope.renderer.GenoscopeRenderer;
 import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
@@ -52,6 +53,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         }
 
         initComponents();
+		ColorReader.readFile("resources/color.cl");
         //Do not change If you don't know
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileFilter(addReadableFileFilters());
@@ -88,8 +90,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
     //required for File Filter DO NOT DELETE
 
     private FileFilter addReadableFileFilters() {
-        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd, *.bedpe)",
-                "cn", "bed", "cb", "rd","bedpe");
+        return new FileNameExtensionFilter("supported types (*.cn, *.bed, *.cb, *.rd, *.bedpe, *.psa)",
+                "cn", "bed", "cb", "rd","bedpe","psa");
     }
 
     private FileFilter addPdfFileFilters() {

@@ -79,7 +79,7 @@ public class State {
                         if(path.lastIndexOf("/") == -1 && path.lastIndexOf("\\") == -1)
                             fileName = path;
                         else
-                            fileName = path.substring(Math.max(path.lastIndexOf('/')+1, path.lastIndexOf('\\')) + 1); 
+                            fileName = path.substring(Math.max(path.lastIndexOf('/')+1, path.lastIndexOf('\\')) + 1);
                         if(path_.lastIndexOf("/") == -1 && path_.lastIndexOf("\\") == -1)
                             fileName2 = path_;
                         else
@@ -129,10 +129,10 @@ public class State {
 				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BEDPE data"));
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
-                        case "psa":
-                                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
+			case "psa":
+					chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
 				renderer.addVisualizer(new PSAVisualizer(800, 80, chr));
-                                break;
+				break;
 			default:
 				renderer.addVisualizer(new ChromosomeVisualizer(800, 80, chr));
 				break;
@@ -148,7 +148,7 @@ public class State {
 		DefaultMutableTreeNode pairingNode = null;
 		String name = pairBlock.getFirst().getName() + " - "
 				+ pairBlock.getSecond().getName();
-		
+
 		pairingTree.add(new DefaultMutableTreeNode(name));
 		System.out.println("New pairing " + name + " added to tree");
 	}
@@ -157,7 +157,7 @@ public class State {
                 for(Visualizer i: visualizerList){
                     if(i.getClass() != PairingVisualizer.class)
                         continue;
-                    if(((PairingVisualizer)i).getPairs().getFirst().getName().equals(string) && 
+                    if(((PairingVisualizer)i).getPairs().getFirst().getName().equals(string) &&
                        ((PairingVisualizer)i).getPairs().getFirst().getName().equals(string0))
                         return i;
                 }
