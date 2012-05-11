@@ -39,9 +39,9 @@ public class CBVisualizer extends ChromosomeVisualizer{
         boolean black = true;
         for(Feature i:chromosome.getFeatures()){
             glBegin(GL_POLYGON);
-            float x1 = getPosX(i.getPosition());
+            float x1 = getPositionX(i.getPosition());
             float y1 = h;
-            float x2 = getPosX(i.getPosition()+((Cytoband)i).getLength());
+            float x2 = getPositionX(i.getPosition()+((Cytoband)i).getLength());
             float y2 = 3*h;
             if(black)
                 glColor4f(0,0,0,1);
