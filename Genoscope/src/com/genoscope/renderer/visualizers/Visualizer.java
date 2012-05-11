@@ -378,7 +378,5 @@ public class Visualizer {
     public void setCoordinatesUpdateHandled() {
         coordsChanged=false;
         
-    }
-
-   
+    }   
 }

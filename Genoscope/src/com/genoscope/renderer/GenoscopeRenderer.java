@@ -45,6 +45,10 @@ public class GenoscopeRenderer {
     public void resetZoom() {
         mViewConfig.zoomFactor = 1.0f;
     }
+
+    public Vector<InterChromosomeV> getPairingVisualizerList() {
+        return interVisualizers;
+    }
     
     public class ViewConfig{
         private float pos[]={0,0,0};
@@ -163,7 +167,6 @@ public class GenoscopeRenderer {
             maxLength = Math.max(maxLength,((ChromosomeVisualizer)v).getChromosomeLength());
         if(maxLength == 0)
             maxLength = 1;
-        System.out.println(maxLength);
         for(Visualizer v: clients)
         {
             if(x+v.getWidth()>GLHandler.getWidth())
@@ -172,7 +175,6 @@ public class GenoscopeRenderer {
                 lineMax=0;
                 x=horizonalGap;
             }
-            System.out.println((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750) + " ");
             v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750+
                     ((ChromosomeVisualizer)v).getPaddingLeft()),v.getHeight());
             v.doneResizing();

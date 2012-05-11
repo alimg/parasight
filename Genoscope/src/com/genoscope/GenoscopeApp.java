@@ -717,8 +717,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
             if (returnVal == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
                 if (file == null || !file.exists()) {
-                    System.out.println("File does not exists!");
-                    JOptionPane.showMessageDialog(this, "File does not exists");
+                    System.out.println("File does not exist!");
+                    JOptionPane.showMessageDialog(this, "File does not exist");
                     openMenuItemActionPerformed(evt);
                     return;
                 }
@@ -820,13 +820,14 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
         String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
         String[] parts = node.split(" - ");
+        if(parts.length < 2)
+            return;
         Visualizer a = null;
-        if(parts.length == 3)
-            a = state.getChromosomeVisualizer(parts[0],parts[1]);
-        if(parts.length == 2)
-            a = state.getPairingVisualizer(parts[0],parts[1]);
+        a = state.getChromosomeVisualizer(parts[0],parts[1]);
+        if(a == null)
+        a = state.getPairingVisualizer(parts[0],parts[1],parts[2]);
         if(a!=null && selectedVisualizer != a)
-            setSelectedVisualizer(node,a);
+            setSelectedVisualizer(parts[0]+" - "+parts[1],a);
     }//GEN-LAST:event_objectTreeMousePressed
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed

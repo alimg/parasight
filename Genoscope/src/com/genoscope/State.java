@@ -10,6 +10,7 @@ import com.genoscope.renderer.visualizers.*;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.PairBlock;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -19,6 +20,7 @@ public class State {
 	private Vector<Chromosome> chromosomeList;
 	private Vector<PairBlock> pairBlockList;
 	private Vector<Visualizer> visualizerList;
+	private Vector<InterChromosomeV> pairingVisualizerList;
 	private GenoscopeRenderer renderer;
 	private DefaultMutableTreeNode chromosomeTree;
 	private DefaultMutableTreeNode pairingTree;
@@ -45,6 +47,7 @@ public class State {
 	public void setRenderer(GenoscopeRenderer renderer) {
 		this.renderer = renderer;
 		visualizerList = renderer.getVisualizerList();
+                pairingVisualizerList = renderer.getPairingVisualizerList();
 	}
 
 	public int importData(String fileName) {
@@ -95,7 +98,6 @@ public class State {
 			} else {
 				fileName2 = path_.substring(Math.max(path_.lastIndexOf('/') + 1, path_.lastIndexOf('\\')) + 1);
 			}
-			System.out.println(fileName + " " + fileName2 + "\n");
 			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name) && fileName.equals(fileName2)) {
 				return i;
 			}
@@ -119,7 +121,6 @@ public class State {
 		if (chromosomeNode == null) {
 			chromosomeNode = new DefaultMutableTreeNode(chr.getName());
 			chromosomeTree.add(chromosomeNode);
-			System.out.println("New chromosome " + chr.getName() + " added to tree");
 		}
 		switch (extension) {
 			case "bed":
@@ -158,22 +159,20 @@ public class State {
 
 		DefaultMutableTreeNode pairingNode = null;
 		String name = pairBlock.getFirst().getName() + " - "
-				+ pairBlock.getSecond().getName();
+				+ pairBlock.getSecond().getName() + " - " + pairBlock.getFirst().getSourceFile();
 
 		pairingTree.add(new DefaultMutableTreeNode(name));
-		System.out.println("New pairing " + name + " added to tree");
 	}
 
-	public Visualizer getPairingVisualizer(String string, String string0) {
-		for (Visualizer i : visualizerList) {
-			if (i.getClass() != PairingVisualizer.class) {
-				continue;
-			}
-			if (((PairingVisualizer) i).getPairs().getFirst().getName().equals(string)
-					&& ((PairingVisualizer) i).getPairs().getFirst().getName().equals(string0)) {
-				return i;
-			}
-		}
+	public Visualizer getPairingVisualizer(String string, String string0,String path) {
+        for (Iterator<InterChromosomeV> it = pairingVisualizerList.iterator(); it.hasNext();) {
+            Visualizer i = it.next();
+            if (((PairingVisualizer) i).getPairs().getFirst().getName().equals(string)
+                            && ((PairingVisualizer) i).getPairs().getSecond().getName().equals(string0)
+                    && ((PairingVisualizer) i).getPairs().getFirst().getSourceFile().equals(path)) {
+                    return i;
+            }
+        }
 		return null;
 	}
 
@@ -191,9 +190,10 @@ public class State {
 	}
 
     void toggleAll(boolean x) {
-        for(Visualizer i:visualizerList){
+        for(Visualizer i:visualizerList)
             i.setVisible(x);
-        }
+        for(InterChromosomeV i:pairingVisualizerList)
+            i.setVisible(x);
     }
 
 }
