@@ -103,7 +103,7 @@ public class GenoscopeRenderer {
             glMatrixMode(GL_PROJECTION);
             
             glTranslatef(pos[0], pos[1], pos[2]);
-            glScalef(zoomFactor, zoomFactor, 1);
+            glScalef((float)Math.sqrt(zoomFactor), (float)Math.sqrt(zoomFactor), 1);
             glMatrixMode(GL_MODELVIEW);
         }
 
@@ -129,6 +129,7 @@ public class GenoscopeRenderer {
         private float getZoomFactor() {
             return zoomFactor;
         }
+
         
         
     }
@@ -176,6 +177,7 @@ public class GenoscopeRenderer {
                 if(lineMax<v.getHeight())
                     lineMax=v.getHeight();
             }   
+            v.setCoordinatesUpdateDone();
         }
         
             
