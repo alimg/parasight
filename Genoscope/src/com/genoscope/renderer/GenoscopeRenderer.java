@@ -13,6 +13,7 @@ import java.util.Vector;
 import javax.swing.JScrollBar;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.util.glu.GLU;
 
 
 /**
@@ -102,8 +103,13 @@ public class GenoscopeRenderer {
         private void translate() {
             glMatrixMode(GL_PROJECTION);
             
+            glLoadIdentity();
+
+            // coordinate system origin at lower left with width and height same as the window
+            //GLU glu = new GLU();
+            //glu.gluOrtho2D( 0.0f, width, 0.0f, height );
+            GLU.gluOrtho2D( 0.0f, GLHandler.getWidth()/zoomFactor, GLHandler.getHeight()/zoomFactor,0.0f );
             glTranslatef(pos[0], pos[1], pos[2]);
-            glScalef((float)Math.sqrt(zoomFactor), (float)Math.sqrt(zoomFactor), 1);
             glMatrixMode(GL_MODELVIEW);
         }
 
