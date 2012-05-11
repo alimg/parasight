@@ -259,6 +259,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
             }
         });
 
+        jCheckBox1.setSelected(true);
         jCheckBox1.setText("Show Labels");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -988,6 +989,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
     protected State state;
-    public static boolean showLabels;
+    public static boolean showLabels = true;
     public Visualizer selectedVisualizer;
 }
