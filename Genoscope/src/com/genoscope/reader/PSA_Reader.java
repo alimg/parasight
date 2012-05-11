@@ -22,13 +22,20 @@ import javax.swing.JPanel;
 public class PSA_Reader extends FileReader {
 
 	@Override
-	public int readFile(String path, State state) {
-		if (state.checkChromosome(path)) {
+	public int readFile(String path, State state_) {
+		if (state_.checkChromosome(path)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
 			return -2;
 		}
+		State state = new State() {
+
+			@Override
+			public void addChromosome(Chromosome chr) {
+				this.getChromosomeList().add(chr);
+			}
+		};
 		File file = new File(path);
 
 		try {
@@ -55,32 +62,26 @@ public class PSA_Reader extends FileReader {
 				} else {
 					val = line.split("\t");
 
-					if (chr == null || chrName.equals(val[0])) {
+					if (chr == null || !chrName.equals(val[0])) {
 						chrName = val[0];
 						chr = state.getChromosome(path, chrName);
-						if(chr == null){
+						if (chr == null) {
 							System.out.println("Adding Chromosome to State: '" + chrName + "'");
 							chr = new Chromosome(0, chrName, path);
 							state.addChromosome(chr);
 						}
 					}
-					if(val.length<7)
-						System.out.println("===========================\n"+line
-								+"\n===========================\n");
 
 					length = Integer.parseInt(val[7]);
-					cl=ColorPicker.getColor(val[3]);
-					feature = new PSA(chrName,Integer.parseInt(val[1]),length,
-							Integer.parseInt(val[5]),cl);
+					cl = ColorPicker.getColor(val[3]);
+					feature = new PSA(chrName, Integer.parseInt(val[1]), length,
+							Integer.parseInt(val[5]), cl , val[6]);
 
 					chr.addFeature(feature);
 				}
 			}
 			scanner.close();
-			if (chr != null) {
-				state.addChromosome(chr);
-			}
-
+			state.clone(state_);
 			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);

@@ -28,13 +28,20 @@ public class BED_Reader extends FileReader {
 	 * @param state current state of Genoscope
 	 */
 	@Override
-	public int readFile(String path, State state) {
-		if (state.checkChromosome(path)) {
+	public int readFile(String path, State state_) {
+		if (state_.checkChromosome(path)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
 			return -2;
 		}
+		State state = new State() {
+
+			@Override
+			public void addChromosome(Chromosome chr) {
+				this.getChromosomeList().add(chr);
+			}
+		};
 		File file = new File(path);
 
 		try {
@@ -83,7 +90,7 @@ public class BED_Reader extends FileReader {
 			if (chr != null) {
 				state.addChromosome(chr);
 			}
-
+			state.clone(state_);
 			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);

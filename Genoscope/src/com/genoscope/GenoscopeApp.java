@@ -715,6 +715,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                     return;
                 }
                 Reader.readFile(file.getAbsolutePath(), state);
+				//Genoscope.renderer.resetLayout();
             } else {
                 System.out.println("File access cancelled by user.");
             }

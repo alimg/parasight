@@ -23,22 +23,33 @@ import javax.swing.JPanel;
  */
 public class BEDPE_Reader extends FileReader {
 
-/**
+	/**
 	 * File reading method for BEDPE format which generates two chromosomes and
 	 * their pairing data and adds to state
 	 *
 	 * @param path shows the path of BEDPE file
 	 * @param state current state of Genoscope
 	 */
-
 	@Override
-	public int readFile(String path, State state) {
-		if (state.checkChromosome(path)) {
+	public int readFile(String path, State state_) {
+		if (state_.checkChromosome(path)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
 			return -2;
 		}
+		State state = new State() {
+
+			@Override
+			public void addChromosome(Chromosome chr) {
+				this.getChromosomeList().add(chr);
+			}
+
+			@Override
+			public void addPairBlock(PairBlock pairBlock){
+				this.getPairBlockList().add(pairBlock);
+			}
+		};
 		File file = new File(path);
 
 		try {
@@ -84,8 +95,8 @@ public class BEDPE_Reader extends FileReader {
 
 					if (chr2 == null || !chr2Name.equals(val[3])) {
 						if (chr2 != null && !chr2Name.equals(val[3])) {
-							System.out.println("\nAdding Pair Block to State:\n\t"+
-									pairBlock.getFirst().getName()+" and "+pairBlock.getSecond().getName());
+							System.out.println("\nAdding Pair Block to State:\n\t"
+									+ pairBlock.getFirst().getName() + " and " + pairBlock.getSecond().getName());
 							if (pairBlock != null) {
 								state.addPairBlock(pairBlock);
 							}
@@ -121,12 +132,12 @@ public class BEDPE_Reader extends FileReader {
 			}
 
 			scanner.close();
-			if(pairBlock!=null)
-			{
-				System.out.println("\nAdding Pair Block to State:\n\t"+
-					pairBlock.getFirst().getName()+" and "+pairBlock.getSecond().getName());
+			if (pairBlock != null) {
+				System.out.println("\nAdding Pair Block to State:\n\t"
+						+ pairBlock.getFirst().getName() + " and " + pairBlock.getSecond().getName());
 				state.addPairBlock(pairBlock);
 			}
+			state.clone(state_);
 			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);
