@@ -74,7 +74,6 @@ public class PSA_Reader extends FileReader {
 				}
 			}
 			scanner.close();
-
 			return 0;
 		} catch (FileNotFoundException e) {
 			System.out.println("File not found:" + path);
