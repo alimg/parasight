@@ -13,6 +13,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class ChromosomeVisualizer extends Visualizer{
     
     float paddingTop=15;
+    float paddingLeft=0;
     Chromosome chromosome;
     
     public String getChromosomeName(){
@@ -29,7 +30,7 @@ public class ChromosomeVisualizer extends Visualizer{
     }
     
     public float getPositionX(int position){
-        return (float)getWidth()*((float)(position-chromosome.getStart())/chromosome.getLength());
+        return paddingLeft+(float)(getWidth()-paddingLeft)*((float)(position-chromosome.getStart())/(chromosome.getLength()));
     }
     @Override
     public void draw(){

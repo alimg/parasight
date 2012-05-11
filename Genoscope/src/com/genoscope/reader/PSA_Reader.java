@@ -75,7 +75,7 @@ public class PSA_Reader extends FileReader {
 					length = Integer.parseInt(val[7]);
 					cl = ColorPicker.getColor(val[3]);
 					feature = new PSA(chrName, Integer.parseInt(val[1]), length,
-							Integer.parseInt(val[5]), cl);
+							Integer.parseInt(val[5]), cl , val[6]);
 
 					chr.addFeature(feature);
 				}

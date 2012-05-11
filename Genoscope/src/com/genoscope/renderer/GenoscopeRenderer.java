@@ -173,7 +173,7 @@ public class GenoscopeRenderer {
                 x=horizonalGap;
             }
             System.out.println((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750) + " ");
-            v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750),80);
+            v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750),v.getHeight());
             v.doneResizing();
             if(v.isVisible()){
                 v.setPosition(x,y);
