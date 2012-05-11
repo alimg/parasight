@@ -275,7 +275,7 @@ public class GenoscopeRenderer {
                 for(InterChromosomeV v: interVisualizers)
                 {
                     v.updateState();
-                    if(! v.isBufferUpToDate() || drawAll == true)
+                    if( (!v.isBufferUpToDate() && v.isVisible()) || drawAll == true)
                     {
                         glPushMatrix();
                         v.initBufferMode();
