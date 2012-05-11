@@ -30,7 +30,7 @@ public class PSAVisualizer extends ChromosomeVisualizer {
                      paddingLeft = font.getWidth(f.getType());
                  
                  map.put(f.getType(), new Integer(height));
-                 height+=f.getHeight();
+                 height+=f.getHeight()+5;
   
              }
          }
@@ -50,16 +50,12 @@ public class PSAVisualizer extends ChromosomeVisualizer {
         float h = getHeight() / 4.0f;
         float w = getWidth();
 
-
-
-
         glLineWidth(5.0f);
         glColor4f(0, 0, 0, 1);
         glBegin(GL_LINES);
         glVertex2f(0.0f, h);
         glVertex2f(w, h);
         glEnd();
-
         glEnable(GL_TEXTURE_2D);
         font.drawString(20, getHeight() - 15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")"), 1, 1);
         for(String s: map.keySet()){
@@ -67,8 +63,7 @@ public class PSAVisualizer extends ChromosomeVisualizer {
             System.out.println(s);
             glLineWidth(1.0f);
             glColor4f(0, 0, 0, 1);
-            font.drawString(1,h+i+5,s, 1, 1);
-            
+            font.drawString(1,h+i,s, 1, 1);
         }
         glDisable(GL_TEXTURE_2D);
 

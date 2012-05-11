@@ -190,4 +190,10 @@ public class State {
 			state_.addPairBlock(i);
 	}
 
+    void toggleAll(boolean x) {
+        for(Visualizer i:visualizerList){
+            i.setVisible(x);
+        }
+    }
+
 }
