@@ -168,13 +168,14 @@ public class GenoscopeRenderer {
             System.out.println((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750) + " ");
             v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750),80);
             v.doneResizing();
-            v.setPosition(x,y);
-            v.setSnapX(x);
-            v.setSnapY(y);
-            x+=v.getWidth()+horizonalGap;
-            if(lineMax<v.getHeight())
-                lineMax=v.getHeight();
-            v.setCoordinatesUpdateDone();
+            if(v.isVisible()){
+                v.setPosition(x,y);
+                v.setSnapX(x);
+                v.setSnapY(y);
+                x+=v.getWidth()+horizonalGap;
+                if(lineMax<v.getHeight())
+                    lineMax=v.getHeight();
+            }   
         }
         
             
@@ -185,8 +186,10 @@ public class GenoscopeRenderer {
     {
         if(v instanceof InterChromosomeV ||v instanceof PairingVisualizer)
         {
-            interVisualizers.add((InterChromosomeV)v);
-            v.setVisible(false);
+            synchronized(interVisualizers){
+                interVisualizers.add((InterChromosomeV)v);
+                v.setVisible(false);
+            }
         }
         else{
             synchronized(clients){
@@ -247,76 +250,78 @@ public class GenoscopeRenderer {
             resetLayout();
             updated=true;
         }
-        synchronized(clients)
-        {
-            for(Visualizer v: clients)
+        synchronized(interVisualizers){
+            synchronized(clients)
             {
-                if(! v.isBufferUpToDate() || drawAll == true)
+                for(Visualizer v: clients)
                 {
-                    glPushMatrix();
-                    v.initBufferMode();
-                    v.updateBuffer();
-                    glPopMatrix();
-                }
-            }
-            for(InterChromosomeV v: interVisualizers)
-            {
-                v.updateState();
-                if(! v.isBufferUpToDate() || drawAll == true)
-                {
-                    glPushMatrix();
-                    v.initBufferMode();
-                    v.updateBuffer();
-                    glPopMatrix();
-                }
-            }
-            for(InterChromosomeV v: interVisualizers)
-                v.setCoordinatesUpdateHandled();
-            GLHandler.setup();
-            glClear( GL_COLOR_BUFFER_BIT );
-            
-            mViewConfig.translate();
-            
-            
-            for(Visualizer v: clients)
-            {
-                if(v.isBufferUpToDate() && v.isVisible())
-                {
-                    //translate then draw;
-                    glPushMatrix();
-                    glTranslatef(v.getSnapX(), v.getSnapY(), 0);
-                    //glTranslatef(v.getX(), v.getY(), 0);
-                    v.drawBuffered();
-                    if(v.isSelected())
-                    {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
-                        GL20.glUseProgram(0);
-                        glColor4f(0,0,0,1);
-                        glDisable(GL_TEXTURE_2D);
-                        glLineWidth(1);
-                        glBegin(GL_LINE_LOOP);
-                        glVertex2f(0, 0);
-                        glVertex2f(0,v.getHeight());
-                        glVertex2f(v.getWidth(),v.getHeight());
-                        glVertex2f(v.getWidth(), 0);
-                        glEnd();
-                        //</editor-fold>
+                    if(! v.isBufferUpToDate() || drawAll == true)
+                    {
+                        glPushMatrix();
+                        v.initBufferMode();
+                        v.updateBuffer();
+                        glPopMatrix();
                     }
-                    glPopMatrix();
-
                 }
-            }
-            for(Visualizer v: interVisualizers)
-            {
-                if(v.isBufferUpToDate() && v.isVisible())
+                for(InterChromosomeV v: interVisualizers)
                 {
-                    //translate then draw;
-                    glPushMatrix();
-                    glTranslatef(v.getSnapX(), v.getSnapY(), 0);
-                    //glTranslatef(v.getX(), v.getY(), 0);
-                    v.drawBuffered();
-                    
-                    glPopMatrix();
+                    v.updateState();
+                    if(! v.isBufferUpToDate() || drawAll == true)
+                    {
+                        glPushMatrix();
+                        v.initBufferMode();
+                        v.updateBuffer();
+                        glPopMatrix();
+                    }
+                }
+                for(InterChromosomeV v: interVisualizers)
+                    v.setCoordinatesUpdateHandled();
+                GLHandler.setup();
+                glClear( GL_COLOR_BUFFER_BIT );
 
+                mViewConfig.translate();
+
+
+                for(Visualizer v: clients)
+                {
+                    if(v.isBufferUpToDate() && v.isVisible())
+                    {
+                        //translate then draw;
+                        glPushMatrix();
+                        glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                        //glTranslatef(v.getX(), v.getY(), 0);
+                        v.drawBuffered();
+                        if(v.isSelected())
+                        {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
+                            GL20.glUseProgram(0);
+                            glColor4f(0,0,0,1);
+                            glDisable(GL_TEXTURE_2D);
+                            glLineWidth(1);
+                            glBegin(GL_LINE_LOOP);
+                            glVertex2f(0, 0);
+                            glVertex2f(0,v.getHeight());
+                            glVertex2f(v.getWidth(),v.getHeight());
+                            glVertex2f(v.getWidth(), 0);
+                            glEnd();
+                            //</editor-fold>
+                        }
+                        glPopMatrix();
+
+                    }
+                }
+                for(Visualizer v: interVisualizers)
+                {
+                    if(v.isBufferUpToDate() && v.isVisible())
+                    {
+                        //translate then draw;
+                        glPushMatrix();
+                        glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                        //glTranslatef(v.getX(), v.getY(), 0);
+                        v.drawBuffered();
+
+                        glPopMatrix();
+
+                    }
                 }
             }
         }
