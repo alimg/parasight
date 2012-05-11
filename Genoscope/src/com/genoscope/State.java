@@ -70,21 +70,24 @@ public class State {
 		return null;
 	}
 
-	public Visualizer getChromosomeVisualizer(String name,String path_) {
+	public Visualizer getChromosomeVisualizer(String name, String path_) {
 		for (Visualizer i : visualizerList) {
-                        if(i.getClass().equals(PairingVisualizer.class))
-                            continue;
-                        String path = ((ChromosomeVisualizer) i).getChromosomePath();
-                        String fileName = null,fileName2 = null;
-                        if(path.lastIndexOf("/") == -1 && path.lastIndexOf("\\") == -1)
-                            fileName = path;
-                        else
-                            fileName = path.substring(Math.max(path.lastIndexOf('/')+1, path.lastIndexOf('\\')) + 1);
-                        if(path_.lastIndexOf("/") == -1 && path_.lastIndexOf("\\") == -1)
-                            fileName2 = path_;
-                        else
-                            fileName2 = path_.substring(Math.max(path_.lastIndexOf('/')+1, path_.lastIndexOf('\\')) + 1);
-                        System.out.println(fileName + " " + fileName2 + "\n");
+			if (i.getClass().equals(PairingVisualizer.class)) {
+				continue;
+			}
+			String path = ((ChromosomeVisualizer) i).getChromosomePath();
+			String fileName = null, fileName2 = null;
+			if (path.lastIndexOf("/") == -1 && path.lastIndexOf("\\") == -1) {
+				fileName = path;
+			} else {
+				fileName = path.substring(Math.max(path.lastIndexOf('/') + 1, path.lastIndexOf('\\')) + 1);
+			}
+			if (path_.lastIndexOf("/") == -1 && path_.lastIndexOf("\\") == -1) {
+				fileName2 = path_;
+			} else {
+				fileName2 = path_.substring(Math.max(path_.lastIndexOf('/') + 1, path_.lastIndexOf('\\')) + 1);
+			}
+			System.out.println(fileName + " " + fileName2 + "\n");
 			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name) && fileName.equals(fileName2)) {
 				return i;
 			}
@@ -130,7 +133,7 @@ public class State {
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
 			case "psa":
-					chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
+				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
 				renderer.addVisualizer(new PSAVisualizer(800, 80, chr));
 				break;
 			default:
@@ -141,9 +144,9 @@ public class State {
 
 	public void addPairBlock(PairBlock pairBlock) {
 		pairBlockList.add(pairBlock);
-		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName(),pairBlock.getFirst().getSourceFile());
-		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName(),pairBlock.getSecond().getSourceFile());
-                renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
+		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName(), pairBlock.getFirst().getSourceFile());
+		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName(), pairBlock.getSecond().getSourceFile());
+		renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
 
 		DefaultMutableTreeNode pairingNode = null;
 		String name = pairBlock.getFirst().getName() + " - "
@@ -153,20 +156,22 @@ public class State {
 		System.out.println("New pairing " + name + " added to tree");
 	}
 
-        public Visualizer getPairingVisualizer(String string, String string0) {
-                for(Visualizer i: visualizerList){
-                    if(i.getClass() != PairingVisualizer.class)
-                        continue;
-                    if(((PairingVisualizer)i).getPairs().getFirst().getName().equals(string) &&
-                       ((PairingVisualizer)i).getPairs().getFirst().getName().equals(string0))
-                        return i;
-                }
-                return null;
-        }
+	public Visualizer getPairingVisualizer(String string, String string0) {
+		for (Visualizer i : visualizerList) {
+			if (i.getClass() != PairingVisualizer.class) {
+				continue;
+			}
+			if (((PairingVisualizer) i).getPairs().getFirst().getName().equals(string)
+					&& ((PairingVisualizer) i).getPairs().getFirst().getName().equals(string0)) {
+				return i;
+			}
+		}
+		return null;
+	}
 
-    void reset() {
-        chromosomeList.clear();
-        visualizerList.clear();
-        pairBlockList.clear();
-    }
+	void reset() {
+		chromosomeList.clear();
+		visualizerList.clear();
+		pairBlockList.clear();
+	}
 }
