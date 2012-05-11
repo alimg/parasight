@@ -163,4 +163,10 @@ public class State {
                 }
                 return null;
         }
+
+    void reset() {
+        chromosomeList.clear();
+        visualizerList.clear();
+        pairBlockList.clear();
+    }
 }

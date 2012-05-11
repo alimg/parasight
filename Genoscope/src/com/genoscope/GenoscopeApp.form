@@ -239,7 +239,7 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="drawingPanel" max="32767" attributes="0"/>
-                      <Component id="leftToolBar" pref="524" max="32767" attributes="0"/>
+                      <Component id="leftToolBar" pref="517" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -322,7 +322,7 @@
                               <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="8" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -345,14 +345,14 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="-"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton4">
                   <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/com/genoscope/resources/magnifier.png"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Zoom Tool"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Select an area to zoom at"/>
+                    <Property name="text" type="java.lang.String" value="Reset Layout"/>
+                    <Property name="toolTipText" type="java.lang.String" value="ResetLayout"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JCheckBox" name="jCheckBox1">
@@ -757,6 +757,9 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton5">
               <Properties>

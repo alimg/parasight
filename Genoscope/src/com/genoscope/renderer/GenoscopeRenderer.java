@@ -36,6 +36,14 @@ public class GenoscopeRenderer {
     public Vector<Visualizer> getVisualizerList() {
         return clients;
     }
+
+    public Vector<InterChromosomeV> getInterVisualizers() {
+        return interVisualizers;
+    }
+
+    public void resetZoom() {
+        mViewConfig.zoomFactor = 1.0f;
+    }
     
     public class ViewConfig{
         private float pos[]={0,0,0};
