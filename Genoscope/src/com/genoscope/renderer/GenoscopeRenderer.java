@@ -71,12 +71,12 @@ public class GenoscopeRenderer {
         {
             hScroll.setMinimum(0);
             hScroll.setMaximum(boundW);
-            hScroll.setVisibleAmount(GLHandler.getWidth());
+            hScroll.setVisibleAmount((int)(GLHandler.getWidth()/zoomFactor));
             hScroll.setValue((int)-pos[0]);
             
             vScroll.setMinimum(0);
             vScroll.setMaximum(boundH);
-            vScroll.setVisibleAmount(GLHandler.getHeight());
+            vScroll.setVisibleAmount((int)(GLHandler.getHeight()/zoomFactor));
             vScroll.setValue((int)-pos[1]);
         }
         
@@ -91,10 +91,10 @@ public class GenoscopeRenderer {
         {
             pos[0]=x;
             pos[1]=y;
-            if(GLHandler.getWidth()-pos[0]>boundW)
-                pos[0]=GLHandler.getWidth()-boundW;
-            if(GLHandler.getHeight()-pos[1]>boundH)
-                pos[1]=GLHandler.getHeight()-boundH;
+            if(GLHandler.getWidth()/zoomFactor-pos[0]>boundW)
+                pos[0]=GLHandler.getWidth()/zoomFactor-boundW;
+            if(GLHandler.getHeight()/zoomFactor-pos[1]>boundH)
+                pos[1]=GLHandler.getHeight()/zoomFactor-boundH;
             if(pos[0]>0)pos[0]=0;
             if(pos[1]>0)pos[1]=0;
             updateScrollbars();
@@ -103,12 +103,12 @@ public class GenoscopeRenderer {
             glMatrixMode(GL_PROJECTION);
             
             glTranslatef(pos[0], pos[1], pos[2]);
-            glScalef(zoomFactor, zoomFactor, 1);
+            glScalef((float)Math.sqrt(zoomFactor), (float)Math.sqrt(zoomFactor), 1);
             glMatrixMode(GL_MODELVIEW);
         }
 
         private int getExactX(int x) {
-            return (int) (-mViewConfig.pos[1]+x/zoomFactor);
+            return (int) (-mViewConfig.pos[0]+x/zoomFactor);
         }
         private int getExactY(int y) {
             return (int) (-mViewConfig.pos[1]+y/zoomFactor);
@@ -116,6 +116,7 @@ public class GenoscopeRenderer {
 
         public void setZoomFactor(float zoomFactor) {
             this.zoomFactor = zoomFactor;
+            updateScrollbars();
         }
 
         public float getX() {
@@ -128,6 +129,7 @@ public class GenoscopeRenderer {
         private float getZoomFactor() {
             return zoomFactor;
         }
+
         
         
     }
@@ -167,14 +169,18 @@ public class GenoscopeRenderer {
             System.out.println((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750) + " ");
             v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750),80);
             v.doneResizing();
-            v.setPosition(x,y);
-            v.setSnapX(x);
-            v.setSnapY(y);
-            x+=v.getWidth()+horizonalGap;
-            if(lineMax<v.getHeight())
-                lineMax=v.getHeight();
-                
+            if(v.isVisible()){
+                v.setPosition(x,y);
+                v.setSnapX(x);
+                v.setSnapY(y);
+                x+=v.getWidth()+horizonalGap;
+                if(lineMax<v.getHeight())
+                    lineMax=v.getHeight();
+            }   
+            v.setCoordinatesUpdateDone();
         }
+        
+            
         mouseHandlers[0].update();
     }
     
@@ -182,8 +188,10 @@ public class GenoscopeRenderer {
     {
         if(v instanceof InterChromosomeV ||v instanceof PairingVisualizer)
         {
-            interVisualizers.add((InterChromosomeV)v);
-            v.setVisible(false);
+            synchronized(interVisualizers){
+                interVisualizers.add((InterChromosomeV)v);
+                v.setVisible(false);
+            }
         }
         else{
             synchronized(clients){
@@ -244,76 +252,78 @@ public class GenoscopeRenderer {
             resetLayout();
             updated=true;
         }
-        synchronized(clients)
-        {
-            for(Visualizer v: clients)
+        synchronized(interVisualizers){
+            synchronized(clients)
             {
-                if(! v.isBufferUpToDate() || drawAll == true)
+                for(Visualizer v: clients)
                 {
-                    glPushMatrix();
-                    v.initBufferMode();
-                    v.updateBuffer();
-                    glPopMatrix();
-                }
-            }
-            for(InterChromosomeV v: interVisualizers)
-            {
-                v.updateState();
-                if(! v.isBufferUpToDate() || drawAll == true)
-                {
-                    glPushMatrix();
-                    v.initBufferMode();
-                    v.updateBuffer();
-                    glPopMatrix();
-                }
-            }
-            for(InterChromosomeV v: interVisualizers)
-                v.setCoordinatesUpdateHandled();
-            GLHandler.setup();
-            glClear( GL_COLOR_BUFFER_BIT );
-            
-            mViewConfig.translate();
-            
-            
-            for(Visualizer v: clients)
-            {
-                if(v.isBufferUpToDate() && v.isVisible())
-                {
-                    //translate then draw;
-                    glPushMatrix();
-                    glTranslatef(v.getSnapX(), v.getSnapY(), 0);
-                    //glTranslatef(v.getX(), v.getY(), 0);
-                    v.drawBuffered();
-                    if(v.isSelected())
-                    {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
-                        GL20.glUseProgram(0);
-                        glColor4f(0,0,0,1);
-                        glDisable(GL_TEXTURE_2D);
-                        glLineWidth(1);
-                        glBegin(GL_LINE_LOOP);
-                        glVertex2f(0, 0);
-                        glVertex2f(0,v.getHeight());
-                        glVertex2f(v.getWidth(),v.getHeight());
-                        glVertex2f(v.getWidth(), 0);
-                        glEnd();
-                        //</editor-fold>
+                    if(! v.isBufferUpToDate() || drawAll == true)
+                    {
+                        glPushMatrix();
+                        v.initBufferMode();
+                        v.updateBuffer();
+                        glPopMatrix();
                     }
-                    glPopMatrix();
-
                 }
-            }
-            for(Visualizer v: interVisualizers)
-            {
-                if(v.isBufferUpToDate() && v.isVisible())
+                for(InterChromosomeV v: interVisualizers)
                 {
-                    //translate then draw;
-                    glPushMatrix();
-                    glTranslatef(v.getSnapX(), v.getSnapY(), 0);
-                    //glTranslatef(v.getX(), v.getY(), 0);
-                    v.drawBuffered();
-                    
-                    glPopMatrix();
+                    v.updateState();
+                    if(! v.isBufferUpToDate() || drawAll == true)
+                    {
+                        glPushMatrix();
+                        v.initBufferMode();
+                        v.updateBuffer();
+                        glPopMatrix();
+                    }
+                }
+                for(InterChromosomeV v: interVisualizers)
+                    v.setCoordinatesUpdateHandled();
+                GLHandler.setup();
+                glClear( GL_COLOR_BUFFER_BIT );
 
+                mViewConfig.translate();
+
+
+                for(Visualizer v: clients)
+                {
+                    if(v.isBufferUpToDate() && v.isVisible())
+                    {
+                        //translate then draw;
+                        glPushMatrix();
+                        glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                        //glTranslatef(v.getX(), v.getY(), 0);
+                        v.drawBuffered();
+                        if(v.isSelected())
+                        {//<editor-fold defaultstate="collapsed" desc="draw some rectangle around">
+                            GL20.glUseProgram(0);
+                            glColor4f(0,0,0,1);
+                            glDisable(GL_TEXTURE_2D);
+                            glLineWidth(1);
+                            glBegin(GL_LINE_LOOP);
+                            glVertex2f(0, 0);
+                            glVertex2f(0,v.getHeight());
+                            glVertex2f(v.getWidth(),v.getHeight());
+                            glVertex2f(v.getWidth(), 0);
+                            glEnd();
+                            //</editor-fold>
+                        }
+                        glPopMatrix();
+
+                    }
+                }
+                for(Visualizer v: interVisualizers)
+                {
+                    if(v.isBufferUpToDate() && v.isVisible())
+                    {
+                        //translate then draw;
+                        glPushMatrix();
+                        glTranslatef(v.getSnapX(), v.getSnapY(), 0);
+                        //glTranslatef(v.getX(), v.getY(), 0);
+                        v.drawBuffered();
+
+                        glPopMatrix();
+
+                    }
                 }
             }
         }
