@@ -251,6 +251,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
         jButton4.setText("Reset Layout");
         jButton4.setToolTipText("ResetLayout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Show Labels");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -833,6 +838,10 @@ public class GenoscopeApp extends javax.swing.JFrame {
         state.setPairingTree(pairings);
         selectedVisualizer = null;
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Genoscope.renderer.resetLayout();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void setSelectedVisualizer(String name,Visualizer a){
         objName.setText(name);
