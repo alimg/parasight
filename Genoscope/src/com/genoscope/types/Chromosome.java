@@ -32,32 +32,31 @@ public class Chromosome {
 	}
 
 	public void addFeature(Feature feature) {
-            synchronized (this)
-            {
-		if (feature.getPosition() < start) {
-			start = feature.getPosition();
-		}
-		if (feature.getClass().equals(Cytoband.class)) {
-			int featureLength = ((Cytoband) feature).getLength();
-			if (feature.getPosition() + featureLength > end) {
-				end = feature.getPosition() + featureLength;
+		synchronized (this) {
+			if (feature.getPosition() < start) {
+				start = feature.getPosition();
 			}
-		}
-		if (feature.getClass().equals(NormalFeature.class)) {
-			int featureLength = ((NormalFeature) feature).getLength();
-			if (feature.getPosition() + featureLength > end) {
-				end = feature.getPosition() + featureLength;
+			if (feature.getClass().equals(Cytoband.class)) {
+				int featureLength = ((Cytoband) feature).getLength();
+				if (feature.getPosition() + featureLength > end) {
+					end = feature.getPosition() + featureLength;
+				}
 			}
-		}
-                if (feature.getClass().equals(ReadDepth.class)) {
-			int featureLength = ((ReadDepth) feature).getLength();
-			if (feature.getPosition() + featureLength > end) {
-				end = feature.getPosition() + featureLength;
+			if (feature.getClass().equals(NormalFeature.class)) {
+				int featureLength = ((NormalFeature) feature).getLength();
+				if (feature.getPosition() + featureLength > end) {
+					end = feature.getPosition() + featureLength;
+				}
 			}
+			if (feature.getClass().equals(ReadDepth.class)) {
+				int featureLength = ((ReadDepth) feature).getLength();
+				if (feature.getPosition() + featureLength > end) {
+					end = feature.getPosition() + featureLength;
+				}
+			}
+			length = end - start;
+			features.add(feature);
 		}
-		length = end - start;
-		features.add(feature);
-            }
 	}
 
 	public int getStart() {

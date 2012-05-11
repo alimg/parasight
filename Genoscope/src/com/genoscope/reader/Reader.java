@@ -59,6 +59,12 @@ public class Reader {
 				new BEDPE_Reader().readFile(path, state);
 				System.out.println("------------ Read Complete -----------\n");
 				return 0;
+			case "psa":
+				System.out.println("reading: " + path);
+				System.out.println("------------ Read Start --------------\n");
+				new PSA_Reader().readFile(path, state);
+				System.out.println("------------ Read Complete -----------\n");
+				return 0;
 			case "cn":
 				System.out.println("reading: " + path);
 				System.out.println("------------ Read Start --------------\n");
