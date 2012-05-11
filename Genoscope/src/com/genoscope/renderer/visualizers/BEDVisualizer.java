@@ -46,16 +46,15 @@ public class BEDVisualizer extends ChromosomeVisualizer{
                 float x1 = getPositionX(i.getPosition());
                 float y1 = h+5;
                 float x2 = getPositionX(i.getPosition()+((NormalFeature)i).getLength());
-                float y2 = 2*h-5;
+                float y2 = y1+10;
+                if(x1 <= x2) 
+                    x2++;
                 if(up){
                     y1+=10;
                     y2+=10;
                 }
                 up = !up;
-                if(((NormalFeature)i).getStrand())
-                    x2-=10;
-                else
-                    x1+=10;
+              
                 if(black)
                     glColor4f(0,0,0,1);
                 else
@@ -66,16 +65,16 @@ public class BEDVisualizer extends ChromosomeVisualizer{
                 glVertex2f(x1,y2);
                 glEnd();
                 glBegin(GL_TRIANGLES);
-                if(((NormalFeature)i).getStrand()){
-                    glVertex2f(x2,y2);
-                    glVertex2f(x2+10,(y1+y2)/2);
-                    glVertex2f(x2,y1);
-                }
-                else{
-                    glVertex2f(x1,y2);
-                    glVertex2f(x1-10,(y1+y2)/2);
-                    glVertex2f(x1,y1);
-                }
+                    if(((NormalFeature)i).getStrand()){
+                        glVertex2f(x2,y2);
+                        glVertex2f(x2+((x2-x1) < 10 ? (x2-x1) : 10),(y1+y2)/2);
+                        glVertex2f(x2,y1);
+                    }
+                    else{
+                        glVertex2f(x1,y2);
+                        glVertex2f(x1-((x2-x1) < 10 ? (x2-x1) : 10),(y1+y2)/2);
+                        glVertex2f(x1,y1);
+                    }
                 glEnd();
                 black = !black;
             }
