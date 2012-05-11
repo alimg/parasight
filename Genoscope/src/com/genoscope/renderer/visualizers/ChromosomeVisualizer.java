@@ -23,6 +23,11 @@ public class ChromosomeVisualizer extends Visualizer{
         super(w,h);
         this.chromosome = chr;
     }
+    
+    public int getChromosomeLength(){
+        return chromosome.getLength();
+    }
+    
     public float getPositionX(int position){
         return (float)getWidth()*((float)(position-chromosome.getStart())/chromosome.getLength());
     }

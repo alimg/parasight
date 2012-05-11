@@ -67,8 +67,10 @@ public class Visualizer {
      * @see MoveAction
      */
     public void setSize(int w, int h) {
-        if(w<50||h<50)
-            return;
+        if(w<150)
+            w = 150;
+        if(h<80)
+            h = 80;
         width = w;
         height = h;
         if(!useFBO)

@@ -18,8 +18,11 @@ public class PairingVisualizer extends InterChromosomeV{
     private ChromosomeVisualizer v1;
     private ChromosomeVisualizer v2;
     private PairBlock pairs;
-    
-    
+
+    public PairBlock getPairs() {
+        return pairs;
+    }
+
     public PairingVisualizer(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2, PairBlock pairing) {
         super(50, 50);
         //setSize(1, 1);
@@ -31,6 +34,8 @@ public class PairingVisualizer extends InterChromosomeV{
     @Override
     public void updateState()
     {
+        if(v1 == null || v2 == null)
+            return;
         if((v1.isVisible()==false) || (v2.isVisible()==false))
             setVisible(false);
         else 
@@ -59,6 +64,8 @@ public class PairingVisualizer extends InterChromosomeV{
 
     @Override
     public void draw() {
+        if(v1 == null || v2 == null)
+            return;
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -73,19 +80,28 @@ public class PairingVisualizer extends InterChromosomeV{
         
         glBegin(GL_LINES);
         for(Pair p:pairs.getPairings())
-        {
-            glColor4f(0, 0, 0, .8f);
+        {   
+            if(v1 == v2)
+                glColor4f(0.8f, 0.2f, 0.2f, .8f);
+            else
+                glColor4f(0.2f, 0.2f, 0.8f, .8f);
             glVertex2f(v1x+v1.getPositionX(p.getFirst().getPosition()),v1y-v1.getHeight()/2.f);
-            if(v1==v2)
+            if(v1==v2){
                glVertex2f(v1x+(v1.getPositionX(p.getFirst().getPosition())+
                        v2.getPositionX(p.getSecond().getPosition()))/2.f,v1y);
+               glVertex2f(v1x+(v1.getPositionX(p.getFirst().getPosition())+
+                       v2.getPositionX(p.getSecond().getPosition()))/2.f,v1y);
+            }
             glVertex2f(v2x+v2.getPositionX(p.getSecond().getPosition()),v2y-v2.getHeight()/2.f);
             
             
             glVertex2f(v1x+v1.getPositionX(p.getFirst().getPosition()+p.getFirst().getLength()),v1y-v1.getHeight()/2.f);
-            if(v1==v2)
+            if(v1==v2){
                glVertex2f(v1x+(v1.getPositionX(p.getFirst().getPosition()+p.getFirst().getLength())+
                        v2.getPositionX(p.getSecond().getPosition()+p.getSecond().getLength()))/2.f,v1y);
+               glVertex2f(v1x+(v1.getPositionX(p.getFirst().getPosition()+p.getFirst().getLength())+
+                       v2.getPositionX(p.getSecond().getPosition()+p.getSecond().getLength()))/2.f,v1y);
+            }
             glVertex2f(v2x+v2.getPositionX(p.getSecond().getPosition()+p.getSecond().getLength()),v2y-v2.getHeight()/2.f);
         }
         glEnd();
@@ -94,6 +110,8 @@ public class PairingVisualizer extends InterChromosomeV{
 
     @Override
     public void setCoordinatesUpdateHandled() {
+        if(v1 == null || v2 == null)
+            return;
         super.setCoordinatesUpdateHandled();
         v1.setCoordinatesUpdateHandled();
         v2.setCoordinatesUpdateHandled(); 

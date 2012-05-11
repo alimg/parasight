@@ -785,11 +785,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
         String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
         String[] parts = node.split(" - ");
-        if(parts.length < 3) return;
-        Visualizer a = state.getChromosomeVisualizer(parts[0],parts[1]);
-        if(a == null)
-            return;
-        setSelectedVisualizer(node,a);
+        Visualizer a = null;
+        if(parts.length == 3)
+            a = state.getChromosomeVisualizer(parts[0],parts[1]);
+        if(parts.length == 2)
+            a = state.getPairingVisualizer(parts[0],parts[1]);
+        if(a!=null && selectedVisualizer != a)
+            setSelectedVisualizer(node,a);
     }//GEN-LAST:event_objectTreeMousePressed
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed

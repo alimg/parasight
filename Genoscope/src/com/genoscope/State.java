@@ -72,9 +72,20 @@ public class State {
 
 	public Visualizer getChromosomeVisualizer(String name,String path_) {
 		for (Visualizer i : visualizerList) {
+                        if(i.getClass().equals(PairingVisualizer.class))
+                            continue;
                         String path = ((ChromosomeVisualizer) i).getChromosomePath();
-                        String fileName = path.substring(Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\')) + 1);
-			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name) && fileName.equals(path_)) {
+                        String fileName = null,fileName2 = null;
+                        if(path.lastIndexOf("/") == -1 && path.lastIndexOf("\\") == -1)
+                            fileName = path;
+                        else
+                            fileName = path.substring(Math.max(path.lastIndexOf('/')+1, path.lastIndexOf('\\')) + 1); 
+                        if(path_.lastIndexOf("/") == -1 && path_.lastIndexOf("\\") == -1)
+                            fileName2 = path_;
+                        else
+                            fileName2 = path_.substring(Math.max(path_.lastIndexOf('/')+1, path_.lastIndexOf('\\')) + 1);
+                        System.out.println(fileName + " " + fileName2 + "\n");
+			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name) && fileName.equals(fileName2)) {
 				return i;
 			}
 		}
@@ -128,21 +139,24 @@ public class State {
 		pairBlockList.add(pairBlock);
 		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName(),pairBlock.getFirst().getSourceFile());
 		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName(),pairBlock.getSecond().getSourceFile());
-		renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
+                renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
 
 		DefaultMutableTreeNode pairingNode = null;
-		String name = "Pairing: " + pairBlock.getFirst().getName() + "-"
+		String name = pairBlock.getFirst().getName() + " - "
 				+ pairBlock.getSecond().getName();
-
-		for (Enumeration p = pairingTree.children(); p.hasMoreElements();) {
-			DefaultMutableTreeNode chrNode = (DefaultMutableTreeNode) p.nextElement();
-			if (chrNode.getUserObject().equals(name)) {
-				pairingNode = chrNode;
-				break;
-			}
-		}
 		
 		pairingTree.add(new DefaultMutableTreeNode(name));
 		System.out.println("New pairing " + name + " added to tree");
 	}
+
+        public Visualizer getPairingVisualizer(String string, String string0) {
+                for(Visualizer i: visualizerList){
+                    if(i.getClass() != PairingVisualizer.class)
+                        continue;
+                    if(((PairingVisualizer)i).getPairs().getFirst().getName().equals(string) && 
+                       ((PairingVisualizer)i).getPairs().getFirst().getName().equals(string0))
+                        return i;
+                }
+                return null;
+        }
 }

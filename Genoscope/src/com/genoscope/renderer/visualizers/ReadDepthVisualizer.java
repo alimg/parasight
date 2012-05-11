@@ -41,7 +41,7 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
         glEnd();
         
         glEnable(GL_TEXTURE_2D);
-        font.drawString(20, getHeight()-20, "RD Visualizer",1,1 );
+        font.drawString(20, getHeight()-15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")") + chromosome.getLength(),1,1 );
         glDisable(GL_TEXTURE_2D);
        
         for(Feature i:chromosome.getFeatures()){
@@ -49,7 +49,10 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
             float ratio = (float)(f.getScore()-min) / (max-min);
             
             glBegin(GL_QUADS);
-            glColor4f(ratio,1-ratio,0,1);
+            if(ratio <= 0.5)
+                glColor4f(ratio*2,1,0,1);
+            else
+                glColor4f(1,(1-ratio)*2,0,1);
             
             glVertex2f(getPositionX(f.getPosition()),h);
             
