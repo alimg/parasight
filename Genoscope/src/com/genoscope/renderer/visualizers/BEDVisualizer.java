@@ -47,7 +47,7 @@ public class BEDVisualizer extends ChromosomeVisualizer{
                 float y1 = h+5;
                 float x2 = getPositionX(i.getPosition()+((NormalFeature)i).getLength());
                 float y2 = y1+10;
-                if(x1 <= x2) 
+                if(-1<= x1 - x2 && x1 - x2 <= 1) 
                     x2++;
                 if(up){
                     y1+=10;
