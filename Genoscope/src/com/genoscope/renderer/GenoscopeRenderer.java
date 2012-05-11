@@ -4,7 +4,7 @@ import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.mouseactions.ScrollAction;
 import com.genoscope.renderer.visualizers.InterChromosomeV;
-import com.genoscope.renderer.visualizers.PairingVisualier;
+import com.genoscope.renderer.visualizers.PairingVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -137,10 +137,11 @@ public class GenoscopeRenderer {
     public void addVisualizer(Visualizer v)
     {
         System.out.println("adding visualizer");
-        if(v instanceof InterChromosomeV ||v instanceof PairingVisualier)
+        if(v instanceof InterChromosomeV ||v instanceof PairingVisualizer)
         {
             interVisualizers.add((InterChromosomeV)v);
             System.out.println("pairing added");
+            v.setVisible(false);
         }
         else{
             synchronized(clients){
@@ -225,8 +226,7 @@ public class GenoscopeRenderer {
                 }
             }
             for(InterChromosomeV v: interVisualizers)
-                if(v.getCoordinatesUpdated() )
-                    v.setCoordinatesUpdateHandled();
+                v.setCoordinatesUpdateHandled();
             GLHandler.setup();
             glClear( GL_COLOR_BUFFER_BIT );
             

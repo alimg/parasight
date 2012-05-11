@@ -126,7 +126,7 @@ public class State {
 		pairBlockList.add(pairBlock);
 		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName());
 		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName());
-		renderer.addVisualizer(new PairingVisualier(800, 80, v1, v2, pairBlock));
+		renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
 
 		DefaultMutableTreeNode pairingNode = null;
 		String name = "Pairing: " + pairBlock.getFirst().getName() + "-"
