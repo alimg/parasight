@@ -796,6 +796,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
+        if(objectTree.isSelectionEmpty())
+            return;
         String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
         String[] parts = node.split(" - ");
         Visualizer a = null;
