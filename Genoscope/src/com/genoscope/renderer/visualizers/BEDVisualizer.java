@@ -82,7 +82,7 @@ public class BEDVisualizer extends ChromosomeVisualizer{
         }
         glColor4f(0, 0, 1, 1);
         glEnable(GL_TEXTURE_2D);
-        font.drawString(20, getHeight()-20, "Deneme  e\n234 \\n\n\\\nn",1,1 );
+        font.drawString(20, getHeight()-15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")") + chromosome.getLength(),1,1 );
         glDisable(GL_TEXTURE_2D);
         
         glLineWidth(2.0f);

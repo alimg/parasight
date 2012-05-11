@@ -3,6 +3,7 @@ package com.genoscope.renderer;
 import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.mouseactions.ScrollAction;
+import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
 import com.genoscope.renderer.visualizers.InterChromosomeV;
 import com.genoscope.renderer.visualizers.PairingVisualizer;
 import com.genoscope.renderer.visualizers.Visualizer;
@@ -115,6 +116,12 @@ public class GenoscopeRenderer {
         int x=horizonalGap;
         int y=0;
         int lineMax=0;
+        float maxLength = 0;
+        for(Visualizer v: clients)
+            maxLength = Math.max(maxLength,((ChromosomeVisualizer)v).getChromosomeLength());
+        if(maxLength == 0)
+            maxLength = 1;
+        System.out.println(maxLength);
         for(Visualizer v: clients)
         {
             if(x+v.getWidth()>GLHandler.getWidth())
@@ -123,6 +130,9 @@ public class GenoscopeRenderer {
                 lineMax=0;
                 x=horizonalGap;
             }
+            System.out.println((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750) + " ");
+            v.setSize((int)((((ChromosomeVisualizer)v).getChromosomeLength()/maxLength)*750),80);
+            v.doneResizing();
             v.setPosition(x,y);
             v.setSnapX(x);
             v.setSnapY(y);
@@ -136,11 +146,9 @@ public class GenoscopeRenderer {
     
     public void addVisualizer(Visualizer v)
     {
-        System.out.println("adding visualizer");
         if(v instanceof InterChromosomeV ||v instanceof PairingVisualizer)
         {
             interVisualizers.add((InterChromosomeV)v);
-            System.out.println("pairing added");
             v.setVisible(false);
         }
         else{
