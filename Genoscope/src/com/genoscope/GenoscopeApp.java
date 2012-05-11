@@ -832,6 +832,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed
         selectedVisualizer.setVisible(objVisible.isSelected());
+        if(objVisible.isSelected())
+            state.showPairsOf(selectedVisualizer);
     }//GEN-LAST:event_objVisibleActionPerformed
 
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
