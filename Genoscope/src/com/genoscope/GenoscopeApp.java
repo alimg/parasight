@@ -834,6 +834,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         objectTree.expandRow(1);
         objectTree.expandRow(2);
         objectTree.repaint();
+        objectTree.setEditable(false);
         state.setChromosomeTree(chromosome);
         state.setPairingTree(pairings);
         selectedVisualizer = null;
