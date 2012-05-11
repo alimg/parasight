@@ -18,6 +18,7 @@ public class PairingVisualizer extends InterChromosomeV{
     private ChromosomeVisualizer v1;
     private ChromosomeVisualizer v2;
     private PairBlock pairs;
+    private boolean pairsVisible;
 
     public PairBlock getPairs() {
         return pairs;
@@ -39,21 +40,23 @@ public class PairingVisualizer extends InterChromosomeV{
         if((v1.isVisible()==false) || (v2.isVisible()==false))
         {
             
-            setVisible(false);
+            pairsVisible = false;
             return;
         }
+        else
+            pairsVisible = true;
         //else 
         //    setVisible(true);
             
         if(v1.getCoordinatesChanging() || v2.getCoordinatesChanging())
         {
-            setVisible(false);
+            pairsVisible = false;
             return;
         }
         
         if(v1.getCoordinatesUpdated() || v2.getCoordinatesUpdated())
         {
-            setVisible(true);
+            pairsVisible = true;
             int x=Math.min(v1.getX(), v2.getX());
             int y=Math.min(v1.getY(), v2.getY());
             int ex=Math.max(v1.getX()+v1.getWidth(), v2.getX()+v2.getWidth());
@@ -66,6 +69,14 @@ public class PairingVisualizer extends InterChromosomeV{
         }
     }
 
+    @Override
+    public boolean isVisible(){
+        if(!super.isVisible())
+            return false;
+        else if(!pairsVisible)
+            return false;
+        return true;
+    }
     @Override
     public void draw() {
         if(v1 == null || v2 == null)

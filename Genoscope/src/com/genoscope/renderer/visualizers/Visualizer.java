@@ -218,7 +218,6 @@ public class Visualizer {
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, FBOid);
         }
         GL20.glUseProgram(0);
-        System.out.println("buffer update");
         draw();
  
         if (useFBO) {
