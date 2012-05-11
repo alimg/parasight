@@ -279,8 +279,6 @@ public  class MoveAction extends MouseActionHandler {
      */
     private void snap(Visualizer selected)
     {
-        if(arX.size()<1)return;
-        
         final int sy=selected.getY();
         final int sye=sy+selected.getHeight();
         int a,b; 
@@ -288,6 +286,12 @@ public  class MoveAction extends MouseActionHandler {
         Integer d,u;
         final int sx=selected.getX();
         final int sxe=sx+selected.getWidth();
+        if(arX.size()<1)
+        {
+            selected.setSnapX(sx);
+            selected.setSnapY(sy);
+            return;
+        }
         d=(Integer) arX.floorKey(sx);
         u=(Integer) arX.higherKey(sx);
         
