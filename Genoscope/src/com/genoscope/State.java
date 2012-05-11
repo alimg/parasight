@@ -70,9 +70,11 @@ public class State {
 		return null;
 	}
 
-	public Visualizer getChromosomeVisualizer(String name) {
+	public Visualizer getChromosomeVisualizer(String name,String path_) {
 		for (Visualizer i : visualizerList) {
-			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name)) {
+                        String path = ((ChromosomeVisualizer) i).getChromosomePath();
+                        String fileName = path.substring(Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\')) + 1);
+			if (((ChromosomeVisualizer) i).getChromosomeName().equals(name) && fileName.equals(path_)) {
 				return i;
 			}
 		}
@@ -99,21 +101,21 @@ public class State {
 		}
 		switch (extension) {
 			case "bed":
-				chromosomeNode.add(new DefaultMutableTreeNode("BED data (" + fileName + ")"));
+				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BED data"));
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
 			case "cb":
-				chromosomeNode.add(new DefaultMutableTreeNode("CytoBand data (" + fileName + ")"));
+				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - Cytoband data"));
 				renderer.addVisualizer(new CBVisualizer(800, 80, chr));
 				break;
 			case "rd":
-				chromosomeNode.add(new DefaultMutableTreeNode("ReadDepth data (" + fileName + ")"));
+				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - ReadDepth data"));
 				renderer.addVisualizer(new ReadDepthVisualizer(800, 80, chr));
 				break;
 			case "cn":
 				break;
 			case "bedpe":
-				chromosomeNode.add(new DefaultMutableTreeNode("BEDPE data (" + fileName + ")"));
+				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BEDPE data"));
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
 			default:
@@ -124,8 +126,8 @@ public class State {
 
 	public void addPairBlock(PairBlock pairBlock) {
 		pairBlockList.add(pairBlock);
-		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName());
-		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName());
+		ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName(),pairBlock.getFirst().getSourceFile());
+		ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName(),pairBlock.getSecond().getSourceFile());
 		renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
 
 		DefaultMutableTreeNode pairingNode = null;

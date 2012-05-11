@@ -238,7 +238,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton4.setText("Zoom Tool");
         jButton4.setToolTipText("Select an area to zoom at");
 
-        jCheckBox1.setSelected(true);
         jCheckBox1.setText("Show Labels");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -784,10 +783,13 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
-        Visualizer a = state.getChromosomeVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString());
+        String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
+        String[] parts = node.split(" - ");
+        if(parts.length < 3) return;
+        Visualizer a = state.getChromosomeVisualizer(parts[0],parts[1]);
         if(a == null)
             return;
-        setSelectedVisualizer(((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString(),a);
+        setSelectedVisualizer(node,a);
     }//GEN-LAST:event_objectTreeMousePressed
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed
