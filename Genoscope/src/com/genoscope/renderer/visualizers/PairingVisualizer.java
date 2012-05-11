@@ -18,8 +18,11 @@ public class PairingVisualizer extends InterChromosomeV{
     private ChromosomeVisualizer v1;
     private ChromosomeVisualizer v2;
     private PairBlock pairs;
-    
-    
+
+    public PairBlock getPairs() {
+        return pairs;
+    }
+
     public PairingVisualizer(int w, int h, ChromosomeVisualizer v1, ChromosomeVisualizer v2, PairBlock pairing) {
         super(50, 50);
         //setSize(1, 1);
@@ -31,6 +34,8 @@ public class PairingVisualizer extends InterChromosomeV{
     @Override
     public void updateState()
     {
+        if(v1 == null || v2 == null)
+            return;
         if((v1.isVisible()==false) || (v2.isVisible()==false))
             setVisible(false);
         else 
@@ -59,6 +64,8 @@ public class PairingVisualizer extends InterChromosomeV{
 
     @Override
     public void draw() {
+        if(v1 == null || v2 == null)
+            return;
         glDisable(GL_TEXTURE_2D);
         glClearColor(1, 1, 1, 0);
         glClear(GL_COLOR_BUFFER_BIT);
@@ -103,6 +110,8 @@ public class PairingVisualizer extends InterChromosomeV{
 
     @Override
     public void setCoordinatesUpdateHandled() {
+        if(v1 == null || v2 == null)
+            return;
         super.setCoordinatesUpdateHandled();
         v1.setCoordinatesUpdateHandled();
         v2.setCoordinatesUpdateHandled(); 

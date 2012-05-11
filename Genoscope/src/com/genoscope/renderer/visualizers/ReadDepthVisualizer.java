@@ -41,7 +41,7 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
         glEnd();
         
         glEnable(GL_TEXTURE_2D);
-        font.drawString(20, getHeight()-20, "RD Visualizer",1,1 );
+        font.drawString(20, getHeight()-15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")"),1,1 );
         glDisable(GL_TEXTURE_2D);
        
         for(Feature i:chromosome.getFeatures()){

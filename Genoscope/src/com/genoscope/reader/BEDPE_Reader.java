@@ -17,9 +17,19 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Furkan Mustafa Akdemir
+ * @author Furkan Mustafa Akdemir This class reads a BEDPE type pairing genome
+ * annotation data and adds this data to state as a PairBlock and two Chromosome
+ * objects
  */
 public class BEDPE_Reader extends FileReader {
+
+/**
+	 * File reading method for BEDPE format which generates two chromosomes and
+	 * their pairing data and adds to state
+	 *
+	 * @param path shows the path of BEDPE file
+	 * @param state current state of Genoscope
+	 */
 
 	@Override
 	public int readFile(String path, State state) {
