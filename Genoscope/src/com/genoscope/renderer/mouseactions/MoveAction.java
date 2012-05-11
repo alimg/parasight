@@ -144,9 +144,10 @@ public  class MoveAction extends MouseActionHandler {
             else {
                 action=RESIZING;
             }
-            String name;
-            if(selected.getClass() == ChromosomeVisualizer.class)
+            String name = null;
+            if(selected instanceof ChromosomeVisualizer)
                 name = ((ChromosomeVisualizer)selected).getChromosomeName();
+            Genoscope.app.setSelectedVisualizer(name, selected);
         }
     }
 
@@ -169,6 +170,10 @@ public  class MoveAction extends MouseActionHandler {
                 action=NONE;
                 selected.doneResizing();
             }
+            String name = null;
+            if(selected instanceof ChromosomeVisualizer)
+                name = ((ChromosomeVisualizer)selected).getChromosomeName();
+            Genoscope.app.setSelectedVisualizer(name, selected);
         }
         selected=null;
         if(!arX.isEmpty())

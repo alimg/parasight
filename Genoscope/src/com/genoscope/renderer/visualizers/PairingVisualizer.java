@@ -37,7 +37,11 @@ public class PairingVisualizer extends InterChromosomeV{
         if(v1 == null || v2 == null)
             return;
         if((v1.isVisible()==false) || (v2.isVisible()==false))
+        {
+            
             setVisible(false);
+            return;
+        }
         else 
             setVisible(true);
             

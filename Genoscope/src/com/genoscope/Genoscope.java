@@ -57,12 +57,13 @@ public class Genoscope {
      */
     static boolean ok=false;
     public static GenoscopeRenderer renderer;
+    public static GenoscopeApp app;
     public static void main(String[] args) {
         //System.setProperty("org.lwjgl.opengl.Display.noinput","true");
         renderer=new GenoscopeRenderer();
         
         GLHandler.setRenderer(renderer);
-        GenoscopeApp app=new GenoscopeApp();
+        app=new GenoscopeApp();
         app.setVisible(true);
         app.getAppState().setRenderer(renderer);
         //System.out.println("Trying LWJGL");
