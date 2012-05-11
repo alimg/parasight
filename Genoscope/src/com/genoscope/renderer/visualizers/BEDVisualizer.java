@@ -43,9 +43,9 @@ public class BEDVisualizer extends ChromosomeVisualizer{
         {
             for(Feature i:chromosome.getFeatures()){
                 glBegin(GL_POLYGON);
-                float x1 = getPosX(i.getPosition());
+                float x1 = getPositionX(i.getPosition());
                 float y1 = h+5;
-                float x2 = getPosX(i.getPosition()+((NormalFeature)i).getLength());
+                float x2 = getPositionX(i.getPosition()+((NormalFeature)i).getLength());
                 float y2 = 2*h-5;
                 if(up){
                     y1+=10;

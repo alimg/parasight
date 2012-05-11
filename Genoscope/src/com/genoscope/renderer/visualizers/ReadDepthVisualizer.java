@@ -51,13 +51,13 @@ public class ReadDepthVisualizer extends ChromosomeVisualizer{
             glBegin(GL_QUADS);
             glColor4f(ratio,1-ratio,0,1);
             
-            glVertex2f(getPosX(f.getPosition()),h);
+            glVertex2f(getPositionX(f.getPosition()),h);
             
-            glVertex2f(getPosX(f.getPosition()+f.getLength()), h);
+            glVertex2f(getPositionX(f.getPosition()+f.getLength()), h);
             
-            glVertex2f(getPosX(f.getPosition()+f.getLength()), h + 2*h*ratio);
+            glVertex2f(getPositionX(f.getPosition()+f.getLength()), h + 2*h*ratio);
           
-            glVertex2f(getPosX(f.getPosition()), h + 2*h*ratio);
+            glVertex2f(getPositionX(f.getPosition()), h + 2*h*ratio);
          
             glEnd();
                      
