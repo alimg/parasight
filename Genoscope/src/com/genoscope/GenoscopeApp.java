@@ -275,7 +275,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, Short.MAX_VALUE)))
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)))
                 .addGap(19, 19, 19))
         );
         viewControlLayout.setVerticalGroup(
@@ -444,7 +444,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jToolBar1.add(jButton5);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/floppy_35inch_blue.png"))); // NOI18N
-        jButton6.setToolTipText("Save Data");
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -560,7 +559,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
