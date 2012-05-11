@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
@@ -242,10 +243,19 @@ public class GenoscopeApp extends javax.swing.JFrame {
         });
 
         jButton3.setText("-");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/magnifier.png"))); // NOI18N
-        jButton4.setText("Zoom Tool");
-        jButton4.setToolTipText("Select an area to zoom at");
+        jButton4.setText("Reset Layout");
+        jButton4.setToolTipText("ResetLayout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setText("Show Labels");
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -291,7 +301,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -429,6 +439,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton1.setFocusable(false);
         jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/directory_open.png"))); // NOI18N
@@ -559,7 +574,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -777,7 +792,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        Genoscope.renderer.zoomView(1.1f);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
@@ -799,6 +814,34 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
         exitMenuItemActionPerformed(null);
     }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Genoscope.renderer.zoomView(0.9f);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Genoscope.renderer.getVisualizerList().clear();
+        Genoscope.renderer.getInterVisualizers().clear();
+        Genoscope.renderer.resetZoom();
+        state.reset();
+        DefaultMutableTreeNode chromosome = new DefaultMutableTreeNode("Chromosomes");
+        DefaultMutableTreeNode pairings = new DefaultMutableTreeNode("Pairings");
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("root");
+        root.add(chromosome);
+        root.add(pairings);
+        objectTree.setModel(new DefaultTreeModel(root));
+        objectTree.expandRow(0);
+        objectTree.expandRow(1);
+        objectTree.expandRow(2);
+        objectTree.repaint();
+        state.setChromosomeTree(chromosome);
+        state.setPairingTree(pairings);
+        selectedVisualizer = null;
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        Genoscope.renderer.resetLayout();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void setSelectedVisualizer(String name,Visualizer a){
         objName.setText(name);

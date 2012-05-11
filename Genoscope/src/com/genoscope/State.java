@@ -129,6 +129,10 @@ public class State {
 				chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BEDPE data"));
 				renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
 				break;
+                        case "psa":
+                                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
+				renderer.addVisualizer(new PSAVisualizer(800, 80, chr));
+                                break;
 			default:
 				renderer.addVisualizer(new ChromosomeVisualizer(800, 80, chr));
 				break;
@@ -159,4 +163,10 @@ public class State {
                 }
                 return null;
         }
+
+    void reset() {
+        chromosomeList.clear();
+        visualizerList.clear();
+        pairBlockList.clear();
+    }
 }
