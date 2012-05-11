@@ -43,8 +43,8 @@ public class PairingVisualizer extends InterChromosomeV{
             pairsVisible = false;
             return;
         }
-        else
-            pairsVisible = true;
+        //else
+            //pairsVisible = true;
         //else 
         //    setVisible(true);
             
@@ -56,16 +56,21 @@ public class PairingVisualizer extends InterChromosomeV{
         
         if(v1.getCoordinatesUpdated() || v2.getCoordinatesUpdated())
         {
-            pairsVisible = true;
             int x=Math.min(v1.getX(), v2.getX());
             int y=Math.min(v1.getY(), v2.getY());
             int ex=Math.max(v1.getX()+v1.getWidth(), v2.getX()+v2.getWidth());
             int ey=Math.max(v1.getY()+v1.getHeight(), v2.getY()+v2.getHeight());
             
-            setPosition(x,y);
-            setSize(ex-x,ey-y);
-            doneResizing();
-            System.out.println("  "+x+" "+ y+" "+ex+" "+ey);
+            if( (ex-x<2024) && (ey-y<2024))
+            {
+                pairsVisible = true;
+                setPosition(x,y);
+                setSize(ex-x,ey-y);
+                doneResizing();
+            }
+            else 
+                pairsVisible=false;
+            //System.out.println("  "+x+" "+ y+" "+ex+" "+ey);
         }
     }
 
