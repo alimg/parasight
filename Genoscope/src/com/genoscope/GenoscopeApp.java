@@ -540,6 +540,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton15.setFocusable(false);
         jButton15.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton15.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton15ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton15);
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/select_none.png"))); // NOI18N
@@ -547,6 +552,11 @@ public class GenoscopeApp extends javax.swing.JFrame {
         jButton16.setFocusable(false);
         jButton16.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton16.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton16ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton16);
         jToolBar1.add(jSeparator5);
 
@@ -879,6 +889,16 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
         state.toggleAll(!jCheckBox2.isSelected());
     }//GEN-LAST:event_jCheckBox2ActionPerformed
+
+    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
+        state.toggleAll(true);
+        jCheckBox2.setSelected(true);
+    }//GEN-LAST:event_jButton15ActionPerformed
+
+    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
+        state.toggleAll(false);
+        jCheckBox2.setSelected(false);
+    }//GEN-LAST:event_jButton16ActionPerformed
 
     public void setSelectedVisualizer(String name,Visualizer a){
         objName.setText(name);
