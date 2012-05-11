@@ -38,7 +38,8 @@ public class GenoscopeRenderer {
     }
     
     public class ViewConfig{
-        public float pos[]={0,0,0};
+        private float pos[]={0,0,0};
+        private float zoomFactor=1;
         private JScrollBar hScroll;
         private JScrollBar vScroll;
         
@@ -94,8 +95,33 @@ public class GenoscopeRenderer {
             glMatrixMode(GL_PROJECTION);
             
             glTranslatef(pos[0], pos[1], pos[2]);
+            glScalef(zoomFactor, zoomFactor, 1);
             glMatrixMode(GL_MODELVIEW);
         }
+
+        private int getExactX(int x) {
+            return (int) (-mViewConfig.pos[1]+x/zoomFactor);
+        }
+        private int getExactY(int y) {
+            return (int) (-mViewConfig.pos[1]+y/zoomFactor);
+        }
+
+        public void setZoomFactor(float zoomFactor) {
+            this.zoomFactor = zoomFactor;
+        }
+
+        public float getX() {
+            return pos[0];
+        }
+        public float getY() {
+            return pos[1];
+        }
+
+        private float getZoomFactor() {
+            return zoomFactor;
+        }
+        
+        
     }
     
     private ViewConfig mViewConfig=new ViewConfig();
@@ -186,8 +212,8 @@ public class GenoscopeRenderer {
     void mouseMove(int x, int y, int buttons) {
         synchronized(clients)
         {
-        MPX=(int) (-mViewConfig.pos[0]+x);
-        MPY=(int) (-mViewConfig.pos[1]+y);
+        MPX=mViewConfig.getExactX(x);
+        MPY=mViewConfig.getExactY(y);
         
         mMoveAction.mouseMove(MPX, MPY, buttons);
         mScrollAction.mouseMove(x, y, buttons);
@@ -286,7 +312,16 @@ public class GenoscopeRenderer {
         drawAll = false;
     }
 
-
+    /**
+     * Control zooming factor of renderer
+     * @param multiply value to be multiplied with current zooming factor.
+     * @return new zoom factor
+     */
+    public float zoomView(float multiply)
+    {
+        mViewConfig.setZoomFactor(multiply*mViewConfig.getZoomFactor());
+        return mViewConfig.getZoomFactor();
+    }
 
     public void setScrollbars(JScrollBar horizontalScroll, JScrollBar verticalScroll) {
         mViewConfig.hScroll=horizontalScroll;
