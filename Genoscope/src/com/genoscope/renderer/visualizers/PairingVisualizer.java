@@ -31,7 +31,19 @@ public class PairingVisualizer extends InterChromosomeV{
         this.v2=v2;
         this.pairs=pairing;
     }
+
+    public boolean arePairsVisible() {
+        return pairsVisible;
+    }
     
+    @Override 
+    public void setVisible(boolean x){
+        super.setVisible(x);
+        if(x){
+            v1.setVisible(true);
+            v2.setVisible(true);
+        }
+    }
     @Override
     public void updateState()
     {

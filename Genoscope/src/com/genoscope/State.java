@@ -176,6 +176,21 @@ public class State {
 		return null;
 	}
 
+	public void showPairingVisualizer(String string,String path) {
+            for (Iterator<InterChromosomeV> it = pairingVisualizerList.iterator(); it.hasNext();) {
+                Visualizer i = it.next();
+                PairingVisualizer k = ((PairingVisualizer) i);
+                if(!k.arePairsVisible())
+                    continue;
+                if(!k.getPairs().getFirst().getName().equals(string))
+                    if(!k.getPairs().getSecond().getName().equals(string))
+                    continue;
+                if(!k.getPairs().getFirst().getSourceFile().equals(path))
+                    continue;
+                k.setVisible(true);
+            }
+        }
+        
 	void reset() {
 		chromosomeList.clear();
 		visualizerList.clear();
@@ -189,11 +204,18 @@ public class State {
 			state_.addPairBlock(i);
 	}
 
-    void toggleAll(boolean x) {
+    public void toggleAll(boolean x) {
         for(Visualizer i:visualizerList)
             i.setVisible(x);
+        if(x == false)
         for(InterChromosomeV i:pairingVisualizerList)
             i.setVisible(x);
+    }
+
+    public void showPairsOf(Visualizer v) {
+        if(!(v instanceof ChromosomeVisualizer))
+            return;
+        showPairingVisualizer(((ChromosomeVisualizer)v).getChromosomeName(), ((ChromosomeVisualizer)v).getChromosomePath());
     }
 
 }
