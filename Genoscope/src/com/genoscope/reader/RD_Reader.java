@@ -30,15 +30,21 @@ public class RD_Reader extends FileReader {
 	 * @param state current state of Genoscope
 	 */
 	@Override
-	public int readFile(String path, State state) {
+	public int readFile(String path, State state_) {
 		try {
-			if (state.checkChromosome(path)) {
+			if (state_.checkChromosome(path)) {
 				final JPanel panel = new JPanel();
 				JOptionPane.showMessageDialog(panel, "File already added",
 						"Warning", JOptionPane.WARNING_MESSAGE);
 				return -2;
 			}
+			State state = new State() {
 
+				@Override
+				public void addChromosome(Chromosome chr) {
+					this.getChromosomeList().add(chr);
+				}
+			};
 			File file = new File(path);
 
 			Scanner scanner;
@@ -80,7 +86,7 @@ public class RD_Reader extends FileReader {
 			if (chr != null) {
 				state.addChromosome(chr);
 			}
-
+			state.clone(state_);
 			return 0;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(RD_Reader.class.getName()).log(Level.SEVERE, null, ex);

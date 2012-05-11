@@ -61,6 +61,10 @@ public class State {
 		return false;
 	}
 
+	public Vector<Chromosome> getChromosomeList() {
+		return chromosomeList;
+	}
+
 	public Chromosome getChromosome(String path, String name) {
 		for (Chromosome i : chromosomeList) {
 			if (i.getSourceFile().equals(path) && i.getName().equals(name)) {
@@ -68,6 +72,10 @@ public class State {
 			}
 		}
 		return null;
+	}
+
+	public Vector<PairBlock> getPairBlockList() {
+		return pairBlockList;
 	}
 
 	public Visualizer getChromosomeVisualizer(String name, String path_) {
@@ -174,4 +182,12 @@ public class State {
 		visualizerList.clear();
 		pairBlockList.clear();
 	}
+
+	public void clone(State state_) {
+		for (Chromosome i : chromosomeList)
+			state_.addChromosome(i);
+		for (PairBlock i : pairBlockList)
+			state_.addPairBlock(i);
+	}
+
 }
