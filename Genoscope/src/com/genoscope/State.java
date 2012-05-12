@@ -110,7 +110,7 @@ public class State {
 		chromosomeList.add(chr);
 		int lastInd = chr.getSourceFile().lastIndexOf('.');
 		String extension = chr.getSourceFile().substring(lastInd + 1);
-		String fileName = chr.getSourceFile().substring(Math.max(chr.getSourceFile().lastIndexOf('/'), chr.getSourceFile().lastIndexOf('\\')) + 1);
+		String fileName = chr.getSourceFile().substring(Math.max(chr.getSourceFile().lastIndexOf('/')+1, chr.getSourceFile().lastIndexOf('\\')) + 1);
 		for (Enumeration p = chromosomeTree.children(); p.hasMoreElements();) {
 			DefaultMutableTreeNode chrNode = (DefaultMutableTreeNode) p.nextElement();
 			if (chrNode.getUserObject().equals(chr.getName())) {
