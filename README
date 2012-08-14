@@ -1,11 +1,13 @@
 Genoscope
 Group 5D CS102 project
-Project Members and working parts:
-Ahmet Kerim Senol - Data Structures
-Alim Sukrucan Gokkaya - OpenGL Rendering engine
-Alper Gundogdu - Application User Interface
-Furkan Mustafa Akdemir - File format's reading
-Note: Specifical Visualizer classes will be seperated within group members in next steps.
+Project Members:
+Ahmet Kerim Senol
+Alim Sukrucan Gokkaya
+Alper Gundogdu
+Furkan Mustafa Akdemir
+
+Description:
+Genoscope is a yet another genomic browser that aims at a better user interface. 
 
 Note: This project uses LWJGL and developed with Netbeans IDE 7.1.0. 
 For library settings, please visit http://www.lwjgl.org/wiki/index.php?title=Setting_Up_LWJGL_with_NetBeans 
