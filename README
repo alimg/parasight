@@ -9,6 +9,11 @@ Furkan Mustafa Akdemir
 Description:
 Genoscope is a yet another genomic browser that aims at a better user interface. 
 
+
+Get preview version at:
+https://docs.google.com/folder/d/0B9VZBPsTnY6UYnFsQTlzaFNBcGc/edit
+
+
 Note: This project uses LWJGL and developed with Netbeans IDE 7.1.0. 
 For library settings, please visit http://www.lwjgl.org/wiki/index.php?title=Setting_Up_LWJGL_with_NetBeans 
 Project hosted at https://github.com/alimg/parasight
