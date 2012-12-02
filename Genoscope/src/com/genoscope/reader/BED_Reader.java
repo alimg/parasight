@@ -8,8 +8,8 @@ import com.genoscope.AppState;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.NormalFeature;
 import com.genoscope.types.PairBlock;
-import java.io.File;
-import java.io.FileNotFoundException;
+import com.itextpdf.text.pdf.codec.Base64;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
@@ -56,7 +56,7 @@ public class BED_Reader extends FileReader {
             NormalFeature feature;
             String chrName;
             int length = 0;
-
+            
             scanner = new Scanner(file);
 
             while (scanner.hasNextLine()) {

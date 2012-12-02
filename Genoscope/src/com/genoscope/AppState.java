@@ -101,9 +101,7 @@ public class AppState {
                 continue;
             }
             Chromosome c=((ChromosomeVisualizer) i).getChromosome();
-            String cp = c.getSourceFile().path;
-            String cf = cp.substring(Math.max(cp.lastIndexOf('/') + 1, cp.lastIndexOf('\\')) + 1);
-            if (c.getName().equals(name) && cf.equals(fileName) ) {
+            if (c.getName().equals(name) && c.getSourceFile().name.equals(fileName) ) {
                 return i;
             }
         }
@@ -128,47 +126,52 @@ public class AppState {
             chromosomeNode = new DefaultMutableTreeNode(chr.getName());
             chromosomeTree.add(chromosomeNode);
         }
-        
+        Visualizer visualizer=null;
+        String name="";
         switch (extension) {
             case "bed":
-                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BED data"));
-                renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
+                name=(chr.getName() + " - " + fileName + " - BED data");
+                visualizer=new BEDVisualizer(800, 80, chr);
                 break;
             case "cb":
-                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - Cytoband data"));
-                renderer.addVisualizer(new CBVisualizer(800, 80, chr));
+                name=(chr.getName() + " - " + fileName + " - Cytoband data");
+                visualizer=(new CBVisualizer(800, 80, chr));
                 break;
             case "rd":
-                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - ReadDepth data"));
-                renderer.addVisualizer(new ReadDepthVisualizer(800, 80, chr));
+                name=(chr.getName() + " - " + fileName + " - ReadDepth data");
+               visualizer=(new ReadDepthVisualizer(800, 80, chr));
                 break;
             case "cn":
                 break;
             case "bedpe":
-                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - BEDPE data"));
-                renderer.addVisualizer(new BEDVisualizer(800, 80, chr));
+                name = chr.getName() + " - " + fileName + " - BEDPE data";
+                visualizer=(new BEDVisualizer(800, 80, chr));
                 break;
             case "psa":
-                chromosomeNode.add(new DefaultMutableTreeNode(chr.getName() + " - " + fileName + " - PSA data"));
-                renderer.addVisualizer(new PSAVisualizer(800, 80, chr));
+                name=(chr.getName() + " - " + fileName + " - PSA data");
+                visualizer=(new PSAVisualizer(800, 80, chr));
                 break;
             default:
-                renderer.addVisualizer(new ChromosomeVisualizer(800, 80, chr));
+                visualizer=(new ChromosomeVisualizer(800, 80, chr));
                 break;
         }
+        visualizer.setName(name);
+        renderer.addVisualizer(visualizer);
+        chromosomeNode.add(new DefaultMutableTreeNode(visualizer));
     }
 
     public void addPairBlock(PairBlock pairBlock) {
         pairBlockList.add(pairBlock);
         ChromosomeVisualizer v1 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getFirst().getName(), pairBlock.getFirst().getSourceFile());
         ChromosomeVisualizer v2 = (ChromosomeVisualizer) getChromosomeVisualizer(pairBlock.getSecond().getName(), pairBlock.getSecond().getSourceFile());
-        renderer.addVisualizer(new PairingVisualizer(800, 80, v1, v2, pairBlock));
-
+        Visualizer v=new PairingVisualizer(800, 80, v1, v2, pairBlock);
+        renderer.addVisualizer(v);
+        
         DefaultMutableTreeNode pairingNode = null;
         String name = pairBlock.getFirst().getName() + " - "
                 + pairBlock.getSecond().getName() + " - " + pairBlock.getFirst().getSourceFile().name;
-
-        pairingTree.add(new DefaultMutableTreeNode(name));
+        v.setName(name);
+        pairingTree.add(new DefaultMutableTreeNode(v));
     }
 
     public Visualizer getPairingVisualizer(String string, String string0, String name) {

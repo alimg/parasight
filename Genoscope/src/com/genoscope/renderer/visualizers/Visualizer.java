@@ -54,6 +54,7 @@ public class Visualizer {
     private boolean moving=false;
     protected int minWidth=150;
     protected int minHeight=80;
+    private String mName="";
     
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
@@ -386,4 +387,14 @@ public class Visualizer {
     public boolean hasChromosome() {
         return false;
     }
+
+    public void setName(String name) {
+        mName=name;
+    }
+
+    @Override
+    public String toString() {
+        return mName;
+    }
+    
 }

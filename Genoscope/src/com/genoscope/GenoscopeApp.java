@@ -828,16 +828,20 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void objectTreeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objectTreeMousePressed
-        String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
-        String[] parts = node.split(" - ");
+        // Note: getUserObject should return a visualizer if selected
+        //String node = ((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject().toString();
+        Object o=((DefaultMutableTreeNode)objectTree.getSelectionPath().getLastPathComponent()).getUserObject();
+        if(o instanceof Visualizer)
+            
+        /*String[] parts = node.split(" - ");
         if(parts.length < 2)
             return;
         Visualizer a = null;
         a = state.getChromosomeVisualizer(parts[0],parts[1]);
         if(a == null)
         a = state.getPairingVisualizer(parts[0],parts[1],parts[2]);
-        if(a!=null && selectedVisualizer != a)
-            setSelectedVisualizer(parts[0]+" - "+parts[1],a);
+        if(a!=null && selectedVisualizer != a)*/
+            setSelectedVisualizer(o.toString(),(Visualizer)o);
     }//GEN-LAST:event_objectTreeMousePressed
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed

@@ -19,7 +19,7 @@ public class Chromosome {
     private Vector<Feature> features;
     private int start;
     private int end;
-
+    
     public Chromosome(int length, String name, FileInfo sourceFile) {
         this.length = length;
         this.name = name;
