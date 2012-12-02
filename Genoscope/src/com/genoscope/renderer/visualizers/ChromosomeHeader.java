@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.genoscope.renderer.visualizers;
 
 import java.util.Vector;
@@ -10,12 +6,12 @@ import java.util.Vector;
  *
  * @author alim
  */
-public class VisualizerGroup extends Visualizer
+public class ChromosomeHeader extends Visualizer
 {
     
     Vector <Visualizer> subs;
 
-    public VisualizerGroup(int w, int h) {
+    public ChromosomeHeader(int w, int h) {
         super(w, h);
         
     }

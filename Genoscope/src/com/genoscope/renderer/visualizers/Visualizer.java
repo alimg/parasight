@@ -52,11 +52,13 @@ public class Visualizer {
      * is moving
      */
     private boolean moving=false;
+    protected int minWidth=150;
+    protected int minHeight=80;
     
     public Visualizer(int w, int h) {
         useFBO = GLHandler.FBOEnabled;
         setSize(w, h);
-
+        
     }
 
     /**
@@ -67,9 +69,9 @@ public class Visualizer {
      * @see MoveAction
      */
     public void setSize(int w, int h) {
-        if(w<150)
+        if(w<minWidth)
             w = 150;
-        if(h<80)
+        if(h<minHeight)
             h = 80;
         width = w;
         height = h;
@@ -223,7 +225,7 @@ public class Visualizer {
         if (useFBO) {
                 glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
         } else { // buffer screen if FBO is not supported
-            //<editor-fold defaultstate="collapsed" desc="comment">
+            //<editor-fold defaultstate="collapsed" desc="buffer screen if FBO is not supported">
             glEnable(GL_TEXTURE_2D);
             glPixelStorei(GL_PACK_ALIGNMENT, 1);
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -320,7 +322,7 @@ public class Visualizer {
     }
 
     /**
-     * 
+     *
      * @see GenoscopeRenderer
      */
     public final boolean isSelected() {
@@ -357,7 +359,7 @@ public class Visualizer {
         //TODO free fbo's and buffers 
     }
 
-//for pairwise data;    
+/* **** These are states needed for pairwise data;    */
     public boolean getCoordinatesUpdated() {
         return coordsChanged;
     }
@@ -378,4 +380,10 @@ public class Visualizer {
         coordsChanged=false;
         
     }   
+ /* **********************************************    */
+
+    
+    public boolean hasChromosome() {
+        return false;
+    }
 }

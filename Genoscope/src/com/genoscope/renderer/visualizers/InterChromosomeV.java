@@ -15,5 +15,11 @@ public abstract class InterChromosomeV extends Visualizer{
     }
     
     public abstract void updateState();
+
+    @Override
+    public boolean hasChromosome() {
+        return false;
+    }
+    
     
 }

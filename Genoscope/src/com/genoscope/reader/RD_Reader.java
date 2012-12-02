@@ -4,7 +4,7 @@
  */
 package com.genoscope.reader;
 
-import com.genoscope.State;
+import com.genoscope.AppState;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.ReadDepth;
 import java.io.File;
@@ -22,6 +22,10 @@ import javax.swing.JPanel;
  */
 public class RD_Reader extends FileReader {
 
+    RD_Reader(String path, AppState state) {
+        super(path, state);
+    }
+
 	/**
 	 * File reading method for Read Depth format which generates a chromosome
 	 * and adds to state
@@ -30,22 +34,22 @@ public class RD_Reader extends FileReader {
 	 * @param state current state of Genoscope
 	 */
 	@Override
-	public int readFile(String path, State state_) {
+	public int readFile() {
 		try {
-			if (state_.checkChromosome(path)) {
+			if (mpState.checkChromosome(mpPath)) {
 				final JPanel panel = new JPanel();
 				JOptionPane.showMessageDialog(panel, "File already added",
 						"Warning", JOptionPane.WARNING_MESSAGE);
-				return -2;
+				return READ_ERROR_ALREADY_EXISTS;
 			}
-			State state = new State() {
+			AppState state = new AppState() {
 
 				@Override
 				public void addChromosome(Chromosome chr) {
 					this.getChromosomeList().add(chr);
 				}
 			};
-			File file = new File(path);
+			File file = new File(mpPath);
 
 			Scanner scanner;
 			String line, chrName = "";
@@ -55,6 +59,8 @@ public class RD_Reader extends FileReader {
 			int length = 0;
 
 			scanner = new Scanner(file);
+            
+            FileInfo fInfo = new FileInfo(mpPath, RD_Reader.class);
 
 			while (scanner.hasNextLine()) {
 
@@ -73,7 +79,7 @@ public class RD_Reader extends FileReader {
 						state.addChromosome(chr);
 					}
 
-					chr = new Chromosome(0, chrName, path);
+					chr = new Chromosome(0, chrName, fInfo);
 				}
 
 				length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
@@ -86,7 +92,7 @@ public class RD_Reader extends FileReader {
 			if (chr != null) {
 				state.addChromosome(chr);
 			}
-			state.clone(state_);
+			state.inject(mpState);
 			return 0;
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(RD_Reader.class.getName()).log(Level.SEVERE, null, ex);

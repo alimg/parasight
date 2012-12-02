@@ -4,11 +4,13 @@
  */
 package com.genoscope.reader;
 
-import com.genoscope.State;
+import com.genoscope.AppState;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.NormalFeature;
+import com.genoscope.types.PairBlock;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,81 +22,101 @@ import javax.swing.JPanel;
  */
 public class BED_Reader extends FileReader {
 
-	/**
-	 * File reading method for BED format which generates a chromosome and adds
-	 * to state
-	 *
-	 * @param path shows the path of BED file
-	 * @param state current state of Genoscope
-	 */
-	@Override
-	public int readFile(String path, State state_) {
-		if (state_.checkChromosome(path)) {
-			final JPanel panel = new JPanel();
-			JOptionPane.showMessageDialog(panel, "File already added",
-					"Warning", JOptionPane.WARNING_MESSAGE);
-			return -2;
-		}
-		State state = new State() {
+    BED_Reader(String path, AppState state) {
+        super(path, state);
+    }
 
-			@Override
-			public void addChromosome(Chromosome chr) {
-				this.getChromosomeList().add(chr);
-			}
-		};
-		File file = new File(path);
+    /**
+     * File reading method for BED format
+     */
+    @Override
+    public int readFile() {
+        if (mpState.checkChromosome(mpPath)) {
+            return READ_ERROR_ALREADY_EXISTS;
+        }
+        
+        AppState state=new AppState(){
 
-		try {
-			Scanner scanner;
-			String line;
-			String[] val;
-			boolean header = true;
-			boolean chromosomeAdded = false;
-			Chromosome chr = null;
-			NormalFeature feature;
-			String chrName;
-			int length = 0;
+            @Override
+            public void addChromosome(Chromosome chr) {
+                this.getChromosomeList().add(chr);
+            }
+            
+        };
 
-			scanner = new Scanner(file);
+        File file = new File(mpPath);
 
-			while (scanner.hasNextLine()) {
+        try {
+            Scanner scanner;
+            String line;
+            String[] val;
+            boolean header = true;
+            Chromosome chr=null;
+            FileInfo fInfo=new FileInfo(mpPath,BED_Reader.class);
+            NormalFeature feature;
+            String chrName;
+            int length = 0;
 
-				line = scanner.nextLine();
-				if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0) {
-					continue;
-				}
-				if (header == true) {
-					val = line.split(" ");
-					if (val[0].equals("track")) {
-						header = false;
-					}
-				} else {
-					val = line.split("\t");
+            scanner = new Scanner(file);
 
-					if (!chromosomeAdded) {
-						chrName = val[0];
-						System.out.println("Adding Chromosome to State: '" + chrName + "'");
+            while (scanner.hasNextLine()) {
 
-						chr = new Chromosome(0, chrName, path);
-						chromosomeAdded = true;
-					}
+                line = scanner.nextLine();
+                if (line.replaceAll("\t", "").replaceAll(" ", "").length() == 0) {
+                    continue;
+                }
+                if (header == true) {
+                    System.out.println("Header: "+line);
+                    val = line.split(" ");
+                    if (val[0].equals("track")) {
+                        header = false;
+                        fInfo.header=val;
+                    }
+                    val = line.split("\t");
+                    if (val[0].equals("chrom")) {
+                        header = false;
+                        fInfo.header=val;
+                    }
+                    
+                } else {
+                    val = line.split("\t");
+                    
+                    
+                    if (chr==null ) {
+                        chrName = val[0];
+                        System.out.println("Adding Chromosome to State: '" + chrName + "'");
 
-					length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
-					feature = new NormalFeature(length, -1, val[5].equals("+"));
-					feature.setPosition(Integer.parseInt(val[1]));
+                        chr = new Chromosome(0, chrName, fInfo);
+                        state.addChromosome(chr);
+                    }
+                    
+                    if(!chr.getName().equals(val[0]))
+                    {
+                        chrName = val[0];
+                        chr = state.getChromosome(val[0], fInfo);
+                        if(chr==null)
+                        {
+                            chr = new Chromosome(0, chrName, fInfo);
+                            System.out.println("Adding Chromosome to State: '" + chrName + "'");
+                            state.addChromosome(chr);
+                        }
+                            
+                    }
+                    
+                    length = Integer.parseInt(val[2]) - Integer.parseInt(val[1]);
+                    feature = new NormalFeature(length, -1, val[5].equals("+"));
+                    feature.setPosition(Integer.parseInt(val[1]));
 
-					chr.addFeature(feature);
-				}
-			}
-			scanner.close();
-			if (chr != null) {
-				state.addChromosome(chr);
-			}
-			state.clone(state_);
-			return 0;
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found:" + path);
-			return -1;
-		}
-	}
+                    chr.addFeature(feature);
+                }
+            }
+            scanner.close();
+            
+            state.inject(mpState);
+            return 0;
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found:" + mpPath);
+            return READ_ERROR_EXCEPTION;
+        }
+    }
 }

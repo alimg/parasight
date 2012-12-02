@@ -5,7 +5,7 @@
 package com.genoscope.reader;
 
 import com.genoscope.ColorPicker;
-import com.genoscope.State;
+import com.genoscope.AppState;
 import com.genoscope.types.Chromosome;
 import com.genoscope.types.Color;
 import com.genoscope.types.PSA;
@@ -21,22 +21,28 @@ import javax.swing.JPanel;
  */
 public class PSA_Reader extends FileReader {
 
+    PSA_Reader(String path, AppState state) {
+        super(path, state);
+    }
+
 	@Override
-	public int readFile(String path, State state_) {
-		if (state_.checkChromosome(path)) {
+	public int readFile() {
+		if (mpState.checkChromosome(mpPath)) {
 			final JPanel panel = new JPanel();
 			JOptionPane.showMessageDialog(panel, "File already added",
 					"Warning", JOptionPane.WARNING_MESSAGE);
-			return -2;
+			return READ_ERROR_ALREADY_EXISTS;
 		}
-		State state = new State() {
+		AppState state = new AppState() {
 
 			@Override
 			public void addChromosome(Chromosome chr) {
 				this.getChromosomeList().add(chr);
 			}
 		};
-		File file = new File(path);
+		File file = new File(mpPath);
+        
+        FileInfo fInfo = new FileInfo(mpPath, PSA_Reader.class);
 
 		try {
 			Scanner scanner;
@@ -64,10 +70,10 @@ public class PSA_Reader extends FileReader {
 
 					if (chr == null || !chrName.equals(val[0])) {
 						chrName = val[0];
-						chr = state.getChromosome(path, chrName);
+						chr = state.getChromosome( chrName, fInfo);
 						if (chr == null) {
 							System.out.println("Adding Chromosome to State: '" + chrName + "'");
-							chr = new Chromosome(0, chrName, path);
+							chr = new Chromosome(0, chrName, fInfo);
 							state.addChromosome(chr);
 						}
 					}
@@ -81,11 +87,11 @@ public class PSA_Reader extends FileReader {
 				}
 			}
 			scanner.close();
-			state.clone(state_);
+			state.inject(mpState);
 			return 0;
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found:" + path);
-			return -1;
+			System.out.println("File not found:" + mpPath);
+			return READ_ERROR_EXCEPTION;
 		}
 
 	}

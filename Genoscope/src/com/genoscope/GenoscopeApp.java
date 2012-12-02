@@ -71,7 +71,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
 //		fileChooser.setCurrentDirectory( new File( "./") );
 
         //initialize
-        state = new State();
+        state = new AppState();
         DefaultMutableTreeNode chromosome = new DefaultMutableTreeNode("Chromosomes");
         DefaultMutableTreeNode pairings = new DefaultMutableTreeNode("Pairings");
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) objectTree.getModel().getRoot();
@@ -84,7 +84,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         state.setPairingTree(pairings);
     }
 
-    public State getAppState() {
+    public AppState getAppState() {
         return state;
     }
     //required for File Filter DO NOT DELETE
@@ -157,7 +157,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
         horizontalScroll = new javax.swing.JScrollBar();
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnOpenFile = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton7 = new javax.swing.JButton();
@@ -293,7 +293,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(viewControlLayout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
                         .addGap(19, 19, 19))
                     .addGroup(viewControlLayout.createSequentialGroup()
                         .addComponent(jCheckBox2)
@@ -312,7 +312,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGroup(viewControlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckBox1)
                     .addComponent(jCheckBox2))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         leftToolBar.add(viewControl);
@@ -457,17 +457,17 @@ public class GenoscopeApp extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton1);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/directory_open.png"))); // NOI18N
-        jButton5.setToolTipText("Open Data");
-        jButton5.setFocusable(false);
-        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btnOpenFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/directory_open.png"))); // NOI18N
+        btnOpenFile.setToolTipText("Open Data");
+        btnOpenFile.setFocusable(false);
+        btnOpenFile.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnOpenFile.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnOpenFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 openMenuItemActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButton5);
+        jToolBar1.add(btnOpenFile);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/genoscope/resources/floppy_35inch_blue.png"))); // NOI18N
         jButton6.setFocusable(false);
@@ -605,7 +605,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(drawingPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+                    .addComponent(leftToolBar, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -841,6 +841,8 @@ public class GenoscopeApp extends javax.swing.JFrame {
     }//GEN-LAST:event_objectTreeMousePressed
 
     private void objVisibleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_objVisibleActionPerformed
+        if(selectedVisualizer==null)
+            return;
         selectedVisualizer.setVisible(objVisible.isSelected());
         if(objVisible.isSelected())
             state.showPairsOf(selectedVisualizer);
@@ -952,6 +954,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JPanel OpenGLContainer;
     public javax.swing.JPanel OpenGLPanel;
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton btnOpenFile;
     private javax.swing.JMenuItem contentsMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
     private javax.swing.JMenuItem cutMenuItem;
@@ -975,7 +978,6 @@ public class GenoscopeApp extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
@@ -1024,7 +1026,7 @@ public class GenoscopeApp extends javax.swing.JFrame {
     public javax.swing.JScrollBar verticalScroll;
     private javax.swing.JPanel viewControl;
     // End of variables declaration//GEN-END:variables
-    protected State state;
+    protected AppState state;
     public static boolean showLabels = true;
     public Visualizer selectedVisualizer;
 }

@@ -14,19 +14,23 @@ public class ChromosomeVisualizer extends Visualizer{
     
     float paddingTop=15;
     float paddingLeft=0;
-
-    public float getPaddingLeft() {
-        return paddingLeft;
-    }
     Chromosome chromosome;
-    
-    public String getChromosomeName(){
-        return chromosome.getName();
-    }
     
     public ChromosomeVisualizer(int w,int h,Chromosome chr){
         super(w,h);
         this.chromosome = chr;
+    }
+    
+
+    public float getPaddingLeft() {
+        return paddingLeft;
+    }
+    
+    public Chromosome getChromosome(){
+        return chromosome;
+    }
+    public String getChromosomeName(){
+        return chromosome.getName();
     }
     
     public int getChromosomeLength(){
@@ -62,6 +66,13 @@ public class ChromosomeVisualizer extends Visualizer{
     }
 
     public String getChromosomePath() {
-        return chromosome.getSourceFile();
+        return chromosome.getSourceFile().path;
     }
+
+    @Override
+    public boolean hasChromosome() {
+        return true;
+    }
+    
+    
 }
