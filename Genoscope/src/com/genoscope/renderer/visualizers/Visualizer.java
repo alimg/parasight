@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.renderer.GLHandler;
@@ -28,6 +24,7 @@ public class Visualizer {
 
     private int width;
     private int height;
+    private int absoluteHeight;
     private ByteBuffer buffer;
     private int textId;
     private IntBuffer texts = null;
@@ -43,6 +40,7 @@ public class Visualizer {
     private int snapX=-100067;
     private int snapY=-100067;
     private boolean visible = true;
+    
     static TrueTypeFont font=GLHandler.font;
     /**
      * if visualizer moved
@@ -76,6 +74,10 @@ public class Visualizer {
             h = 80;
         width = w;
         height = h;
+        
+        if(absoluteHeight>0)
+            height=absoluteHeight;
+            
         if(!useFBO)
             buffer = ByteBuffer.allocateDirect((width + 1) * (height) * 4 - 1);
     }
@@ -120,6 +122,9 @@ public class Visualizer {
         posY = y;
     }
     
+    public void setAbsoluteHeight(int h){
+        absoluteHeight=h;
+    }
     
     public boolean isVisible() {
         return visible;
@@ -221,6 +226,8 @@ public class Visualizer {
             glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, FBOid);
         }
         GL20.glUseProgram(0);
+        glTranslated(0, getHeight(), 0);
+        glScalef(1, -1, 1);
         draw();
  
         if (useFBO) {

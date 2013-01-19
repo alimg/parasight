@@ -249,13 +249,13 @@ public class TrueTypeFont {
 		float RenderHeight = (SrcHeight / textureHeight);
 
 		GL11.glTexCoord2f(TextureSrcX, TextureSrcY);
-		GL11.glVertex2f(drawX, drawY);
-		GL11.glTexCoord2f(TextureSrcX, TextureSrcY + RenderHeight);
 		GL11.glVertex2f(drawX, drawY + DrawHeight);
+		GL11.glTexCoord2f(TextureSrcX, TextureSrcY + RenderHeight);
+		GL11.glVertex2f(drawX, drawY);
 		GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY + RenderHeight);
-		GL11.glVertex2f(drawX + DrawWidth, drawY + DrawHeight);
-		GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY);
 		GL11.glVertex2f(drawX + DrawWidth, drawY);
+		GL11.glTexCoord2f(TextureSrcX + RenderWidth, TextureSrcY);
+		GL11.glVertex2f(drawX + DrawWidth, drawY + DrawHeight);
 	}
 
 	public int getWidth(String whatchars) {
@@ -441,8 +441,8 @@ public class TrueTypeFont {
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 			
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 			
 			GL11.glTexEnvf(GL11.GL_TEXTURE_ENV, GL11.GL_TEXTURE_ENV_MODE, GL11.GL_MODULATE);
 			
