@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.genoscope.renderer.visualizers;
 
 import com.genoscope.types.Chromosome;
@@ -12,8 +9,10 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class ChromosomeVisualizer extends Visualizer{
     
-    float paddingTop=15;
+    float paddingTop=0;
     float paddingLeft=0;
+    float paddingBottom=0;
+    float paddingRight=0;
     Chromosome chromosome;
     
     public ChromosomeVisualizer(int w,int h,Chromosome chr){
@@ -40,6 +39,7 @@ public class ChromosomeVisualizer extends Visualizer{
     public float getPositionX(int position){
         return paddingLeft+(float)(getWidth()-paddingLeft)*((float)(position-chromosome.getStart())/(chromosome.getLength()));
     }
+    
     @Override
     public void draw(){
         glDisable(GL_TEXTURE_2D);

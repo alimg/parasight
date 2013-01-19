@@ -57,7 +57,7 @@ public class PSAVisualizer extends ChromosomeVisualizer {
         glVertex2f(w, h);
         glEnd();
         glEnable(GL_TEXTURE_2D);
-        font.drawString(20, getHeight() - 15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")"), 1, 1);
+        font.drawString(20, 15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")"), 1, 1);
         for(String s: map.keySet()){
             int i = map.get(s);
             System.out.println(s);

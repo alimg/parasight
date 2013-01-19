@@ -3,12 +3,11 @@ package com.genoscope.renderer;
 import com.genoscope.renderer.mouseactions.MouseActionHandler;
 import com.genoscope.renderer.mouseactions.MoveAction;
 import com.genoscope.renderer.mouseactions.ScrollAction;
-import com.genoscope.renderer.visualizers.ChromosomeVisualizer;
-import com.genoscope.renderer.visualizers.InterChromosomeV;
-import com.genoscope.renderer.visualizers.PairingVisualizer;
-import com.genoscope.renderer.visualizers.Visualizer;
+import com.genoscope.renderer.visualizers.*;
+import com.genoscope.types.Chromosome;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.util.Iterator;
 import java.util.Vector;
 import javax.swing.JScrollBar;
 import static org.lwjgl.opengl.GL11.*;
@@ -204,6 +203,22 @@ public class GenoscopeRenderer {
         }
         else{
             synchronized(clients){
+                if(v instanceof CBVisualizer)
+                {
+                    Iterator<Visualizer> it = clients.iterator();
+                    for(;it.hasNext();)
+                    {
+                        Visualizer c = it.next();
+                        Chromosome chr1 = ((ChromosomeVisualizer)v).getChromosome();
+                        Chromosome chr2 = ((ChromosomeVisualizer)c).getChromosome();
+                        if(c instanceof SingleChromosomeVisualizer && chr1.getName().equals(chr2.getName()))
+                        {
+                            ((SingleChromosomeVisualizer)c).setCytoband(chr1);
+                            resetLayout();
+                            return;
+                        }
+                    }
+                }
                 clients.add(v);
                 resetLayout();
             }

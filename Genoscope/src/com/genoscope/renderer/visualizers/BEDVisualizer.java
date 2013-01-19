@@ -14,29 +14,71 @@ import static org.lwjgl.opengl.GL11.*;
  *
  * @author Alper
  */
-public class BEDVisualizer extends ChromosomeVisualizer{
+public class BEDVisualizer extends SingleChromosomeVisualizer{
+    
+    float vHeight=30;
     
     public BEDVisualizer(int w,int h,Chromosome chr){
         super(w,h,chr);
+        resize();
     }
+    
     @Override
-    public void draw(){
-        float h = getHeight()/4.0f;
+    public int getRowCount()
+    {
+        if(cytoband==null)
+            return 2;
+        return 3;
+    }
+    
+    @Override
+    public float getRowHeight(int rowNumber) {
+        if(cytoband==null)
+        {
+            if(rowNumber==1)
+                return vHeight;
+            return 20;
+        }
+        if(rowNumber==2)
+            return vHeight;
+        else if(rowNumber==1)
+            return 10;
+        return 20;
+    }
+
+    @Override
+    public String getRowLabel(int rowNumber) {
+        if(rowNumber==0)
+            return (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")");
+        return "";
+    }
+    
+    
+    
+    @Override
+    public void drawRow(int rowNumber) {
+        if(rowNumber == 0 )
+            return;
+        if(rowNumber==1 && cytoband!=null)
+        {
+            drawCytoband(getRowHeight(rowNumber));
+            return;
+        }
+        
+        float h = vHeight/3;
         float w = getWidth();
         glDisable(GL_TEXTURE_2D);
-        glClearColor(1, 1, 1, 0);
-        glClear(GL_COLOR_BUFFER_BIT);
         
         glColor4f(0, 0, 0, 1);
         glLineWidth(5.0f);
-        glBegin(GL_LINES);
-        glVertex2f(0.0f,h);
-        glVertex2f(0.0f,3*h);
-        glVertex2f(0.0f,h);
-        glVertex2f(w,h);
-        glVertex2f(w,h);
-        glVertex2f(w,3*h);
+        glBegin(GL_LINE_STRIP);
+        glVertex2f(0.0f,0);
+        glVertex2f(0.0f,vHeight);
+        glVertex2f(w,vHeight);
+        glVertex2f(w,0);
         glEnd();
+        
+        glLineWidth(1.0f);
         boolean black = true;
         boolean up = true;
         synchronized(chromosome)
@@ -44,14 +86,14 @@ public class BEDVisualizer extends ChromosomeVisualizer{
             for(Feature i:chromosome.getFeatures()){
                 glBegin(GL_POLYGON);
                 float x1 = getPositionX(i.getPosition());
-                float y1 = h+5;
+                float y1 = 4;
                 float x2 = getPositionX(i.getPosition()+((NormalFeature)i).getLength());
-                float y2 = y1+10;
+                float y2 = y1+h;
                 if(-1<= x1 - x2 && x1 - x2 <= 1) 
                     x2++;
-                if(up){
-                    y1+=10;
-                    y2+=10;
+                if(!up){
+                    y1+=h;
+                    y2+=h;
                 }
                 up = !up;
               
@@ -79,11 +121,5 @@ public class BEDVisualizer extends ChromosomeVisualizer{
                 black = !black;
             }
         }
-        glColor4f(0, 0, 1, 1);
-        glEnable(GL_TEXTURE_2D);
-        font.drawString(20, getHeight()-15, (chromosome.getName() + " (" + chromosome.getStart() + ":" + chromosome.getEnd() + ")"),1,1 );
-        glDisable(GL_TEXTURE_2D);
-        
-        glLineWidth(2.0f);
     }
 }
